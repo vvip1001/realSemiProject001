@@ -37,7 +37,11 @@ public class TbBoardBizImpl implements TbBoardBiz{
 
 	@Override
 	public int answerProc(TbBoardDto dto) {
-		return 0;
+		
+		int update = dao.updateAnswer(dto.getBoardNum());
+		int insert = dao.insertAnswer(dto);
+		
+		return update+insert;
 	}
 
 }

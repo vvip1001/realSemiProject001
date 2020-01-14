@@ -26,38 +26,114 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 			session.close();
 		}
 		
-		
 		return list;
 	}
 
 	@Override
 	public TbBoardDto selectOne(int boardNum) {
-		return null;
+		
+		SqlSession session = null;
+		TbBoardDto dto = null;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			dto = session.selectOne(namespace+"selectOne");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public int insertBoard(TbBoardDto dto) {
-		return 0;
+		
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.insert(namespace+"insertBoard");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return res;
 	}
 
 	@Override
 	public int updateBoard(TbBoardDto dto) {
-		return 0;
+		
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"updateBoard");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 	@Override
 	public int deleteBoard(int boardNum) {
-		return 0;
+		
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"deleteBoard");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 	@Override
 	public int updateAnswer(int parentBoardNum) {
-		return 0;
+		
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"updateAnswer");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 	@Override
 	public int insertAnswer(TbBoardDto dto) {
-		return 0;
+		
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"insertAnswer");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 }
