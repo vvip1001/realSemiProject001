@@ -14,20 +14,7 @@ public class SqlMapConfig {
 	public SqlSessionFactory getSqlSessionFactory() {
 		
 		String resource = "com/between/common/mybatis-config.xml";
-<<<<<<< HEAD
-		
-		try {
-			Reader reader = Resources.getResourceAsReader(resource);
-			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-			
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return sqlSessionFactory;
-		
-=======
+
 		Reader reader = null;
 		
 		try {
@@ -43,7 +30,6 @@ public class SqlMapConfig {
 			}
 		}
 		return sqlSessionFactory;
->>>>>>> jins/master
 	}
 
 }
