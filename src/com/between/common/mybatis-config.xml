@@ -7,7 +7,7 @@
 	<properties resource="com/between/common/db.properties"></properties>
 	
 	<typeAliases>
-		<typeAlias type="com.betwee.dto.TbCalDto" alias="TbCalDto"/>
+		<typeAlias type="com.between.dto.TbCalDto" alias="TbCalDto"/>
 	</typeAliases>
 
   <environments default="development">
