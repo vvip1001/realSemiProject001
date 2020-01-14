@@ -2,11 +2,12 @@ package com.between.dao;
 
 import java.util.List;
 
+import com.between.common.SqlMapConfig;
 import com.between.dto.TbCalDto;
 
-public class TbCalDaoImpl implements TbCalDao {
+public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	
-	private String namespace = "mapper.";
+	private String namespace = "com.between.TbCal.mapper.";
 
 	@Override
 	public List<TbCalDto> getCalList(String yyyyMMdd) {

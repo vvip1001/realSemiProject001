@@ -2,9 +2,35 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper">
-  <select id="" parameterType="" resultType="">
+<mapper namespace="com.between.TbCal.mapper">
+
+	<resultMap type="TbCalDto" id="TbCalResultMap">
+		<result property="calNum" column="CAL_NUM"/>
+		<result property="groupNum" column="GROUP_NUM"/>
+		<result property="calTitle" column="CAL_TITLE"/>
+		<result property="calContent" column="CAL_CONTENT"/>
+		<result property="calTime" column="CAL_TIME"/>
+		<result property="calDate" column="CAL_DATE"/>
+	</resultMap>
+	
+  <select id="getCalList" parameterType="" resultType="" resultMap="TbCalResultMap">
+  	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE FROM TB_CAL
+  </select>
+  
+  <select id="selectOne" parameterType="" resultType="" resultMap="TbCalResultMap">
   	
   </select>
+  
+  <insert id="">
+  
+  </insert>
+  
+  <update id="">
+  
+  </update>
+  
+  <delete id="">
+  
+  </delete>
   
 </mapper>  
