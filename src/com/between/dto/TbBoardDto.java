@@ -7,43 +7,32 @@ public class TbBoardDto {
 
  // 회원아이디 
  private String userId;
-
  // 글번호 
  private int boardNum;
-
  // 그룹번호 
  private int boardGroupNum;
-
  // 그룹순서 
  private int boardGroupOrder;
-
  // 글탭번호 
  private int boardTab;
-
  // 삭제여부 
  private String boardDeleteCheck;
-
  // 글제목 
  private String boardTitle;
-
  // 글내용 
  private String boardContent;
-
  // 조회수 
  private String boardViewCount;
-
  // 작성일 
  private Date boardDate;
-
  // 글타입(공지_일반글) 
  private String boardType;
-
  // 신고 
  private String boardFlag;
-
  // 신고유형 
  private String boardFlagType;
-
+ 
+ 
  public String getUserId() {
      return userId;
  }
