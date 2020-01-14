@@ -30,7 +30,7 @@
 	
 	<insert id="insertBoard" parameterType="TbBoardDto" >
 		INSERT INTO TB_BOARD VALUES
-		(#{userId},TB_BOARD_SEQ.NEXTVAL,TB_BOARD_GROUP_SEQ.NEXTVAL,1,0,#{boardDeleteCheck},#{boardTitle},#{boardContent},#{boardViewCount},SYSDATE,NORMAL,#{boardFlag},#{boardFlagType})
+		(#{userId},TB_BOARD_SEQ.NEXTVAL,TB_BOARD_GROUP_SEQ.NEXTVAL,1,0,#{boardDeleteCheck},#{boardTitle},#{boardContent},#{boardViewCount},SYSDATE,#{boardType},#{boardFlag},#{b oardFlagType})
 	</insert>
 
 
