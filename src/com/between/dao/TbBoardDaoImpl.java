@@ -13,7 +13,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	
 	@Override
 	public List<TbBoardDto> selectList() {
-		
+		//전체출력
 		SqlSession session = null;
 		List<TbBoardDto> list = null;
 		
@@ -26,38 +26,114 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 			session.close();
 		}
 		
-		
 		return list;
 	}
 
 	@Override
 	public TbBoardDto selectOne(int boardNum) {
-		return null;
+		//하나출력
+		SqlSession session = null;
+		TbBoardDto dto = null;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			dto = session.selectOne(namespace+"selectOne");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public int insertBoard(TbBoardDto dto) {
-		return 0;
+		//글작성
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.insert(namespace+"insertBoard");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return res;
 	}
 
 	@Override
 	public int updateBoard(TbBoardDto dto) {
-		return 0;
+		//글수정
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"updateBoard");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 	@Override
 	public int deleteBoard(int boardNum) {
-		return 0;
+		//글삭제 (쿼리는 UPDATE)
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"deleteBoard");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 	@Override
 	public int updateAnswer(int parentBoardNum) {
-		return 0;
+		//답글 탭번호 수정
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"updateAnswer");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 	@Override
 	public int insertAnswer(TbBoardDto dto) {
-		return 0;
+		//답글 삽입
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"insertAnswer");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 }

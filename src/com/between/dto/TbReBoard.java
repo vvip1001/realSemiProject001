@@ -7,12 +7,14 @@ public class TbReBoard {
  
  // 글번호 
  private int boardNum;
+ // 댓글번호
+ private int reNum;
  // 작성자 
  private String writer;
  // 댓글내용 
  private String reContent;
  // 그룹번호 
- private int reNum;
+ private int reGroupNum;
  // 댓글탭번호 
  private int reTab;
  // 작성일 
@@ -27,8 +29,19 @@ public class TbReBoard {
  public int getBoardNum() {
      return boardNum;
  }
+ 
 
- public void setBoardNum(int boardNum) {
+ public int getReGroupNum() {
+	return reGroupNum;
+}
+
+
+public void setReGroupNum(int reGroupNum) {
+	this.reGroupNum = reGroupNum;
+}
+
+
+public void setBoardNum(int boardNum) {
      this.boardNum = boardNum;
  }
 
@@ -96,11 +109,13 @@ public class TbReBoard {
      this.reFlagType = reFlagType;
  }
 
+
 @Override
 public String toString() {
-	return "TbReBoard [boardNum=" + boardNum + ", writer=" + writer + ", reContent=" + reContent + ", reNum=" + reNum
-			+ ", reTab=" + reTab + ", reDate=" + reDate + ", reDeleteCheck=" + reDeleteCheck + ", reFlag=" + reFlag
-			+ ", reFlagType=" + reFlagType + "]";
+	return "TbReBoard [boardNum=" + boardNum + ", reNum=" + reNum + ", writer=" + writer + ", reContent=" + reContent
+			+ ", reGroupNum=" + reGroupNum + ", reTab=" + reTab + ", reDate=" + reDate + ", reDeleteCheck="
+			+ reDeleteCheck + ", reFlag=" + reFlag + ", reFlagType=" + reFlagType + "]";
 }
+
 
 }

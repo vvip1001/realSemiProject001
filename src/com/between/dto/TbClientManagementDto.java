@@ -7,7 +7,7 @@ public class TbClientManagementDto {
  private int clientNum;
 
  // 커플 그룹 번호 
- private String groupNum;
+ private int groupNum;
 
  // 회원아이디 
  private String userId;
@@ -20,11 +20,11 @@ public class TbClientManagementDto {
      this.clientNum = clientNum;
  }
 
- public String getGroupNum() {
+ public int getGroupNum() {
      return groupNum;
  }
 
- public void setGroupNum(String groupNum) {
+ public void setGroupNum(int groupNum) {
      this.groupNum = groupNum;
  }
 

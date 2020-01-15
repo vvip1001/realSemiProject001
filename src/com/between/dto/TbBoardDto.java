@@ -25,7 +25,7 @@ public class TbBoardDto {
  private String boardViewCount;
  // 작성일 
  private Date boardDate;
- // 글타입(공지_일반글) 
+ // 글타입(NORMAL, NOTICE)
  private String boardType;
  // 신고 
  private String boardFlag;

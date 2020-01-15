@@ -1,0 +1,34 @@
+
+1월 14, 2020 07:29:10.32 NEW SESSION
+1월 14, 2020 07:29:10.32 [12572:16136:0114/072910.261:ERROR:socket_stream.cc(218)] Closing stream with result -2
+1월 14, 2020 07:29:10.95 [12572:16136:0114/072910.951:ERROR:socket_stream.cc(218)] Closing stream with result -2
+1월 14, 2020 08:37:14.10 [12572:16136:0114/083714.102:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -106
+1월 14, 2020 08:37:14.12 [12572:1064:0114/083714.110:ERROR:gcm_channel_status_request.cc(145)] GCM channel request failed.
+1월 14, 2020 08:37:14.13 [12572:21180:0114/083714.111:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:37:40.36 [12572:1064:0114/083740.363:ERROR:gcm_channel_status_request.cc(145)] GCM channel request failed.
+1월 14, 2020 08:37:59.72 [12572:16136:0114/083759.728:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -106
+1월 14, 2020 08:37:59.73 [12572:21180:0114/083759.729:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:13.86 [12572:16136:0114/083813.859:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:38:13.87 [12572:21180:0114/083813.861:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:13.87 [12572:21180:0114/083813.863:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:26.79 [12572:16136:0114/083826.798:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:38:26.80 [12572:21180:0114/083826.799:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:26.81 [12572:21180:0114/083826.803:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:26.99 [12572:1064:0114/083826.994:ERROR:gcm_channel_status_request.cc(145)] GCM channel request failed.
+1월 14, 2020 08:38:31.93 [12572:16136:0114/083831.931:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:38:31.94 [12572:21180:0114/083831.932:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:38.81 [12572:16136:0114/083838.818:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:38:38.82 [12572:21180:0114/083838.819:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:46.62 [12572:16136:0114/083846.624:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:38:46.63 [12572:21180:0114/083846.625:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:38:53.75 [12572:16136:0114/083853.758:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:38:53.76 [12572:21180:0114/083853.759:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:39:01.66 [12572:16136:0114/083901.666:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:39:01.67 [12572:21180:0114/083901.666:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:39:09.86 [12572:16136:0114/083909.859:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:39:09.86 [12572:21180:0114/083909.861:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:39:17.85 [12572:16136:0114/083917.858:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -106
+1월 14, 2020 08:39:43.04 [12572:16136:0114/083943.040:ERROR:connection_factory_impl.cc(418)] Failed to connect to MCS endpoint with error -105
+1월 14, 2020 08:39:43.05 [12572:21180:0114/083943.041:ERROR:get_updates_processor.cc(246)] PostClientToServerMessage() failed during GetUpdates
+1월 14, 2020 08:39:48.65 
+1월 14, 2020 08:39:48.66 KLIB_SelfTest return : KLR_OK

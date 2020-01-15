@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+C:\Users\김진성\Desktop\2조 세미 프로젝트\realSemiProject002\.metadata\.plugins\org.eclipse.jdt.core
