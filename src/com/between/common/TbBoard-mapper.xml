@@ -4,6 +4,7 @@
 
 	<resultMap type="TbBoardDto" id="TbBoardResultMap">
 		<result property="userId" column="USER_ID"/>
+		<result property="boardGender" column="BOARD_GENDER"/>
 		<result property="boardNum" column="BOARD_NUM"/>
 		<result property="boardGroupNum" column="BOARD_GROUP_NUM" />
 		<result property="boardGroupOrder" column="BOARD_GROUP_ORDER" />
@@ -19,18 +20,18 @@
 	</resultMap>
 	
 	<select id="selectList" resultMap="TbBoardResultMap">
-		SELECT USER_ID, BOARD_NUM, BOARD_GROUP_NUM, BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
+		SELECT USER_ID,BOARD_GENDER, BOARD_NUM, BOARD_GROUP_NUM, BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
 		FROM TB_BOARD ORDER BY BOARD_NUM DESC
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultMap="TbBoardResultMap">
-		SELECT USER_ID, BOARD_NUM, BOARD_GROUP_NUM, BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
+		SELECT USER_ID,BOARD_GENDER, BOARD_NUM, BOARD_GROUP_NUM, BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
 		FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}
 	</select>
 	
 	<insert id="insertBoard" parameterType="TbBoardDto" >
 		INSERT INTO TB_BOARD VALUES
-		(#{userId},TB_BOARD_SEQ.NEXTVAL,TB_BOARD_GROUP_SEQ.NEXTVAL,1,0,#{boardDeleteCheck},#{boardTitle},#{boardContent},#{boardViewCount},SYSDATE,#{boardType},#{boardFlag},#{b oardFlagType})
+		(#{userId},#{boardGender},TB_BOARD_SEQ.NEXTVAL,TB_BOARD_GROUP_SEQ.NEXTVAL,1,0,#{boardDeleteCheck},#{boardTitle},#{boardContent},#{boardViewCount},SYSDATE,#{boardType},#{boardFlag},#{b oardFlagType})
 	</insert>
 
 

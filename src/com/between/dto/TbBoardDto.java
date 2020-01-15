@@ -7,6 +7,8 @@ public class TbBoardDto {
 
  // 회원아이디 
  private String userId;
+ // 회원성별
+ private String boardGender;
  // 글번호 
  private int boardNum;
  // 그룹번호 
@@ -41,7 +43,15 @@ public class TbBoardDto {
      this.userId = userId;
  }
 
- public int getBoardNum() {
+ public String getBoardGender() {
+	return boardGender;
+}
+
+public void setBoardGender(String boardGender) {
+	this.boardGender = boardGender;
+}
+
+public int getBoardNum() {
      return boardNum;
  }
 
