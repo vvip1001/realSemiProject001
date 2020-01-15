@@ -7,14 +7,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>속닥속닥 작성</title>
+<title>Insert title here</title>
 </head>
 <body>
-	
-	
+
+
+
+
 	<div>
 	<form action="TbBoard.do" method="post" >
-	<input type="hidden" name="command" value="boardwriteres"/>
+	<input type="hidden" name="command" value="boardupdateres"/>
 	<input type="hidden" name="userId" value="${dto.userId } }" />
 	<fieldset>
 		<table>
@@ -29,7 +31,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="right" >
-					<input type="submit" value="작성"/>
+					<input type="submit" value="수정"/>
 					<input type="button" value="취소" onclick="history.back();" /> 
 				</td>
 			</tr>
@@ -37,7 +39,6 @@
 	</fieldset>
 	</form>
 	</div>
-	
 
 
 </body>

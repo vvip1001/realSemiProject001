@@ -45,9 +45,42 @@ public class TbBoardServlet extends HttpServlet {
 			response.sendRedirect("TbBoardWriteForm.jsp");
 		} else if(command.equals("boardwriteres")) {
 			
+			String userId = request.getParameter("userId");
+			String boardTitle = request.getParameter("boardTitle");
+			String boardContent = request.getParameter("boardContent");
 			
+			TbBoardDto dto = new TbBoardDto();
+			dto.setUserId(userId);
+			dto.setBoardTitle(boardTitle);
+			dto.setBoardContent(boardContent);
+			
+			int res = biz.insertBoard(dto);
+			
+			if(res>0) {
+				response.sendRedirect("TbBoard.do?command=boardlist");
+			} else {
+				responseAlert("fail", "index.html", response);
+			} 
+			
+		} else if(command.equals("boarddelete")) {
+			
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			
+			int res = biz.deleteBoard(boardNum);
+			
+			if(res>0) {
+				response.sendRedirect("TbBoard.do?command=boardlist");
+			} else {
+				responseAlert("fail", "index.html", response);
+			} 
+		} else if(command.equals("boardupdate")) {
+			
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			
+			TbBoardDto dto = biz.selectOne(boardNum);
+			request.setAttribute("dto", dto);
+			dispatch("TbBoardUpdateForm.jsp", request, response);
 		}
-	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
