@@ -37,9 +37,6 @@ public class TbCalServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public void dispatch(String url, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatch = request.getRequestDispatcher(url);
-		dispatch.forward(request, response);
-	}
+	
 
 }

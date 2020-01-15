@@ -14,6 +14,8 @@ import com.between.biz.TbBoardBiz;
 import com.between.biz.TbBoardBizImpl;
 import com.between.dto.TbBoardDto;
 
+import static com.between.controller.ServletUtil.*;
+
 @WebServlet("/test.do")
 public class TbBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,6 +43,9 @@ public class TbBoardServlet extends HttpServlet {
 			dispatch("TbBoardDatail.jsp",request,response);
 		} else if(command.equals("boardwriteform")) {
 			response.sendRedirect("TbBoardWriteForm.jsp");
+		} else if(command.equals("boardwriteres")) {
+			
+			
 		}
 	
 	}
@@ -52,9 +57,4 @@ public class TbBoardServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public void dispatch(String url, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatch = request.getRequestDispatcher(url);
-		dispatch.forward(request, response);
-	}
-
 }
