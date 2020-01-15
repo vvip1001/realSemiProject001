@@ -22,4 +22,16 @@
   	<url-pattern>/TbCal.do</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+  	<servlet-name>TbUsercontroller</servlet-name>
+  	<servlet-class>com.between.controller.TbUserServlet</servlet-class>
+  </servlet>
+
+  
+  <servlet-mapping>
+  	<servlet-name>TbUsercontroller</servlet-name>
+  	<url-pattern>/TbUser.do</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
