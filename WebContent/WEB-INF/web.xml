@@ -12,4 +12,14 @@
   	<url-pattern>/TbBoard.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>calController</servlet-name>
+  	<servlet-class>com.between.controller.TbCalServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>calController</servlet-name>
+  	<url-pattern>/TbCal.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
