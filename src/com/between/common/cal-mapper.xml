@@ -13,26 +13,31 @@
 		<result property="calDate" column="CAL_DATE"/>
 	</resultMap>
 	
-  <select id="getCalList" parameterType="" resultType="" resultMap="TbCalResultMap">
+  <select id="getCalList" parameterType="String" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE 
-  	FROM TB_CAL WHERE CAL_TIME = {#calTime}
+  	FROM TB_CAL WHERE CAL_TIME = {#calTime} AND GROUP_NUM = #{groupNum} ORDER BY CAL_NUM DESC
   </select>
   
-  <select id="selectOne" parameterType="" resultType="" resultMap="TbCalResultMap">
+  <select id="selectOne" parameterType="int" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
-  	FROM TB_CAL WHERE CAL_NUM = {#calNum}
+  	FROM TB_CAL WHERE CAL_NUM = {#calNum} AND GROUp_NUM = #{groupNum}
   </select>
   
-  <insert id="">
-  
+  <insert id="insertEvent">
+  	INSERT INTO TB_CAL VALUES 
+  	(TB_CAL_SEQ.NEXTVAL, ${groupNum}, #{calTitle}, #{calContent}, #{calTime}, SYSDATE)
+  	WHERE GROUP_NUM = #{groupNum}
   </insert>
   
-  <update id="">
-  
+  <update id="updateEvent">
+  	UPDATE TB_CAL 
+  	SET CAL_TITLE = #{calTitle}, CAL_CONTENT = #{calContent} 
+  	WHERE CAL_NUM = #{calNum} AND GROUP_NUM = #{groupNum}
   </update>
   
-  <delete id="">
-  
+  <delete id="deleteEvent">
+  	DELETE FROM TB_CAL 
+  	WHERE CAL_NUM = #{calNUm} AND GROUP_NUM = #{groupNum}
   </delete>
   
 </mapper>  
