@@ -8,6 +8,7 @@
 	
 	<typeAliases>
 		<typeAlias type="com.between.dto.TbCalDto" alias="TbCalDto"/>
+		<typeAlias type="com.between.dto.TbBoardDto" alias="TbBoardDto" />
 	</typeAliases>
 
   <environments default="development">
@@ -23,7 +24,7 @@
   </environments>
   
   <mappers>
-    <mapper resource="com/between/common/mybatis-mapper.xml"/>
+    <mapper resource="com/between/common/TbBoard-mapper.xml"/>
   </mappers>
   
 </configuration>

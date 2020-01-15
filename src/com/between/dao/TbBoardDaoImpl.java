@@ -13,7 +13,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	
 	@Override
 	public List<TbBoardDto> selectList() {
-		
+		//전체출력
 		SqlSession session = null;
 		List<TbBoardDto> list = null;
 		
@@ -31,7 +31,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 
 	@Override
 	public TbBoardDto selectOne(int boardNum) {
-		
+		//하나출력
 		SqlSession session = null;
 		TbBoardDto dto = null;
 		
@@ -49,7 +49,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 
 	@Override
 	public int insertBoard(TbBoardDto dto) {
-		
+		//글작성
 		SqlSession session = null;
 		int res = 0;
 		
@@ -66,7 +66,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 
 	@Override
 	public int updateBoard(TbBoardDto dto) {
-		
+		//글수정
 		SqlSession session = null;
 		int res = 0;
 		
@@ -84,7 +84,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 
 	@Override
 	public int deleteBoard(int boardNum) {
-		
+		//글삭제 (쿼리는 UPDATE)
 		SqlSession session = null;
 		int res = 0;
 		
@@ -102,7 +102,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 
 	@Override
 	public int updateAnswer(int parentBoardNum) {
-		
+		//답글 탭번호 수정
 		SqlSession session = null;
 		int res = 0;
 		
@@ -120,7 +120,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 
 	@Override
 	public int insertAnswer(TbBoardDto dto) {
-		
+		//답글 삽입
 		SqlSession session = null;
 		int res = 0;
 		
