@@ -14,11 +14,13 @@
 	</resultMap>
 	
   <select id="getCalList" parameterType="" resultType="" resultMap="TbCalResultMap">
-  	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE FROM TB_CAL
+  	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE 
+  	FROM TB_CAL WHERE CAL_TIME = {#calTime}
   </select>
   
   <select id="selectOne" parameterType="" resultType="" resultMap="TbCalResultMap">
-  	
+  	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
+  	FROM TB_CAL WHERE CAL_NUM = {#calNum}
   </select>
   
   <insert id="">

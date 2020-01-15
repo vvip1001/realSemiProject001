@@ -6,7 +6,7 @@ import com.between.dto.TbCalDto;
 
 public interface TbCalDao {
 
-	public List<TbCalDto> getCalList(String yyyyMMdd);
+	public List<TbCalDto> getCalList(String calTime);
 	public TbCalDto selectOne(int calNum);
 	public int insertEvent(TbCalDto dto);
 	public int updateEvent(TbCalDto dto);
