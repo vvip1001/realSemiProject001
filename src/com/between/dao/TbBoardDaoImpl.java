@@ -37,7 +37,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			dto = session.selectOne(namespace+"selectOne");
+			dto = session.selectOne(namespace+"selectOne",boardNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -55,7 +55,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.insert(namespace+"insertBoard");
+			res = session.insert(namespace+"insertBoard",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -72,7 +72,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"updateBoard");
+			res = session.update(namespace+"updateBoard",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -90,7 +90,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"deleteBoard");
+			res = session.update(namespace+"deleteBoard",boardNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -108,7 +108,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"updateAnswer");
+			res = session.update(namespace+"updateAnswer",parentBoardNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -126,7 +126,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"insertAnswer");
+			res = session.update(namespace+"insertAnswer",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

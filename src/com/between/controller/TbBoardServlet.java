@@ -19,9 +19,6 @@ public class TbBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	public TbBoardServlet() {
-
-		System.out.println("서블릿 입성");
-		
 	}
        
 
@@ -37,7 +34,13 @@ public class TbBoardServlet extends HttpServlet {
 			List<TbBoardDto> list = biz.selectList();
 			request.setAttribute("list", list);
 			dispatch("TbBoardList.jsp",request,response);
-			
+		} else if(command.equals("boarddetail")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardnum"));
+			TbBoardDto dto = biz.selectOne(boardNum);
+			request.setAttribute("dto", dto);
+			dispatch("TbBoardDatail.jsp",request,response);
+		} else if(command.equals("boardwriteform")) {
+			response.sendRedirect("TbBoardWriteForm.jsp");
 		}
 	
 	}
