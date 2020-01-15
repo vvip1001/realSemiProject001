@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.between.biz.TbCalBiz;
 import com.between.biz.TbCalBizImpl;
 
-/**
- * Servlet implementation class TbCalServlet
- */
 @WebServlet("/TbCalServlet.do")
 public class TbCalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
