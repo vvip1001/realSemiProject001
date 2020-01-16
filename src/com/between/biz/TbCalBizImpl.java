@@ -41,8 +41,8 @@ public class TbCalBizImpl implements TbCalBiz {
 	}
 
 	@Override
-	public int deleteEvent(int calNum, int groupNum) {
-		return dao.deleteEvent(calNum, groupNum);
+	public int deleteEvent(int calNum) {
+		return dao.deleteEvent(calNum);
 	}
 	
 	

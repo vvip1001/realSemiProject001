@@ -27,7 +27,6 @@
 	TbGroupDto groupDto = (TbGroupDto)request.getAttribute("groupDto");
 	
 	
-	
 	Calendar cal = Calendar.getInstance();
 	
 	int year = cal.get(Calendar.YEAR);

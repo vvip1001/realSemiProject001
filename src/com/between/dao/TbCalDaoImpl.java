@@ -84,7 +84,7 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	}
 
 	@Override
-	public int deleteEvent(int calNum, int groupNum) {
+	public int deleteEvent(int calNum) {
 		SqlSession session = null;
 		int res = 0;
 		
