@@ -30,10 +30,22 @@
 	</select>
 	
 	<insert id="insertBoard" parameterType="TbBoardDto" >
-		INSERT INTO TB_BOARD VALUES
-		(#{userId},#{boardGender},TB_BOARD_SEQ.NEXTVAL,TB_BOARD_GROUP_SEQ.NEXTVAL,1,0,#{boardDeleteCheck},#{boardTitle},#{boardContent},#{boardViewCount},SYSDATE,#{boardType},#{boardFlag},#{b oardFlagType})
+		INSERT INTO TB_BOARD VALUES(
+		#{userId},
+		#{boardGender},
+		TB_BOARD_SEQ.NEXTVAL,
+		TB_BOARD_GROUP_SEQ.NEXTVAL,
+		1,
+		0,
+		'N',
+		#{boardTitle},
+		#{boardContent},
+		'0',
+		SYSDATE,
+		#{boardType},
+		'0',
+		null)
 	</insert>
-	
 	<update id="updateBoard" parameterType="TbBoardDto" >
 		UPDATE TB_BOARD SET
 		BOARD_TITLE = #{boardTitle},
