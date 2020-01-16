@@ -1,3 +1,9 @@
+<%
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Cache-control","no-store");
+	response.setHeader("Expires","0");
+%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -17,16 +23,16 @@
 	<div>
 	<form action="TbBoard.do" method="post" >
 	<input type="hidden" name="command" value="boardupdateres"/>
-	<input type="hidden" name="boardNum" value="${dto.boardNum }" />
+	<input type="hidden" name="boardNum" value="${board.boardNum }" />
 	<fieldset>
 		<table>
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="boardTitle" value="${dto.boardTitle }"/></td>
+				<td><input type="text" name="boardTitle" value="${board.boardTitle }"/></td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="15" cols="30" name="boardContent">${dto.boardContent }</textarea>
+				<td><textarea rows="15" cols="30" name="boardContent">${board.boardContent }</textarea>
 				</td>
 			</tr>
 			<tr>
