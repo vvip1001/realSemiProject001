@@ -9,10 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.between.biz.TbCalBiz;
 import com.between.biz.TbCalBizImpl;
 import com.between.dto.TbCalDto;
+import com.between.dto.TbGroupDto;
+import com.between.dto.TbUserDto;
 
 import static com.between.controller.ServletUtil.*;
 
@@ -26,11 +29,20 @@ public class TbCalServlet extends HttpServlet {
 		
 		TbCalBiz biz = new TbCalBizImpl();
 		
+		
+		
 		String command = request.getParameter("command");
 		
 		if(command.equals("calendar")) {
+			HttpSession session = request.getSession();
+			TbUserDto userInfo = (TbUserDto)session.getAttribute("userInfo");
 			
-			response.sendRedirect("Calendar.jsp");
+			TbGroupDto groupDto = biz.findPartner(userInfo.getGroupNum());
+			
+			request.setAttribute("groupDto", groupDto);
+			
+			dispatch("Calendar.jsp", request, response);
+			
 		} else if(command.equals("insertCalEvent")) {
 			String year = request.getParameter("year");
 			String month = request.getParameter("month");

@@ -7,6 +7,8 @@ import java.util.List;
 import com.between.dao.TbCalDao;
 import com.between.dao.TbCalDaoImpl;
 import com.between.dto.TbCalDto;
+import com.between.dto.TbGroupDto;
+import com.between.dto.TbUserDto;
 
 public class TbCalBizImpl implements TbCalBiz {
 	
@@ -84,4 +86,10 @@ public class TbCalBizImpl implements TbCalBiz {
 		return null;
 	}
 
+	@Override
+	public TbGroupDto findPartner(int groupNum) {
+		return dao.findPartner(groupNum);
+	}
+
+	
 }

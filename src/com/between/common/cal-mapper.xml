@@ -13,6 +13,14 @@
 		<result property="calDate" column="CAL_DATE"/>
 	</resultMap>
 	
+	<resultMap type="TbGroupDto" id="TbGroupResultMap">
+		<result property="groupNum" column="GROUP_NUM"/>
+		<result property="partnerId" column="PARTNER_ID"/>
+		<result property="userId" column="USER_ID"/>
+	</resultMap>
+	
+	
+	
   <select id="getCalList" parameterType="String" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE 
   	FROM TB_CAL WHERE CAL_TIME = {#calTime} AND GROUP_NUM = #{groupNum} ORDER BY CAL_NUM DESC
@@ -39,5 +47,9 @@
   	DELETE FROM TB_CAL 
   	WHERE CAL_NUM = #{calNUm} AND GROUP_NUM = #{groupNum}
   </delete>
+  
+  <select id="findPartner" resultMap="TbGroupResultMap">
+  	SELECT USER_ID, PARTNER_ID FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
+  </select>
   
 </mapper>  

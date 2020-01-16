@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.TbGroupDto"%>
 <%@page import="com.between.dto.TbUserDto"%>
 <%@page import="com.between.biz.TbCalBiz"%>
 <%@page import="com.between.biz.TbCalBizImpl"%>
@@ -15,13 +16,17 @@
 </head>
 <body>
 	
-	<h1>Calendar</h1>
+	
 <%
 	
 	TbCalBiz biz = new TbCalBizImpl();
 
 	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
 	int groupNum = userInfo.getGroupNum();
+	
+	TbGroupDto groupDto = (TbGroupDto)request.getAttribute("groupDto");
+	
+	
 	
 	Calendar cal = Calendar.getInstance();
 	
@@ -58,6 +63,7 @@
 	//달력 일정 (dao)biz
 	
 %>
+	<h1><%=groupDto.getUserId() %>와<%=groupDto.getPartnerId() %> Calendar</h1>
 
 	<table id="calendar" border="1">
 		<caption>

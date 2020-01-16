@@ -3,6 +3,7 @@ package com.between.dao;
 import java.util.List;
 
 import com.between.dto.TbCalDto;
+import com.between.dto.TbGroupDto;
 
 public interface TbCalDao {
 
@@ -11,5 +12,5 @@ public interface TbCalDao {
 	public int insertEvent(TbCalDto dto);
 	public int updateEvent(TbCalDto dto);
 	public int deleteEvent(int calNum, int groupNum);
-	
+	public TbGroupDto findPartner(int groupNum);
 }

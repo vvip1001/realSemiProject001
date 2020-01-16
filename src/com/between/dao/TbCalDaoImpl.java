@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.between.common.SqlMapConfig;
 import com.between.dto.TbCalDto;
+import com.between.dto.TbGroupDto;
 
 public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	
@@ -31,11 +32,13 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	@Override
 	public TbCalDto selectOne(int calNum, int groupNum) {
 		SqlSession session = null;
-		TbCalDto dto = null;
+		TbCalDto dto = new TbCalDto();
+		dto.setCalNum(calNum);
+		dto.setGroupNum(groupNum);
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			dto = session.selectOne(namespace+"selectOne", calNum);
+			dto = session.selectOne(namespace+"selectOne", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -95,6 +98,17 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 		}
 		
 		return res;
+	}
+
+	@Override
+	public TbGroupDto findPartner(int groupNum) {
+		SqlSession session = null;
+		TbGroupDto dto = null;
+		
+		session = getSqlSessionFactory().openSession(true);
+		dto = session.selectOne(namespace+"findPartner", groupNum);
+		
+		return dto;
 	}
 
 	
