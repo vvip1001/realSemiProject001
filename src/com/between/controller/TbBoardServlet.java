@@ -40,7 +40,7 @@ public class TbBoardServlet extends HttpServlet {
 			int boardNum = Integer.parseInt(request.getParameter("boardnum"));
 			TbBoardDto dto = biz.selectOne(boardNum);
 			request.setAttribute("dto", dto);
-			dispatch("TbBoardDatail.jsp",request,response);
+			dispatch("TbBoardDetail.jsp",request,response);
 		} else if(command.equals("boardwriteform")) {
 			response.sendRedirect("TbBoardWriteForm.jsp");
 		} else if(command.equals("boardwriteres")) {
@@ -80,6 +80,23 @@ public class TbBoardServlet extends HttpServlet {
 			TbBoardDto dto = biz.selectOne(boardNum);
 			request.setAttribute("dto", dto);
 			dispatch("TbBoardUpdateForm.jsp", request, response);
+		} else if(command.equals("boardupdateres")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			String boardTitle = request.getParameter("boardTitle");
+			String boardContent = request.getParameter("boardContent");
+			
+			TbBoardDto dto = new TbBoardDto();
+			dto.setBoardNum(boardNum);
+			dto.setBoardTitle(boardTitle);
+			dto.setBoardContent(boardContent);
+			
+			int res = biz.updateBoard(dto);
+			
+			if(res>0) {
+				response.sendRedirect("TbBoard.do?command=boardlist");
+			} else {
+				responseAlert("fail", "index.html", response);
+			} 
 		}
 	}
 

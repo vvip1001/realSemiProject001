@@ -22,6 +22,7 @@
 	<div>
 	<form action="TbBoard.do" method="post" >
 	<input type="hidden" name="command" value="boardupdate"/>
+	<input type="hidden" name="boardNum" value="${dto.boardNum }" />
 	<fieldset>
 		<table>
 			<tr>
@@ -34,13 +35,14 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="15" cols="30">
-					 ${dto.boardContent }
-				</textarea>
+				<td><textarea rows="15" cols="30" readonly="readonly" >${dto.boardContent }</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="right" id=<c:choose></c:choose>"hideButton" >
+				<td>
+					<input type="button" value="답글작성" onclick="location.href='TbBoard.do?command=boardanswer'"/>
+				</td>
+				<td colspan="2" align="right" id="hideButtonss" >
 					<input type="submit" value="수정"/>
 					<input type="button" value="삭제" onclick="location.href='TbBoard.do?command=boarddelete'"/>
 				</td>
