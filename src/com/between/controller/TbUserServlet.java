@@ -71,6 +71,11 @@ public class TbUserServlet extends HttpServlet {
 			
 			
 		}else if(command.equals("logout")) {
+			//세션 만료 
+			//HttpSession session = request.getSession();
+			//session.invalidate();
+			
+		}else if(command.equals("mypage")) {
 			
 		}
 		
