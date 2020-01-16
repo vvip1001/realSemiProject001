@@ -30,9 +30,10 @@
 	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
 
 	if(userInfo==null){
-		response.sendRedirect("index.html");
+		pageContext.forward("index.jsp");
 	}
 %>
+
 
 
 	<div>

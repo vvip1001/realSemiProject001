@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.TbUserDto"%>
 <%
 	response.setHeader("Pragma","no-cache");
 	response.setHeader("Cache-control","no-store");
@@ -16,12 +17,19 @@
 <title>속닥속닥 작성</title>
 </head>
 <body>
+<%
+	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
+
+	if(userInfo==null){
+		pageContext.forward("index.html");
+	}
+%>
 	
 	
 	<div>
 	<form action="TbBoard.do" method="post" >
 	<input type="hidden" name="command" value="boardwriteres"/>
-	<input type="hidden" name="userId" value="${dto.userId } }" />
+	<input type="hidden" name="userId" value="${userInfo.userId } }" />
 	<fieldset>
 		<table>
 			<tr>
