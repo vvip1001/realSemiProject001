@@ -20,7 +20,7 @@
   
   <select id="selectOne" parameterType="int" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
-  	FROM TB_CAL WHERE CAL_NUM = {#calNum} AND GROUp_NUM = #{groupNum}
+  	FROM TB_CAL WHERE CAL_NUM = {#calNum} AND GROUP_NUM = #{groupNum}
   </select>
   
   <insert id="insertEvent">

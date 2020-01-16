@@ -22,8 +22,26 @@ public class TbCalDto {
 
  // 작성일자 
  private Date calDate;
+ 
+ public TbCalDto() {
+	 
+ }
+ 
+ 
 
- public int getCalNum() {
+ public TbCalDto(int calNum, int groupNum, String calTitle, String calContent, String calTime, Date calDate) {
+	super();
+	this.calNum = calNum;
+	this.groupNum = groupNum;
+	this.calTitle = calTitle;
+	this.calContent = calContent;
+	this.calTime = calTime;
+	this.calDate = calDate;
+}
+
+
+
+public int getCalNum() {
      return calNum;
  }
 
