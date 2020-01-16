@@ -39,7 +39,7 @@ public class TbBoardServlet extends HttpServlet {
 		} else if(command.equals("boarddetail")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardnum"));
 			TbBoardDto dto = biz.selectOne(boardNum);
-			request.setAttribute("dto", dto);
+			request.setAttribute("board", dto);
 			dispatch("TbBoardDetail.jsp",request,response);
 		} else if(command.equals("boardwriteform")) {
 			response.sendRedirect("TbBoardWriteForm.jsp");
@@ -78,7 +78,7 @@ public class TbBoardServlet extends HttpServlet {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 			
 			TbBoardDto dto = biz.selectOne(boardNum);
-			request.setAttribute("dto", dto);
+			request.setAttribute("board", dto);
 			dispatch("TbBoardUpdateForm.jsp", request, response);
 		} else if(command.equals("boardupdateres")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
