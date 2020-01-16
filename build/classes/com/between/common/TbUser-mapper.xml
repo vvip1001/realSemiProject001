@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.between.common.mapper">
+	<resultMap type="TbUserDto" id="TbUserResultMap">
+		<result property="userId" column="USER_ID"/>
+		<result property="userPw" column="USER_PW"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="userGender" column="USER_GENDER"/>
+		<result property="userNick" column="USER_NICK"/>
+		<result property="userDob" column="USER_DOB"/>
+		<result property="userEmail" column="USER_EMAIL"/>
+		<result property="userDeact" column="USER_DEACT"/>
+	    <result property="userStatus" column="USER_STATUS"/>
+	    <result property="userDeactDate" column="USER_DEACT_DATE"/>
+	    <result property="userRegdate" column="USER_REGDATE"/>
+	    <result property="userFlagno" column="USER_FLAGNO"/>
+	    <result property="groupNum" column="GROUP_NUM"/>
+	    <result property="userAlbumPath" column="USER_ALBUM_PATH"/>
+	    <result property="userAlbumTitile" column="USER_ALBUM_TITILE"/>
+	</resultMap>
+
+	<select id="idChk" parameterType="String">
+	SELECT USER_ID  FROM TB_USER WHERE MYID  =#{userId}
+	</select>
+	
+	<select id="login" parameterType="map" resultMap="TbUserResultMap">
+	SELECT * FROM TB_USER WHERE USER_ID =#{userId} AND USER_PW=#{userPw} AND USER_DEACT= 'N'
+	</select>
+	
+ 	<insert id="insertJoin" parameterMap="TbUserResultMap">
+ 	INSERT INTO TB_USER
+    VALUES(#{userId},#{userPw},#{userName},#{userGender},#{userDob},#{userEmail})
+    </insert>
+ 	
+ 	<update id="updateJoin" parameterMap="TbUserResultMap">
+ 	UPDATE TB_USER SET USER_PW=#{userPw},USER_EMAIL=#{},USER_NICK=#{}
+ 	</update>
+ 	
+ 	
+ 	<delete id="delete" parameterType="String">
+ 	UPDATE TB_USER SET USER_DEACT = 'Y' 
+ 	WHERE USER_ID = #{userId}
+ 	</delete>
+ 	
+</mapper>
