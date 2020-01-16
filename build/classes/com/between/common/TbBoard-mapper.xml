@@ -46,6 +46,7 @@
 		'0',
 		null)
 	</insert>
+	
 	<update id="updateBoard" parameterType="TbBoardDto" >
 		UPDATE TB_BOARD SET
 		BOARD_TITLE = #{boardTitle},
