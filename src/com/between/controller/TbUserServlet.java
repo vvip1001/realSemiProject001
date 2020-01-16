@@ -47,6 +47,10 @@ public class TbUserServlet extends HttpServlet {
 			//회원가입 가야할 부분 링크 걸기 
 			response.sendRedirect("index.html");
 			
+		}else if(command.equals("main")) {
+			//취소했을때 로그인 하지 않은 메인으로 돌아가야 함 
+			response.sendRedirect("index.html");
+			
 		}else if(command.equals("loginres")) {
 			String userId = request.getParameter("userId");
 			String userPw = request.getParameter("userPw");
@@ -58,24 +62,35 @@ public class TbUserServlet extends HttpServlet {
 				HttpSession session =  request.getSession(true);
 				session.setAttribute("dto", dto);
 				//session.setMaxInactiveInterval(60*10);
-				if(dto.getUserStatus().equals("ADMIN")) {
-					responseAlert("어드민로그인", "loginafter.jsp", response);
-				}else if(dto.getUserStatus().equals("COUNSELOR")) {
-					responseAlert("상담사로그인", "loginafter.jsp", response);
-				}else if(dto.getUserStatus().equals("USER")) {
-					responseAlert("유저로그인", "loginafter.jsp", response);
-				}else {
-					response.sendRedirect("TbUser.do?command=login");
+				
 				}
-			}
+			response.sendRedirect("loginafter.jsp");
+			
 			
 			
 		}else if(command.equals("logout")) {
+			
 			//세션 만료 
-			//HttpSession session = request.getSession();
-			//session.invalidate();
+			HttpSession session = request.getSession();
+			session.invalidate();
+			responseAlert("로그아웃 되었습니다.", "index.html", response);
+			//response.sendRedirect("index.html");
 			
 		}else if(command.equals("mypage")) {
+			
+			
+			
+			HttpSession session = request.getSession();
+			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
+			System.out.println(loginDto.getUserEmail());
+			//각 등급별로 마이페이지 열리기 
+			if(loginDto.getUserStatus().equals("ADMIN")) {
+				responseAlert("어드민님의 마이페이지 입니다. 환영합니다.", "TbUserAdminMyPage.jsp", response);
+			}else if(loginDto.getUserStatus().equals("USER")) {
+				responseAlert("일반회원님의 마이페이지 입니다. 환영합니다.", "TbUserUserMyPage.jsp", response);
+			}else if(loginDto.getUserStatus().equals("COUNSELOR")) {
+				responseAlert("상담사님의 마이페이지 입니다.","TbUserCounselorMyPage.jsp", response);
+			}
 			
 		}
 		

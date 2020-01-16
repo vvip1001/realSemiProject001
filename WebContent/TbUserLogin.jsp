@@ -1,3 +1,8 @@
+<%
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Cache-control","no-store");
+	response.setHeader("Expires","0");
+%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8");%>
@@ -26,7 +31,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="로그인">
-					<input type="button" name="register"  value="회원가입" onclick="location.href='TbUser.do?command=registerform'" >
+					<input type="button" value="회원가입" onclick="location.href='TbUser.do?command=registerform'" >
 					<input type="button" value="취소" onclick="location.href='TbUser.do?command=main'" >
 				</td>
 			</tr>
