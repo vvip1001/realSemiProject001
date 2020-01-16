@@ -9,6 +9,7 @@
 	<typeAliases>
 		<typeAlias type="com.between.dto.TbCalDto" alias="TbCalDto"/>
 		<typeAlias type="com.between.dto.TbBoardDto" alias="TbBoardDto" />
+		<typeAlias type="com.between.dto.TbUserDto" alias="TbUserDto"/>
 	</typeAliases>
 
   <environments default="development">
@@ -25,6 +26,7 @@
   
   <mappers>
     <mapper resource="com/between/common/TbBoard-mapper.xml"/>
+    <mapper resource="com/between/common/TbUser-mapper.xml"/>
   </mappers>
   
 </configuration>

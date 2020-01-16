@@ -40,8 +40,18 @@ public class TbUserServlet extends HttpServlet {
 		TbUserBiz biz = new TbUserBizImpl();
 		
 		if(command.equals("login")) {
-			response.sendRedirect("login.jsp");
-	
+			response.sendRedirect("TbUserLogin.jsp");
+			
+
+		}else if(command.equals("registerform")) {
+			//회원가입 가야할 부분 링크 걸기 
+			response.sendRedirect("index.html");
+			
+		}else if(command.equals("main")) {
+			//로그인뒤 보이는 첫 메인 화면으로 링크를 걸어주자
+			response.sendRedirect("loginafter.jsp");
+			
+			
 		}else if(command.equals("loginres")) {
 			String userId = request.getParameter("userId");
 			String userPw = request.getParameter("userPw");

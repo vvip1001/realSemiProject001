@@ -17,17 +17,17 @@
 		<table border="1">
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="myid"></td>
+				<td><input type="text" name="userId"></td>
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="password" name="mypw"></td>
+				<td><input type="password" name="userPw"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="로그인">
-					<input type="button" name="register"  value="회원가입" onclick="" >
-					<input type="button" value="취소" onclick="TbUser.do?command=login" >
+					<input type="button" name="register"  value="회원가입" onclick="location.href='TbUser.do?command=registerform'" >
+					<input type="button" value="취소" onclick="location.href='TbUser.do?command=main'" >
 				</td>
 			</tr>
 			

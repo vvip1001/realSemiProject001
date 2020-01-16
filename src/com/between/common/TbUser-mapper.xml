@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.between.common.mapper">
+
 	<resultMap type="TbUserDto" id="TbUserResultMap">
 		<result property="userId" column="USER_ID"/>
 		<result property="userPw" column="USER_PW"/>
@@ -23,17 +24,17 @@
 	SELECT USER_ID  FROM TB_USER WHERE MYID  =#{userId}
 	</select>
 	
-	<select id="login" parameterType="map" resultMap="TbUserResultMap">
+	<select id="login" resultMap="TbUserResultMap">
 	SELECT * FROM TB_USER WHERE USER_ID =#{userId} AND USER_PW=#{userPw} AND USER_DEACT= 'N'
 	</select>
 	
- 	<insert id="insertJoin" parameterMap="TbUserResultMap">
+ 	<insert id="insertJoin" parameterType="TbUserDto">
  	INSERT INTO TB_USER
     VALUES(#{userId},#{userPw},#{userName},#{userGender},#{userDob},#{userEmail})
     </insert>
  	
- 	<update id="updateJoin" parameterMap="TbUserResultMap">
- 	UPDATE TB_USER SET USER_PW=#{userPw},USER_EMAIL=#{},USER_NICK=#{}
+ 	<update id="updateJoin" parameterType="TbUserDto">
+ 	UPDATE TB_USER SET USER_PW=#{userPw},USER_EMAIL=#{userEmail},USER_NICK=#{userNick}
  	</update>
  	
  	

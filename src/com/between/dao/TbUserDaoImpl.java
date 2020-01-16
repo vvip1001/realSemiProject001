@@ -14,17 +14,19 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 	@Override
 	public TbUserDto login(String userId, String userPw) {
 		SqlSession session = null; 
-		TbUserDto dto = null;
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userId", userId);
-		map.put("userPw", userPw);
+		TbUserDto dto = new TbUserDto();
+		
+		dto.setUserId(userId);
+		dto.setUserPw(userPw);
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			dto = session.selectOne(namespace+"login",map);
+			dto = session.selectOne(namespace+"login",dto);
 		} catch (Exception e) {
 			System.out.println("에러 login");
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 		
 		return dto;
