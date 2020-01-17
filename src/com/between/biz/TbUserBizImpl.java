@@ -1,7 +1,10 @@
 package com.between.biz;
 
+import java.util.List;
+
 import com.between.dao.TbUserDao;
 import com.between.dao.TbUserDaoImpl;
+import com.between.dto.TbBoardDto;
 import com.between.dto.TbUserDto;
 
 public class TbUserBizImpl implements TbUserBiz{
@@ -14,14 +17,43 @@ public class TbUserBizImpl implements TbUserBiz{
 			return dao.login(userId, userPw) ;
 		}
 
+	//회원정보수정
 	@Override
-	public int update(TbUserDto dto) {
-		return dao.update(dto);
+	public int userUpdate(TbUserDto dto) {
+		// TODO Auto-generated method stub
+		return dao.userUpdate(dto);
 	}
 
+	//회원탈퇴
 	@Override
-	public int delete(String userId) {
-		return dao.delete(userId);
+	public int userDelete(String userId) {
+		// TODO Auto-generated method stub
+		return dao.userDelete(userId);
 	}
+
+	//내 글목록 보기 
+	@Override
+	public List<TbBoardDto> userBoardList(String userId) {
+		// TODO Auto-generated method stub
+		return dao.userBoardList(userId);
+	}
+	
+	
+	//내 글 상세보기 
+	@Override
+	public TbBoardDto userBoardSelectOne(int boardNum) {
+		// TODO Auto-generated method stub
+		return dao.userBoardSelectOne(boardNum);
+	}
+
+	//내글 수정하기 
+	@Override
+	public int userBoardUpdate(TbBoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.userBoardUpdate(dto);
+	}
+
+
+	
 
 }

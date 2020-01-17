@@ -2,6 +2,8 @@ package com.between.controller;
 import static com.between.controller.ServletUtil.*; 
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.between.biz.TbUserBiz;
 import com.between.biz.TbUserBizImpl;
+import com.between.dto.TbBoardDto;
 import com.between.dto.TbUserDto;
 
 
@@ -80,7 +83,8 @@ public class TbUserServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
-			System.out.println(loginDto.getUserEmail());
+			
+			//System.out.println(loginDto.getUserEmail());
 			//각 등급별로 마이페이지 열리기 
 			if(loginDto.getUserStatus().equals("ADMIN")) {
 				responseAlert("어드민님의 마이페이지 입니다. 환영합니다.", "TbUserAdminMyPage.jsp", response);
@@ -89,6 +93,33 @@ public class TbUserServlet extends HttpServlet {
 			}else if(loginDto.getUserStatus().equals("COUNSELOR")) {
 				responseAlert("상담사님의 마이페이지 입니다.","TbUserCounselorMyPage.jsp", response);
 			}
+			
+		}else if(command.equals("userupdateform")){
+			response.sendRedirect("TbUserUserUpdateForm.jsp");
+			
+		}else if(command.equals("userupdateformres")) {
+			response.sendRedirect("TbUser.do?command=mypage");
+		
+		}else if(command.equals("userboardlist")) {
+			
+			//문제해결 : jsp파일에서 입력된 값 넘길때 form밖에 없나 ? 
+			String equserPw = request.getParameter("equserPw");
+			HttpSession session = request.getSession();
+			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
+			System.out.println(equserPw);
+			
+			if(equserPw.equals(loginDto.getUserPw())) {
+				
+				String userId = request.getParameter("userId");
+				
+				List<TbBoardDto> list = biz.userBoardList(userId);
+				request.setAttribute("list", list);
+				dispatch("TbUserboardList.jsp", request, response);
+					
+			}else {
+				responseAlert("비밀번호를 제대로 입력하세요 ", "TbUser.do?command=mypage", response);
+			}
+			
 			
 		}
 		
