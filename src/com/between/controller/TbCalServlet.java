@@ -45,7 +45,7 @@ public class TbCalServlet extends HttpServlet {
 			
 			request.setAttribute("groupDto", groupDto);
 			
-			dispatch("Calendar.jsp", request, response);
+			dispatch("TbCalendar.jsp", request, response);
 			
 		} else if(command.equals("insertCalEvent")) {
 			String year = request.getParameter("year");
