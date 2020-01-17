@@ -81,22 +81,55 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		return res;
 	}
-
 	@Override
-	public int deleteBoard(int boardNum) {
-		//글삭제 (쿼리는 UPDATE)
+	public int checkGroupBoard(int boardNum) {
+		//글삭제 하기 전 그룹작성글이 있는지 확인
 		SqlSession session = null;
 		int res = 0;
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"deleteBoard",boardNum);
+			res = session.selectOne(namespace+"checkGroupBoard",boardNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
 		
+		return res;
+	}
+
+	@Override
+	public int updateBoardCheck(int boardNum) {
+		//글삭제 (쿼리는 UPDATE)
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"updateBoardCheck",boardNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int deleteBoard(int boardNum) {
+		//글삭제 
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.delete(namespace+"deleteBoard",boardNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 		return res;
 	}
 
@@ -135,5 +168,6 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		return res;
 	}
+
 
 }

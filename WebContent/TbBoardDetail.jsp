@@ -63,7 +63,7 @@
 				</td>
 				<td colspan="2" align="right" id=<%=(board.getUserId().equals(userInfo.getUserId())) ? "":"hideButton" %> >
 					<input type="submit" value="수정"/>
-					<input type="button" value="삭제" onclick="location.href='TbBoard.do?command=boarddelete'"/>
+					<input type="button" value="삭제" onclick="location.href='TbBoard.do?command=boarddelete&boardNum=<%=board.getBoardNum()%>'"/>
 				</td>
 			</tr>
 		</table>

@@ -68,7 +68,7 @@ public class TbBoardServlet extends HttpServlet {
 			
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 			
-			int res = biz.deleteBoard(boardNum);
+			int res = biz.checkBoardDelete(boardNum);
 			
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boardlist");

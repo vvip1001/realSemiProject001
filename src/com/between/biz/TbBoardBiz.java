@@ -12,5 +12,6 @@ public interface TbBoardBiz {
 	public int updateBoard(TbBoardDto dto);
 	public int deleteBoard(int boardNum);
 	
+	public int checkBoardDelete(int boardNum);
 	public int answerProc(TbBoardDto dto);
 }

@@ -34,6 +34,18 @@ public class TbBoardBizImpl implements TbBoardBiz{
 	public int deleteBoard(int boardNum) {
 		return dao.deleteBoard(boardNum);
 	}
+	public int checkBoardDelete(int boardNum) {
+		int count = dao.checkGroupBoard(boardNum);
+		int res = 0;
+		
+		if(count == 1) {
+			res = dao.deleteBoard(boardNum);
+		} else {
+			res = dao.updateBoardCheck(boardNum);
+		}
+		
+		return res;
+	}
 
 	@Override
 	public int answerProc(TbBoardDto dto) {

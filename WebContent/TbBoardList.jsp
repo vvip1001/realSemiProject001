@@ -45,6 +45,11 @@
 					<c:forEach items="${list }" var="dto" >
 						<tr>
 							<td align="center" >${dto.boardNum }</td>
+							<c:choose>
+							<c:when test="${dto.boardDeleteCheck =='Y' }">
+								<td colspan="4" align="center" class="delete">삭제된 글입니다.</td>
+							</c:when>
+							<c:otherwise>
 							<td>
 								<c:forEach begin="1" end="${dto.boardTab }" >
 								 &nbsp;
@@ -53,6 +58,8 @@
 							</td>
 							<td align="center">${dto.boardGender }</td>
 							<td align="center">${dto.boardDate }</td>
+						</c:otherwise>
+						</c:choose>
 						</tr>
 					</c:forEach>
 				</c:otherwise>
