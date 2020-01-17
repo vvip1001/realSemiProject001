@@ -13,6 +13,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.countview, .arrows a{
+		text-decoration: none;
+	}
+	
+</style>
 </head>
 <body>
 	
@@ -61,11 +67,12 @@
 	
 	//달력 일정 (dao)biz
 	
+	
 %>
 	<h1><%=groupDto.getUserId() %>와<%=groupDto.getPartnerId() %> Calendar</h1>
 
-	<table id="calendar" border="1">
-		<caption>
+	<table id="calendar">
+		<caption class="arrows">
 			<a href="Calendar.jsp?year=<%=year-1%>&month=<%=month%>">◀︎◀︎</a> 
 			<a href="Calendar.jsp?year=<%=year%>&month=<%=month-1%>">◁</a> 
 			<span class="y"><%=year %></span>년 <span class="m"><%=month %></span>월 
@@ -94,7 +101,7 @@
 				href="TbCal.do?command=callist&year=<%=year%>&month=<%=month%>&date=<%=i%>"
 				style="color: <%=biz.fontColor(i, dayOfWeek)%>"><%=i%> </a> <a
 				href="insertCal.jsp?year=<%=year%>&month=<%=month%>&date=<%=i%>&lastday=<%=lastDay%>">
-					<img alt="일정추가" src="img/pen.png"
+					<img alt="일정추가" src="images/heart.png"
 					style="width: 10px; height: 10px;" />
 			</a>
 
