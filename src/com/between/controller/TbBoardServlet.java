@@ -9,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.between.biz.TbBoardBiz;
 import com.between.biz.TbBoardBizImpl;
 import com.between.dto.TbBoardDto;
+import com.between.dto.TbUserDto;
 
 import static com.between.controller.ServletUtil.*;
 
@@ -48,11 +50,18 @@ public class TbBoardServlet extends HttpServlet {
 			String userId = request.getParameter("userId");
 			String boardTitle = request.getParameter("boardTitle");
 			String boardContent = request.getParameter("boardContent");
+			HttpSession session = request.getSession();
+			TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
+			
+			
 			
 			TbBoardDto dto = new TbBoardDto();
 			dto.setUserId(userId);
 			dto.setBoardTitle(boardTitle);
 			dto.setBoardContent(boardContent);
+			dto.setBoardGender(userInfo.getUserGender());
+			dto.setBoardType(checkStatus(userInfo.getUserStatus()));
+			
 			
 			int res = biz.insertBoard(dto);
 			
@@ -105,6 +114,18 @@ public class TbBoardServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=utf-8");
 		doGet(request, response);
+	}
+	public String checkStatus(String userStatus) {
+		
+		String boardType ;
+		
+		if(userStatus.equals("ADMIN")) {
+			boardType = "NOTICE";
+		} else {
+			boardType= "NORMAL";
+		}
+		
+		return boardType;
 	}
 	
 }
