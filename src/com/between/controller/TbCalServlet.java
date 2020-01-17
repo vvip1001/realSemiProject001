@@ -30,14 +30,18 @@ public class TbCalServlet extends HttpServlet {
 		TbCalBiz biz = new TbCalBizImpl();
 		
 		
-		
 		String command = request.getParameter("command");
 		
 		if(command.equals("calendar")) {
 			HttpSession session = request.getSession();
-			TbUserDto userInfo = (TbUserDto)session.getAttribute("userInfo");
+			TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
+			
+			System.out.println(userInfo.getGroupNum());
 			
 			TbGroupDto groupDto = biz.findPartner(userInfo.getGroupNum());
+			
+			System.out.println(groupDto.getPartnerId());
+			
 			
 			request.setAttribute("groupDto", groupDto);
 			

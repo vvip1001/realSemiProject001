@@ -78,8 +78,6 @@ public class TbUserServlet extends HttpServlet {
 			
 		}else if(command.equals("mypage")) {
 			
-			
-			
 			HttpSession session = request.getSession();
 			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
 			System.out.println(loginDto.getUserEmail());
