@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.TbBoardDto"%>
 <%@page import="com.between.dto.TbUserDto"%>
 <%
 	response.setHeader("Pragma","no-cache");
@@ -28,6 +29,7 @@
 <body>
 <%
 	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
+	TbBoardDto board = (TbBoardDto)request.getAttribute("board");
 
 	if(userInfo==null){
 		pageContext.forward("index.jsp");
@@ -44,22 +46,22 @@
 		<table>
 			<tr>
 				<th>작성자</th>
-				<td>${board.boardGender }</td>
+				<td><%=board.getBoardGender() %></td>
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td>${board.boardTitle }</td>
+				<td><%=board.getBoardTitle() %></td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="15" cols="30" readonly="readonly" >${board.boardContent }</textarea>
+				<td><textarea rows="15" cols="30" readonly="readonly" ><%=board.getBoardContent() %></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<input type="button" value="답글작성" onclick="location.href='TbBoard.do?command=boardanswer'"/>
 				</td>
-				<td colspan="2" align="right" id=${board.userId==dto.userId ? "":"hideButton" } >
+				<td colspan="2" align="right" id=<%=(board.getUserId().equals(userInfo.getUserId())) ? "":"hideButton" %> >
 					<input type="submit" value="수정"/>
 					<input type="button" value="삭제" onclick="location.href='TbBoard.do?command=boarddelete'"/>
 				</td>

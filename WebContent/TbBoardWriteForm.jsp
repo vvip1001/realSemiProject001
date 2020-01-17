@@ -29,7 +29,7 @@
 	<div>
 	<form action="TbBoard.do" method="post" >
 	<input type="hidden" name="command" value="boardwriteres"/>
-	<input type="hidden" name="userId" value="${userInfo.userId } }" />
+	<input type="hidden" name="userId" value="<%=userInfo.getUserId() %>" />
 	<fieldset>
 		<table>
 			<tr>
