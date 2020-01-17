@@ -51,9 +51,11 @@ public class TbBoardBizImpl implements TbBoardBiz{
 	public int answerProc(TbBoardDto dto) {
 		
 		int update = dao.updateAnswer(dto.getBoardNum());
+		System.out.println("UPDATE : "+update);
 		int insert = dao.insertAnswer(dto);
+		System.out.println("INSERT : "+insert);
 		
-		return update+insert;
+		return insert;
 	}
 
 }

@@ -58,14 +58,43 @@
 		WHERE BOARD_NUM = #{boardNum}
 	</update>
 	
+	<update id="updateBoardCheck" parameterType="int" >
+		UPDATE TB_BOARD SET
+		BOARD_DELETE_CHECK = 'Y'
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+	
 	<delete id="deleteBoard">
 		DELETE TB_BOARD
 		WHERE BOARD_NUM = #{boardNum}
+		//그룹 넘으로 지우자
 	</delete>
 	
-	<update id="updateAnswer" parameterType="tbBOardDto">
-		
+	<update id="updateAnswer" parameterType="TbBoardDto">
+		UPDATE TB_BOARD
+		SET BOARD_GROUP_ORDER = BOARD_GROUP_ORDER + 1
+		WHERE BOARD_GROUP_NUM = (SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum)
+		AND BOARD_GROUP_ORDER > (SELECT BOARD_GROUP_ORDER FROM TB_BOARD WHERE BOARD_NUM = #{boardNum})
 	</update>
+	
+	<insert id="insertAnswer" parameterType="TbBoardDto" >
+		INSERT INTO TB_BOARD VALUES(
+		#{userId},
+		#{boardGender},
+		TB_BOARD_SEQ.NEXTVAL,
+		(SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}),
+		(SELECT BOARD_GROUP_ORDER + 1 FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}),
+		(SELECT BOARD_TAB + 1 FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}),
+		'N',
+		#{boardTitle},
+		#{boardContent},
+		'0',
+		SYSDATE,
+		#{boardType},
+		'0',
+		null)
+	</insert>
+		
 
 
 </mapper>
