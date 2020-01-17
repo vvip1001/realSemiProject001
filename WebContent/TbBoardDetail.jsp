@@ -59,7 +59,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="button" value="답글작성" onclick="location.href='TbBoard.do?command=boardanswer'"/>
+					<input type="button" value="답글작성" onclick="location.href='TbBoard.do?command=boardanswer&boardNum=<%=board.getBoardNum()%>'"/>
 				</td>
 				<td colspan="2" align="right" id=<%=(board.getUserId().equals(userInfo.getUserId())) ? "":"hideButton" %> >
 					<input type="submit" value="수정"/>

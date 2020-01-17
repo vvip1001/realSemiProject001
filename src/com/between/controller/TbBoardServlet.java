@@ -46,14 +46,11 @@ public class TbBoardServlet extends HttpServlet {
 		} else if(command.equals("boardwriteform")) {
 			response.sendRedirect("TbBoardWriteForm.jsp");
 		} else if(command.equals("boardwriteres")) {
-			
 			String userId = request.getParameter("userId");
 			String boardTitle = request.getParameter("boardTitle");
 			String boardContent = request.getParameter("boardContent");
 			HttpSession session = request.getSession();
 			TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
-			
-			
 			
 			TbBoardDto dto = new TbBoardDto();
 			dto.setUserId(userId);
@@ -61,16 +58,12 @@ public class TbBoardServlet extends HttpServlet {
 			dto.setBoardContent(boardContent);
 			dto.setBoardGender(userInfo.getUserGender());
 			dto.setBoardType(checkStatus(userInfo.getUserStatus()));
-			
-			
 			int res = biz.insertBoard(dto);
-			
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boardlist");
 			} else {
 				responseAlert("fail", "index.html", response);
 			} 
-			
 		} else if(command.equals("boarddelete")) {
 			
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
@@ -83,9 +76,7 @@ public class TbBoardServlet extends HttpServlet {
 				responseAlert("fail", "index.html", response);
 			} 
 		} else if(command.equals("boardupdate")) {
-			
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
-			
 			TbBoardDto dto = biz.selectOne(boardNum);
 			request.setAttribute("board", dto);
 			dispatch("TbBoardUpdateForm.jsp", request, response);
@@ -106,6 +97,25 @@ public class TbBoardServlet extends HttpServlet {
 			} else {
 				responseAlert("fail", "index.html", response);
 			} 
+		} else if(command.equals("boardanswer")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			TbBoardDto board = biz.selectOne(boardNum);
+			request.setAttribute("board", board);
+			dispatch("TbBoardAnswerForm.jsp", request, response);
+		} else if(command.equals("boardanswerres")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			String boardTitle = request.getParameter("boardTitle");
+			String boardContent = request.getParameter("boardConent");
+			String userId = request.getParameter("userId");
+			
+			TbBoardDto dto = new TbBoardDto();
+			dto.setBoardNum(boardNum);
+			dto.setBoardTitle(boardTitle);
+			dto.setBoardContent(boardContent);
+			dto.setUserId(userId);
+			
+			int res = biz.answerProc(dto);
+			
 		}
 	}
 
