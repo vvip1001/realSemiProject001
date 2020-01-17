@@ -33,5 +33,15 @@
   	<url-pattern>/TbUser.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>registController</servlet-name>
+  <servlet-class>com.between.controller.TbRegistServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>registController</servlet-name>
+  	<url-pattern>/TbRegist.do</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>

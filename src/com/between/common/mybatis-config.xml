@@ -29,6 +29,7 @@
     <mapper resource="com/between/common/TbCal-mapper.xml"/>
     <mapper resource="com/between/common/TbBoard-mapper.xml"/>
     <mapper resource="com/between/common/TbUser-mapper.xml"/>
+    <mapper resource="com/between/common/regist-mapper.xml"/>
   </mappers>
   
 </configuration>
