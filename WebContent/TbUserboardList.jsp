@@ -15,10 +15,22 @@
 <body>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<% TbUserDto dto = (TbUserDto) session.getAttribute("dto");%>
+<% TbUserDto dto = (TbUserDto) session.getAttribute("dto");
+	
+%>
 
 <h1><%=dto.getUserId() %>내글 목록보기</h1>
 
+	<div align="right">
+		<form action="TbUser.do" method="post">
+			<input type="hidden" name="command" value="search">
+			<input type="hidden" name="userId" value="<%=dto.getUserId()%>">
+			<input type="text" name="boardTitle">
+			<input type="submit" value="검색">
+			<input type="button" value="모든 글 보기 " onclick="location.href='TbUser.do?command=mylist&userId=<%=dto.getUserId()%>'">
+		</form>	
+	</div>
+	
 	<div>
 	<fieldset>
 		<table>
@@ -46,7 +58,7 @@
 								<c:forEach begin="1" end="${list.boardTab }" >
 								 &nbsp;
 								</c:forEach>
-								<a href="TbBoard.do?command=boarddetail&boardnum=${list.boardNum }" >${list.boardTitle }</a>
+								<a href="TbUser.do?command=userboarddetail&boardNum=${list.boardNum }" >${list.boardTitle }</a>
 							</td>
 							<td align="center">${list.boardGender }</td>
 							<td align="center">${list.boardDate }</td>
@@ -56,8 +68,9 @@
 			</c:choose>
 			<tr>
 				<td colspan="4" align="right" >
-					<input type="button" value="글수정" onclick="location.href='TbBoard.do?command=userboardupdateform'"/>
+					<input type="button" value="글수정" onclick="location.href='TbUser.do?command=userboardupdateform'"/>
 					<input type="button" value="글삭제" onclick="">
+					<input type="button" value="마이페이지로" onclick="location.href='TbUser.do?command=mypage&logindto1=<%=dto.getUserStatus()%>'">
 				</td>
 			</tr>
 		</table>

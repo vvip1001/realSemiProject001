@@ -38,6 +38,10 @@
 	</resultMap>
 	
 	
+	
+	
+	
+	
 
 	<select id="idChk" parameterType="String">
 	SELECT USER_ID  FROM TB_USER WHERE MYID  =#{userId}
@@ -62,6 +66,14 @@
  	WHERE USER_ID = #{userId}
  	</delete>
  	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
  	<select id="userBoardList" parameterType="String" resultMap="TbBoardResultMap">
 	SELECT * FROM TB_BOARD WHERE USER_ID = #{userId}
 	</select>
@@ -71,12 +83,28 @@
 	FROM TB_BOARD WHERE BOARD_NUM = #{boardNum} 
 	</select>
 	
-	<update id="userBoardUpdate" parameterType="TbBoardDto" >
+		
+ 	<select id="userBoardSearch" parameterType="map" resultMap="TbBoardResultMap">
+ 	SELECT * FROM TB_BOARD 
+ 	WHERE UPPER(BOARD_TITLE) LIKE '%' || UPPER(#{boardTitle}) || '%' AND USER_ID = #{userId}
+ 	</select>
+ 	
+	
+	<update id="userBoardUpdate" parameterType="TbBoardDto"  >
 		UPDATE TB_BOARD SET
 		BOARD_TITLE = #{boardTitle},
 		BOARD_CONTENT = #{boardContent}
 		WHERE BOARD_NUM = #{boardNum}
 	</update>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 
+ 	
+ 	
  	
  	
 </mapper>

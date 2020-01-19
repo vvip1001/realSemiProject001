@@ -53,6 +53,13 @@ public class TbUserBizImpl implements TbUserBiz{
 		return dao.userBoardUpdate(dto);
 	}
 
+	//내글 목록 찾기 
+	@Override
+	public List<TbBoardDto> userBoardSearch(String boardTitle, String userId) {
+		
+		return dao.userBoardSearch(boardTitle, userId);
+	}
+
 
 	
 

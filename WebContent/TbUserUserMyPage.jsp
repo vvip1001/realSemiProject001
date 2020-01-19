@@ -40,7 +40,7 @@
 		<input type="hidden" name="command" value="userboardlist">
 		<input type="hidden" name="userId" value="<%=dto.getUserId()%>">
 			<h1>내글보기</h1>
-			<input type="text" name = "equserPw">
+			<input type="password" name = "equserPw">
 			<input type="submit" value="비밀번호">
 		</form>
 

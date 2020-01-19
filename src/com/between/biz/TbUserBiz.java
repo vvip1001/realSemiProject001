@@ -29,5 +29,8 @@ public interface TbUserBiz {
 		
 		//회원 글 수정하기 
 		public int userBoardUpdate(TbBoardDto dto);
+		
+		//회원 글 찾기 
+		public List<TbBoardDto> userBoardSearch(String boardTitle, String userId);
 
 }

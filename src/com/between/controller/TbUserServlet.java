@@ -2,6 +2,7 @@ package com.between.controller;
 import static com.between.controller.ServletUtil.*; 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -47,8 +48,8 @@ public class TbUserServlet extends HttpServlet {
 			
 
 		}else if(command.equals("registerform")) {
-			//회원가입 가야할 부분 링크 걸기 
-			response.sendRedirect("index.html");
+			 
+			response.sendRedirect("RegistForm.jsp");
 			
 		}else if(command.equals("main")) {
 			//취소했을때 로그인 하지 않은 메인으로 돌아가야 함 
@@ -84,15 +85,20 @@ public class TbUserServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
 			
+			//내글 목록 보기에서 마이페이지로 다시 넘어올 때
+			String logindto1 = request.getParameter("logindto1");
+			
 			//System.out.println(loginDto.getUserEmail());
 			//각 등급별로 마이페이지 열리기 
 			if(loginDto.getUserStatus().equals("ADMIN")) {
 				responseAlert("어드민님의 마이페이지 입니다. 환영합니다.", "TbUserAdminMyPage.jsp", response);
-			}else if(loginDto.getUserStatus().equals("USER")) {
+			}else if(loginDto.getUserStatus().equals("USER") || loginDto.getUserStatus().equals("logindto1")  ) {
 				responseAlert("일반회원님의 마이페이지 입니다. 환영합니다.", "TbUserUserMyPage.jsp", response);
 			}else if(loginDto.getUserStatus().equals("COUNSELOR")) {
 				responseAlert("상담사님의 마이페이지 입니다.","TbUserCounselorMyPage.jsp", response);
 			}
+			
+			
 			
 		}else if(command.equals("userupdateform")){
 			response.sendRedirect("TbUserUserUpdateForm.jsp");
@@ -106,7 +112,7 @@ public class TbUserServlet extends HttpServlet {
 			String equserPw = request.getParameter("equserPw");
 			HttpSession session = request.getSession();
 			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
-			System.out.println(equserPw);
+			//System.out.println(equserPw);
 			
 			if(equserPw.equals(loginDto.getUserPw())) {
 				
@@ -120,6 +126,77 @@ public class TbUserServlet extends HttpServlet {
 				responseAlert("비밀번호를 제대로 입력하세요 ", "TbUser.do?command=mypage", response);
 			}
 			
+			
+		}else if(command.equals("search")) {
+			
+			String userId = request.getParameter("userId");
+			String boardTitle = request.getParameter("boardTitle");
+			
+			/*
+			List<TbBoardDto> list = biz.userBoardSearch(boardTitle, userId);
+			request.setAttribute("list", list);
+			dispatch("TbUserboardList.jsp", request, response);
+			*/
+			
+			List<TbBoardDto> list = new ArrayList<TbBoardDto>();
+			list = biz.userBoardSearch(boardTitle, userId);
+			
+			request.setAttribute("list", list);
+			
+			for(TbBoardDto bTitle : list) {
+				System.out.println("가지고 있는 자료"+bTitle+"검색하려는 글"+boardTitle);
+				if(bTitle.getBoardTitle().contains(boardTitle)) {
+					System.out.println("가지고 있는 자료"+bTitle+"검색하려는 글"+boardTitle);
+					dispatch("TbUserboardList.jsp", request, response);	
+					
+				}else {
+					//이부분 실행이 안됨 ㅠㅠ 
+					responseAlert("검색하신 단어와 일치하는 제목이 없습니다", "TbUserboardList.jsp", response);
+				}
+			}
+			
+		}else if(command.equals("userboarddetail")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			TbBoardDto board = biz.userBoardSelectOne(boardNum);
+			request.setAttribute("board", board);
+			dispatch("TbUserUserBoardDetail.jsp", request, response);
+			
+		}else if(command.equals("userboardupdate")) {	
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			TbBoardDto board = biz.userBoardSelectOne(boardNum);
+			request.setAttribute("board", board);
+			dispatch("TbUserBoardUpdateForm.jsp", request, response);
+			//response.sendRedirect("TbUserBoardUpdateForm.jsp");
+		
+		}else if(command.equals("userboardupdateres")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			String boardTitle = request.getParameter("boardTitle");
+			String boardContent = request.getParameter("boardContent");
+			
+			TbBoardDto dto = new TbBoardDto();
+			dto.setBoardNum(boardNum);
+			dto.setBoardTitle(boardTitle);
+			dto.setBoardContent(boardContent);
+			System.out.println(dto);
+			int res = biz.userBoardUpdate(dto);
+			
+			if(res >0 ) {
+				String userId = request.getParameter("userId");
+				request.setAttribute("userId", userId);
+				dispatch("TbUser.do?command=mylist", request, response);
+			}else {
+				//아래문구 실행 안됨 
+				responseAlert("글수정 실패 다시작성해주세요", "TbUser.do?command=userboardupdate", response);
+			}
+			
+		}else if(command.equals("mylist")) {
+		
+			String userId = request.getParameter("userId");
+			System.out.println(userId);
+			List<TbBoardDto> list = biz.userBoardList(userId);
+			
+			request.setAttribute("list", list);
+			dispatch("TbUserboardList.jsp", request, response);
 			
 		}
 		

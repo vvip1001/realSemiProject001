@@ -74,7 +74,7 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		return res; 
 	}
 
-	//유저 글 목록 보기 
+	//내 글 목록 보기 
 	@Override
 	public List<TbBoardDto> userBoardList(String userId) {
 		
@@ -85,7 +85,7 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 			session = getSqlSessionFactory().openSession(true);
 			list = session.selectList(usernamespace+"userBoardList",userId);
 		} catch (Exception e) {
-			System.out.println("에러 selectlist ");
+			System.out.println("에러 userBoardList ");
 			e.printStackTrace();
 		}finally {
 			session.close();
@@ -97,7 +97,7 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 	
 	
 
-	//유저 글 상세보기 
+	//내 글 상세보기 
 	@Override
 	public TbBoardDto userBoardSelectOne(int boardNum) {
 		
@@ -106,19 +106,21 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			dto = session.selectOne(usernamespace+"userBoardSelectOne",dto);
+			dto = session.selectOne(usernamespace+"userBoardSelectOne",boardNum);
 		} catch (Exception e) {
 			System.out.println("에러 유저의 글하나 보기 ");
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 		
 		
-		return null;
+		return dto;
 	}
 	
 	
 		
-	//유저 글 수정  
+	//내 글 수정  
 	@Override
 	public int userBoardUpdate(TbBoardDto dto) {
 		SqlSession session = null; 
@@ -133,6 +135,30 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		}
 		
 		return res;
+	}
+
+	//내 글 목록 찾기 
+	@Override
+	public List<TbBoardDto> userBoardSearch(String boardTitle, String userId) {
+		SqlSession session = null; 
+		List<TbBoardDto> list = null; 
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("boardTitle", boardTitle);
+		map.put("userId", userId);
+		
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			list = session.selectList(usernamespace+"userBoardSearch",map);
+			
+		} catch (Exception e) {
+			System.out.println("글검색 에러");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return list;
 	}
 
 
