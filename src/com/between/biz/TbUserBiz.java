@@ -33,4 +33,10 @@ public interface TbUserBiz {
 		//회원 글 찾기 
 		public List<TbBoardDto> userBoardSearch(String boardTitle, String userId);
 
+		//회원 글 삭제하기 multi
+		public int userBoardMultiDelete(String[] boardNum);
+		//단일삭제 
+		public int userBoardDelete(int boardNum);
+
+
 }

@@ -65,7 +65,7 @@
 				<td colspan="2" align="right"  >
 					<input type="submit" value="수정완료"/>
 					<input type="button" value="삭제" onclick=""/>
-					<input type="button" value="목록" onclick=""/>
+					<input type="button" value="목록" onclick="location.href='command=mylist&userId=<%=userDto.getUserId() %>'"/>
 				</td>
 			</tr>
 		</table>

@@ -60,7 +60,7 @@
 			<tr>
 				<td colspan="2" align="right"  >
 					<input type="submit" value="수정"/>
-					<input type="button" value="삭제" onclick=""/>
+					<input type="button" value="삭제" onclick="TbUser.do?command=userboarddeleteone&boardNum=<%=board.getBoardNum() %>"/>
 				</td>
 			</tr>
 		</table>

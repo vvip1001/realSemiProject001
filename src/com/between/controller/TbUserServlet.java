@@ -2,6 +2,7 @@ package com.between.controller;
 import static com.between.controller.ServletUtil.*; 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,9 +145,9 @@ public class TbUserServlet extends HttpServlet {
 			request.setAttribute("list", list);
 			
 			for(TbBoardDto bTitle : list) {
-				System.out.println("가지고 있는 자료"+bTitle+"검색하려는 글"+boardTitle);
+				//System.out.println("가지고 있는 자료"+bTitle+"검색하려는 글"+boardTitle);
 				if(bTitle.getBoardTitle().contains(boardTitle)) {
-					System.out.println("가지고 있는 자료"+bTitle+"검색하려는 글"+boardTitle);
+					//System.out.println("가지고 있는 자료"+bTitle+"검색하려는 글"+boardTitle);
 					dispatch("TbUserboardList.jsp", request, response);	
 					
 				}else {
@@ -177,7 +178,7 @@ public class TbUserServlet extends HttpServlet {
 			dto.setBoardNum(boardNum);
 			dto.setBoardTitle(boardTitle);
 			dto.setBoardContent(boardContent);
-			System.out.println(dto);
+			//System.out.println(dto);
 			int res = biz.userBoardUpdate(dto);
 			
 			if(res >0 ) {
@@ -190,14 +191,50 @@ public class TbUserServlet extends HttpServlet {
 			}
 			
 		}else if(command.equals("mylist")) {
-		
-			String userId = request.getParameter("userId");
-			System.out.println(userId);
+			//에러문제 자꾸만 null이 뜸 
+			//String userId = request.getParameter("userId");
+			//System.out.println("나의 글 목록 보기 "+userId);
+			HttpSession session = request.getSession();
+			String userId = (String)session.getAttribute("userId");
+			
 			List<TbBoardDto> list = biz.userBoardList(userId);
 			
 			request.setAttribute("list", list);
 			dispatch("TbUserboardList.jsp", request, response);
 			
+		}else if(command.equals("muldel")) {
+						
+			String userId = request.getParameter("userId");
+			System.out.println("멀티딜리트"+userId);
+			
+			String[] boardNum = request.getParameterValues("chk");
+			if(boardNum == null || boardNum.length == 0) {
+				responseAlert("적어도 하나 이상 체크해 주세요", "TbUser.do?command=mylist", response);
+		   }else {
+			   int res = biz.userBoardMultiDelete(boardNum);
+			   if(res>0) {
+				   responseAlert("삭제 성공", "TbUser.do?command=mylist", response);
+				   		   
+			   }else {
+				   responseAlert("삭제실패하였습니다", "TbUser.do?command=mylist", response);
+
+			   }
+		   }
+		
+		
+		 
+		}else if(command.equals("userboarddeleteone")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			int res = biz.userBoardDelete(boardNum);
+			
+			if(res>0) {
+				responseAlert("글을 삭제하였습니다", "TbUser.do?command=mylist", response);
+
+			}else {
+				responseAlert("삭제 실패하였습니다", "TbUser.do?command=userboarddetail&boardNum=<%=boardNum%>", response);
+			
+			}
+	
 		}
 		
 		

@@ -84,6 +84,7 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		try {
 			session = getSqlSessionFactory().openSession(true);
 			list = session.selectList(usernamespace+"userBoardList",userId);
+			System.out.println("여기는 보드리스트 "+list);
 		} catch (Exception e) {
 			System.out.println("에러 userBoardList ");
 			e.printStackTrace();
@@ -159,6 +160,50 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		}
 		
 		return list;
+	}
+
+	//내글 다중 삭제
+	@Override
+	public int userBoardMultiDelete(String[] boardNum) {
+		SqlSession session = null; 
+		int res = 0; 
+		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("boardNums", boardNum);
+		
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			res = session.delete(usernamespace+"userBoardMultiDelete",map);
+			if(res == boardNum.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			System.out.println("에러 다중 삭제에서 ....");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
+	}
+
+	//내글 하나만 삭제
+	@Override
+	public int userBoardDelete(int boardNum) {
+		SqlSession session = null; 
+		int res =0; 
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.delete(usernamespace+"userBoardDelete",boardNum);
+		} catch (Exception e) {
+			System.out.println("에러 단일 삭제 ....");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 

@@ -60,6 +60,18 @@ public class TbUserBizImpl implements TbUserBiz{
 		return dao.userBoardSearch(boardTitle, userId);
 	}
 
+	@Override
+	public int userBoardMultiDelete(String[] boardNum) {
+		// TODO Auto-generated method stub
+		return dao.userBoardMultiDelete(boardNum);
+	}
+
+	@Override
+	public int userBoardDelete(int boardNum) {
+		// TODO Auto-generated method stub
+		return dao.userBoardDelete(boardNum);
+	}
+
 
 	
 
