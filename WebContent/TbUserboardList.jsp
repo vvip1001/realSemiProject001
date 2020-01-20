@@ -19,9 +19,9 @@
 
 <% TbUserDto dto = (TbUserDto) session.getAttribute("dto");
 	
-	String userId = request.getParameter("userId");
-	TbUserBiz biz = new TbUserBizImpl();
-	List<TbBoardDto> list = biz.userBoardList(userId);
+	
+	List<TbBoardDto> list = (List<TbBoardDto>)request.getAttribute("list");
+	
 	
 %>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -125,7 +125,6 @@
 %>			
 			<tr>
 				<td colspan="5" align="right" >
-					<input type="button" value="글수정" onclick="location.href='TbUser.do?command=userboardupdateform'"/>
 					<input type="submit" value="글삭제">
 					<input type="button" value="마이페이지로" onclick="location.href='TbUser.do?command=mypage&logindto1=<%=dto.getUserStatus()%>'">
 				</td>

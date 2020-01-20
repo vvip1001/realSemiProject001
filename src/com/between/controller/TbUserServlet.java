@@ -67,7 +67,6 @@ public class TbUserServlet extends HttpServlet {
 				HttpSession session =  request.getSession(true);
 				session.setAttribute("dto", dto);
 				//session.setMaxInactiveInterval(60*10);
-				
 				}
 			response.sendRedirect("loginafter.jsp");
 			
@@ -142,8 +141,17 @@ public class TbUserServlet extends HttpServlet {
 			List<TbBoardDto> list = new ArrayList<TbBoardDto>();
 			list = biz.userBoardSearch(boardTitle, userId);
 			
-			request.setAttribute("list", list);
 			
+				if(list.size()>0) {
+					request.setAttribute("list", list);
+					dispatch("TbUserboardList.jsp", request, response);
+				}else if(list.size()==0){
+					List<TbBoardDto> list2 = biz.userBoardList(userId);
+					request.setAttribute("list", list2);
+					dispatch("TbUserboardList.jsp", request, response);
+			}
+			
+			/*
 			for(TbBoardDto bTitle : list) {
 				//System.out.println("가지고 있는 자료"+bTitle+"검색하려는 글"+boardTitle);
 				if(bTitle.getBoardTitle().contains(boardTitle)) {
@@ -152,9 +160,12 @@ public class TbUserServlet extends HttpServlet {
 					
 				}else {
 					//이부분 실행이 안됨 ㅠㅠ 
-					responseAlert("검색하신 단어와 일치하는 제목이 없습니다", "TbUserboardList.jsp", response);
+					dispatch(url, request, response);
+					
 				}
 			}
+			*/
+			
 			
 		}else if(command.equals("userboarddetail")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
@@ -193,9 +204,10 @@ public class TbUserServlet extends HttpServlet {
 		}else if(command.equals("mylist")) {
 			//에러문제 자꾸만 null이 뜸 
 			//String userId = request.getParameter("userId");
-			//System.out.println("나의 글 목록 보기 "+userId);
+			
 			HttpSession session = request.getSession();
-			String userId = (String)session.getAttribute("userId");
+			String userId = ((TbUserDto)session.getAttribute("dto")).getUserId();
+			//System.out.println("나의 글 목록 보기 "+userId);
 			
 			List<TbBoardDto> list = biz.userBoardList(userId);
 			
@@ -205,7 +217,7 @@ public class TbUserServlet extends HttpServlet {
 		}else if(command.equals("muldel")) {
 						
 			String userId = request.getParameter("userId");
-			System.out.println("멀티딜리트"+userId);
+			//System.out.println("멀티딜리트"+userId);
 			
 			String[] boardNum = request.getParameterValues("chk");
 			if(boardNum == null || boardNum.length == 0) {
@@ -226,6 +238,8 @@ public class TbUserServlet extends HttpServlet {
 		}else if(command.equals("userboarddeleteone")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 			int res = biz.userBoardDelete(boardNum);
+			
+			//System.out.println("단일삭제 부분ㅇ 글번호 "+boardNum);
 			
 			if(res>0) {
 				responseAlert("글을 삭제하였습니다", "TbUser.do?command=mylist", response);

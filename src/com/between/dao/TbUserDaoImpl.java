@@ -84,7 +84,7 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		try {
 			session = getSqlSessionFactory().openSession(true);
 			list = session.selectList(usernamespace+"userBoardList",userId);
-			System.out.println("여기는 보드리스트 "+list);
+			//System.out.println("여기는 보드리스트 "+list);
 		} catch (Exception e) {
 			System.out.println("에러 userBoardList ");
 			e.printStackTrace();
@@ -146,12 +146,12 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("boardTitle", boardTitle);
 		map.put("userId", userId);
-		
+		//System.out.println("글검색 다오"+boardTitle+"으아ㅏㅇ"+userId);
 		
 		try {
-			session = getSqlSessionFactory().openSession(true);
+			session = getSqlSessionFactory().openSession(false);
 			list = session.selectList(usernamespace+"userBoardSearch",map);
-			
+			//System.out.println(list+"내글목록을 에러를 잡아보자 ㄴ");
 		} catch (Exception e) {
 			System.out.println("글검색 에러");
 			e.printStackTrace();

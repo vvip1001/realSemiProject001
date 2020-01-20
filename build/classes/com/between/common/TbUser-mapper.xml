@@ -37,7 +37,13 @@
 		<result property="boardFlagType" column="BOARD_FLAG_TYPE" />
 	</resultMap>
 	
-	
+	<resultMap type="TbGroupDto" id="TbGroupResultMap">
+		<result property="userId" column="USER_ID"/>
+		<result property="partnerId" column="PARTNER_ID"/>
+		<result property="groupNum" column="GROUP_NUM"/>
+		<result property="groupCheck" column="GROUP_CHECK"/>
+	</resultMap>
+		
 	
 	
 	
@@ -104,13 +110,26 @@
 	</foreach>
  	</delete>
  	
- 	<delete id="userBoardDelete">
- 	DELETE FROM MDBOARD WHERE BOARD_NUM = #{boardNum}
+ 	<delete id="userBoardDelete" parameterType="int">
+ 	DELETE FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}
  	</delete>
  	
  	
  	
  
+ 	
+ 	
+ 	<select id="partnerIdSelect" parameterType="String" resultType="String">
+ 	SELECT * FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
+ 	</select>
+ 	
+ 	<update id="partnerIdInsert" parameterType="map" >
+ 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId} WHERE USER_ID = #{userId}
+ 	</update>
+ 	
+ 	<update id="partnerIdDelete" parameterType="String">
+ 	UPDATE TB_GROUP SET PARTNER_ID = 'N' WHERE USER_ID = #{userId}
+ 	</update>
  	
  	
  	

@@ -12,20 +12,21 @@
 </head>
 <body>
 
-<% TbUserDto dto = (TbUserDto)session.getAttribute("dto"); 
+<% 
+	TbUserDto dto = (TbUserDto)session.getAttribute("dto"); 
 
-// onclick="location.href='TbUser.do?command=userboardlist&userId=<%=dto.getUserId() 
 %>
 
 	<h1>유저 마이페이지</h1>
-	<table>
+	<h1>나의 애칭<%=dto.getUserNick() %></h1>
+	<table border=1>
 		<tr>
 			<td>우리자기</td>
-			<td><input type="text" ></td>
+			<td><input type="text" value="수정에서 등록하기" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<td>email</td>
-			<td><input type="text" value=<%=dto.getUserEmail() %>></td>
+			<td><input type="text" value="<%=dto.getUserEmail() %>"></td>
 		</tr>
 
 		

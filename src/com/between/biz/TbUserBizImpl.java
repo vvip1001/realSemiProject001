@@ -20,21 +20,18 @@ public class TbUserBizImpl implements TbUserBiz{
 	//회원정보수정
 	@Override
 	public int userUpdate(TbUserDto dto) {
-		// TODO Auto-generated method stub
 		return dao.userUpdate(dto);
 	}
 
 	//회원탈퇴
 	@Override
 	public int userDelete(String userId) {
-		// TODO Auto-generated method stub
 		return dao.userDelete(userId);
 	}
 
 	//내 글목록 보기 
 	@Override
 	public List<TbBoardDto> userBoardList(String userId) {
-		// TODO Auto-generated method stub
 		return dao.userBoardList(userId);
 	}
 	
@@ -42,14 +39,12 @@ public class TbUserBizImpl implements TbUserBiz{
 	//내 글 상세보기 
 	@Override
 	public TbBoardDto userBoardSelectOne(int boardNum) {
-		// TODO Auto-generated method stub
 		return dao.userBoardSelectOne(boardNum);
 	}
 
 	//내글 수정하기 
 	@Override
 	public int userBoardUpdate(TbBoardDto dto) {
-		// TODO Auto-generated method stub
 		return dao.userBoardUpdate(dto);
 	}
 
@@ -62,13 +57,11 @@ public class TbUserBizImpl implements TbUserBiz{
 
 	@Override
 	public int userBoardMultiDelete(String[] boardNum) {
-		// TODO Auto-generated method stub
 		return dao.userBoardMultiDelete(boardNum);
 	}
 
 	@Override
 	public int userBoardDelete(int boardNum) {
-		// TODO Auto-generated method stub
 		return dao.userBoardDelete(boardNum);
 	}
 
