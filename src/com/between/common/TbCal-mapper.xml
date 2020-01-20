@@ -31,10 +31,9 @@
   	FROM TB_CAL WHERE CAL_NUM = {#calNum} AND GROUP_NUM = #{groupNum}
   </select>
   
-  <insert id="insertEvent">
+  <insert id="insertEvent" parameterType="TbCalDto">
   	INSERT INTO TB_CAL VALUES 
   	(TB_CAL_SEQ.NEXTVAL, ${groupNum}, #{calTitle}, #{calContent}, #{calTime}, SYSDATE)
-  	WHERE GROUP_NUM = #{groupNum}
   </insert>
   
   <update id="updateEvent">
@@ -45,7 +44,7 @@
   
   <delete id="deleteEvent">
   	DELETE FROM TB_CAL 
-  	WHERE CAL_NUM = #{calNUm}
+  	WHERE CAL_NUM = #{calNum}
   </delete>
   
   <select id="findPartner" resultMap="TbGroupResultMap">
