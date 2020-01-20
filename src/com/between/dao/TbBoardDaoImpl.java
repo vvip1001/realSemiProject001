@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.between.common.SqlMapConfig;
+import com.between.dto.Criteria;
 import com.between.dto.TbBoardDto;
 
 public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
@@ -12,14 +13,18 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	private String namespace = "com.between.TbBoard.mapper.";
 	
 	@Override
-	public List<TbBoardDto> selectList() {
+	public List<TbBoardDto> selectList(int pageNum, int pageCount) {
 		//전체출력
 		SqlSession session = null;
 		List<TbBoardDto> list = null;
 		
+		Criteria cri = new Criteria();
+		cri.setPage(pageNum);
+		cri.setPageCount(pageCount);
+		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			list = session.selectList(namespace+"selectList");
+			list = session.selectList(namespace+"selectList",cri);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -117,14 +122,14 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	}
 
 	@Override
-	public int deleteBoard(int boardNum) {
+	public int deleteBoard(int boardGroupNum) {
 		//글삭제 
 		SqlSession session = null;
 		int res = 0;
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.delete(namespace+"deleteBoard",boardNum);
+			res = session.delete(namespace+"deleteBoard",boardGroupNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -168,6 +173,18 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		} finally {
 			session.close();
 		}
+		
+		return res;
+	}
+
+	@Override
+	public int countBoard() {
+		
+		SqlSession session = null;
+		int res = 0;
+		
+		session = getSqlSessionFactory().openSession(true);
+		res = session.selectOne(namespace+"countBoard");
 		
 		return res;
 	}

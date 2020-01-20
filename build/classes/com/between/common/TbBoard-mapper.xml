@@ -20,8 +20,12 @@
 	</resultMap>
 	
 	<select id="selectList" resultMap="TbBoardResultMap">
-		SELECT USER_ID,BOARD_GENDER, BOARD_NUM, BOARD_GROUP_NUM, BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
-		FROM TB_BOARD ORDER BY BOARD_GROUP_NUM DESC, BOARD_GROUP_ORDER
+	<![CDATA[
+		SELECT * FROM (
+		SELECT * FROM (
+		SELECT ROWNUM RNM,USER_ID,BOARD_GENDER,BOARD_NUM,BOARD_GROUP_NUM,BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
+		FROM (SELECT * FROM TB_BOARD ORDER BY BOARD_GROUP_NUM DESC)) WHERE RNM <=#{pageCount}) WHERE RNM >=#{page}
+	]]>	
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultMap="TbBoardResultMap">
@@ -64,9 +68,9 @@
 		WHERE BOARD_NUM = #{boardNum}
 	</update>
 	
-	<delete id="deleteBoard" parameterType="int" >
+	<delete id="deleteBoard">
 		DELETE TB_BOARD
-		WHERE BOARD_GROUP_NUM = (SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum})
+		WHERE BOARD_GROUP_NUM = #{boardGroupNum}
 	</delete>
 	
 	<update id="updateAnswer" parameterType="TbBoardDto">
@@ -93,6 +97,10 @@
 		'0',
 		null)
 	</insert>
+	
+	<select id="countBoard" resultType="int" >
+		SELECT COUNT(*) FROM TB_BOARD
+	</select>
 		
 
 

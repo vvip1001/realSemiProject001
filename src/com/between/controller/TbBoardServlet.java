@@ -3,7 +3,6 @@ package com.between.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.between.biz.TbBoardBiz;
 import com.between.biz.TbBoardBizImpl;
+import com.between.dto.Criteria;
+import com.between.dto.PageMaker;
 import com.between.dto.TbBoardDto;
 import com.between.dto.TbUserDto;
 
@@ -35,9 +36,42 @@ public class TbBoardServlet extends HttpServlet {
 		String command = request.getParameter("command");
 		
 		if(command.equals("boardlist")) {
-			List<TbBoardDto> list = biz.selectList();
+			
+			String paramPage = request.getParameter("page");
+			System.out.println(paramPage);
+
+			Criteria cri = new Criteria();
+			
+			
+			if(paramPage==null) {
+				cri.setPage(1);
+				cri.setPageCount(10);
+			} else {
+				int page = Integer.parseInt(paramPage);
+				cri.setPage(page);
+				cri.setPageCount(10);
+			}
+			
+		
+			
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(biz.countBoard());
+			
+			List<TbBoardDto> list = biz.selectList(cri.getPage(), cri.getPageCount());
+
 			request.setAttribute("list", list);
-			dispatch("TbBoardList.jsp",request,response);
+			request.setAttribute("pageMaker", pageMaker);
+			
+			dispatch("TbBoardList.jsp", request, response);
+			
+			
+			
+			
+			
+			
+			
+			
 		} else if(command.equals("boarddetail")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardnum"));
 			TbBoardDto dto = biz.selectOne(boardNum);
