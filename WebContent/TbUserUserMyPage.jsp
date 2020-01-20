@@ -12,29 +12,38 @@
 </head>
 <body>
 
-<% TbUserDto dto = (TbUserDto)session.getAttribute("dto"); %>
+<% 
+	TbUserDto dto = (TbUserDto)session.getAttribute("dto"); 
+
+%>
 
 	<h1>유저 마이페이지</h1>
-	<table>
+	<h1>나의 애칭<%=dto.getUserNick() %></h1>
+	<table border=1>
 		<tr>
 			<td>우리자기</td>
-			<td><input type="text" ></td>
+			<td><input type="text" value="수정에서 등록하기" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<td>email</td>
-			<td><input type="text" value=<%=dto.getUserEmail() %>></td>
+			<td><input type="text" value="<%=dto.getUserEmail() %>"></td>
 		</tr>
-		<tr>
-			<td>내글보기</td>
-			<td><input type="button" onclick="" value="비밀번호"></td>
-		</tr>
+
+		
 		<tr>
 			<td>회원정보 수정하기 </td>
-			<td><input type="button" onclick="" value="수정" ></td>
+			<td><input type="button" onclick="location.href='TbUser.do?command=userupdateform'" value="수정" ></td>
 		</tr>
 		
 	</table>
-
+		
+		<form action="TbUser.do" method="post">
+		<input type="hidden" name="command" value="userboardlist">
+		<input type="hidden" name="userId" value="<%=dto.getUserId()%>">
+			<h1>내글보기</h1>
+			<input type="password" name = "equserPw">
+			<input type="submit" value="비밀번호">
+		</form>
 
 
 </body>

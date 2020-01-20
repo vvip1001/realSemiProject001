@@ -13,6 +13,7 @@ public class ServletUtil {
 	public static void dispatch(String url, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatch = request.getRequestDispatcher(url);
 		dispatch.forward(request, response);
+		
 	}
 	
 	public static void responseAlert(String msg, String url, HttpServletResponse response ) throws IOException {

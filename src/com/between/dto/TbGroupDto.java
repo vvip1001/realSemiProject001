@@ -11,6 +11,9 @@ public class TbGroupDto {
 
  // 회원아이디 
  private String userId;
+ 
+ // 확인여부
+ private String groupCheck;
 
  public int getGroupNum() {
      return groupNum;
@@ -36,9 +39,19 @@ public class TbGroupDto {
      this.userId = userId;
  }
 
+public String getGroupCheck() {
+	return groupCheck;
+}
+
+public void setGroupCheck(String groupCheck) {
+	this.groupCheck = groupCheck;
+}
+
 @Override
 public String toString() {
-	return "TbGroupDto [groupNum=" + groupNum + ", partnerId=" + partnerId + ", userId=" + userId + "]";
+	return "TbGroupDto [groupNum=" + groupNum + ", partnerId=" + partnerId + ", userId=" + userId + ", groupCheck="
+			+ groupCheck + "]";
 }
+
 
 }

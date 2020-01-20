@@ -66,8 +66,7 @@
 	
 	<delete id="deleteBoard">
 		DELETE TB_BOARD
-		WHERE BOARD_NUM = #{boardNum}
-		//그룹 넘으로 지우자
+		WHERE BOARD_GROUP_NUM = #{boardGroupNum}
 	</delete>
 	
 	<update id="updateAnswer" parameterType="TbBoardDto">

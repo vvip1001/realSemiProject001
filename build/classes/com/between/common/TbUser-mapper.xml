@@ -19,6 +19,35 @@
 	    <result property="userAlbumPath" column="USER_ALBUM_PATH"/>
 	    <result property="userAlbumTitile" column="USER_ALBUM_TITILE"/>
 	</resultMap>
+	
+	<resultMap type="TbBoardDto" id="TbBoardResultMap">
+		<result property="userId" column="USER_ID"/>
+		<result property="boardGender" column="BOARD_GENDER"/>
+		<result property="boardNum" column="BOARD_NUM"/>
+		<result property="boardGroupNum" column="BOARD_GROUP_NUM" />
+		<result property="boardGroupOrder" column="BOARD_GROUP_ORDER" />
+		<result property="boardTab" column="BOARD_TAB" />
+		<result property="boardDeleteCheck" column="BOARD_DELETE_CHECK" />
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="boardContent" column="BOARD_CONTENT" />
+		<result property="boardViewCount" column="BOARD_VIEW_COUNT" />
+		<result property="boardDate" column="BOARD_DATE" />
+		<result property="boardType" column="BOARD_TYPE" />
+		<result property="boardFlag" column="BOARD_FLAG" />
+		<result property="boardFlagType" column="BOARD_FLAG_TYPE" />
+	</resultMap>
+	
+	<resultMap type="TbGroupDto" id="TbGroupResultMap">
+		<result property="userId" column="USER_ID"/>
+		<result property="partnerId" column="PARTNER_ID"/>
+		<result property="groupNum" column="GROUP_NUM"/>
+		<result property="groupCheck" column="GROUP_CHECK"/>
+	</resultMap>
+		
+	
+	
+	
+	
 
 	<select id="idChk" parameterType="String">
 	SELECT USER_ID  FROM TB_USER WHERE MYID  =#{userId}
@@ -28,19 +57,81 @@
 	SELECT * FROM TB_USER WHERE USER_ID =#{userId} AND USER_PW=#{userPw} AND USER_DEACT= 'N'
 	</select>
 	
- 	<insert id="insertJoin" parameterType="TbUserDto">
+ 	<insert id="userInsert" parameterType="TbUserDto">
  	INSERT INTO TB_USER
     VALUES(#{userId},#{userPw},#{userName},#{userGender},#{userDob},#{userEmail})
     </insert>
  	
- 	<update id="updateJoin" parameterType="TbUserDto">
+ 	<update id="userUpdate" parameterType="TbUserDto">
  	UPDATE TB_USER SET USER_PW=#{userPw},USER_EMAIL=#{userEmail},USER_NICK=#{userNick}
  	</update>
  	
  	
- 	<delete id="delete" parameterType="String">
+ 	<delete id="userDelete" parameterType="String">
  	UPDATE TB_USER SET USER_DEACT = 'Y' 
  	WHERE USER_ID = #{userId}
  	</delete>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	<select id="userBoardList" parameterType="String" resultMap="TbBoardResultMap">
+	SELECT * FROM TB_BOARD WHERE USER_ID = #{userId} ORDER BY BOARD_NUM DESC
+	</select>
+	
+	<select id="userBoardSelectOne" parameterType="int" resultMap="TbBoardResultMap">
+	SELECT USER_ID,BOARD_GENDER, BOARD_NUM, BOARD_GROUP_NUM, BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
+	FROM TB_BOARD WHERE BOARD_NUM = #{boardNum} 
+	</select>
+	
+		
+ 	<select id="userBoardSearch" parameterType="map" resultMap="TbBoardResultMap">
+ 	SELECT * FROM TB_BOARD 
+ 	WHERE UPPER(BOARD_TITLE) LIKE '%' || UPPER(#{boardTitle}) || '%' AND USER_ID = #{userId}
+ 	</select>
+ 	
+	
+	<update id="userBoardUpdate" parameterType="TbBoardDto"  >
+		UPDATE TB_BOARD SET
+		BOARD_TITLE = #{boardTitle},
+		BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+ 	
+ 	<delete id="userBoardMultiDelete" parameterType="map">
+ 	DELETE FROM TB_BOARD WHERE BOARD_NUM IN 
+ 	<foreach collection="boardNums" item="boardNum" open="(" separator="," close=")">
+		#{boardNum}
+	</foreach>
+ 	</delete>
+ 	
+ 	<delete id="userBoardDelete" parameterType="int">
+ 	DELETE FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}
+ 	</delete>
+ 	
+ 	
+ 	
+ 
+ 	
+ 	
+ 	<select id="partnerIdSelect" parameterType="String" resultType="String">
+ 	SELECT * FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
+ 	</select>
+ 	
+ 	<update id="partnerIdInsert" parameterType="map" >
+ 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId} WHERE USER_ID = #{userId}
+ 	</update>
+ 	
+ 	<update id="partnerIdDelete" parameterType="String">
+ 	UPDATE TB_GROUP SET PARTNER_ID = 'N' WHERE USER_ID = #{userId}
+ 	</update>
+ 	
+ 	
+ 	
  	
 </mapper>
