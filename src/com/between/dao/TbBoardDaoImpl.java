@@ -157,9 +157,12 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		SqlSession session = null;
 		int res = 0;
 		
+		System.out.println(dto.getBoardNum()+"/"+dto.getBoardTitle()+"/"+dto.getBoardContent()+"/"+
+		dto.getBoardGender()+"/"+dto.getUserId()+"/"+dto.getBoardType()+"/호호/");
+		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"insertAnswer",dto);
+			res = session.insert(namespace+"insertAnswer",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
