@@ -32,8 +32,8 @@
 		int lastDay = (int) request.getAttribute("lastDay");
 	%>
 
-	<h1><%=groupDto.getUserId()%>와
-		<%=groupDto.getPartnerId()%>의 뉴캘린더
+	<h1><%=groupDto.getUserId()%>&
+		<%=groupDto.getPartnerId()%>의 캘린더
 	</h1>
 
 
@@ -94,9 +94,7 @@
 		</tr>
 	</table>
 
-	제목
-	<textarea rows="20" cols="40" placeholder="내용을 입력해주세요"></textarea>
-
+	
 
 
 </body>

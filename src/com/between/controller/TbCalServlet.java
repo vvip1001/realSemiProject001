@@ -3,6 +3,7 @@ package com.between.controller;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -120,11 +121,12 @@ public class TbCalServlet extends HttpServlet {
 			
 			dispatch("TbCalendar.jsp", request, response);
 		} else if(command.equals("insertCal")) {
+			int groupNum = Integer.parseInt(request.getParameter("groupNum"));
+			
 			year = Integer.parseInt(request.getParameter("year"));
 			month = Integer.parseInt(request.getParameter("month"));
 			
 			String date = request.getParameter("date");
-			lastDay = Integer.parseInt(request.getParameter("lastDay"));
 			
 			String hour = request.getParameter("hour");
 			String min = request.getParameter("min");
@@ -137,7 +139,21 @@ public class TbCalServlet extends HttpServlet {
 					biz.isTwo(date)+
 					biz.isTwo(hour)+
 					biz.isTwo(min);
-			int res = biz.insertEvent(new TbCalDto(0, groupDto.getGroupNum(), title, content, calTime, null));
+			TbCalDto dto = new TbCalDto();
+			dto.setGroupNum(groupNum);
+			dto.setCalTitle(title);
+			dto.setCalContent(content);
+			dto.setCalTime(calTime);
+			int res = biz.insertEvent(dto);
+			
+			System.out.println(year);
+			System.out.println(month);
+			System.out.println(date);
+			System.out.println(hour);
+			System.out.println(min);
+			System.out.println(title);
+			System.out.println(content);
+			System.out.println(calTime);
 			
 			if(res>0) {
 				response.sendRedirect("TbCal.do?command=calendar");
@@ -147,6 +163,20 @@ public class TbCalServlet extends HttpServlet {
 			}
 			
 			dispatch("TbCalendarInsert", request, response);
+		} else if(command.equals("callist")) {
+			year = Integer.parseInt(request.getParameter("year"));
+			month = Integer.parseInt(request.getParameter("month"));
+			int date = Integer.parseInt(request.getParameter("date"));
+			
+			String yyyyMMdd = year+biz.isTwo(Integer.toString(month))+biz.isTwo(Integer.toString(date));
+			
+			List<TbCalDto> list = biz.getCalList(yyyyMMdd, userInfo.getGroupNum());
+			
+			request.setAttribute("list", list);
+			
+			
+			dispatch("TbCalendarList.jsp", request, response);
+			
 		}
 			
 		
