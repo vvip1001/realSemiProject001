@@ -30,11 +30,11 @@
 	<h1>일정 추가</h1>
 
 	<form action="TbCal.do" method="post">
-		<input type="hidden" name="command" value="insertCalEvent">
+		<input type="hidden" name="command" value="insertCal">
 		<table border="1">
 			<tr>
 				<th>그룹번호</th>
-				<td><input type="text" name="groupNum" value="<%userInfo.getGroupNum(); %>" readonly="readonly"></td>
+				<td><input type="text" name="groupNum" value="<%=userInfo.getGroupNum() %>" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<th>일정</th>
@@ -93,7 +93,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="일정작성">
-					<input type="button" value="취소" onclick="">
+					<input type="button" value="취소" onclick="location.href='TbCal.do?command=calendar'">
 				</td>
 			</tr>
 		</table>

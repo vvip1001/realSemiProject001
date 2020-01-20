@@ -73,11 +73,11 @@
 
 	<table id="calendar">
 		<caption class="arrows">
-			<a href="Calendar.jsp?year=<%=year-1%>&month=<%=month%>">◀︎◀︎</a> 
-			<a href="Calendar.jsp?year=<%=year%>&month=<%=month-1%>">◁</a> 
+			<a href="TbCal.do?command=minusYear&year=<%=year %>">◀︎◀︎</a> 
+			<a href="TbCal.do?command=minusMonth">◁</a> 
 			<span class="y"><%=year %></span>년 <span class="m"><%=month %></span>월 
-			<a href="Calendar.jsp?year=<%=year%>&month=<%=month+1%>">▷</a> 
-			<a href="Calendar.jsp?year=<%=year+1%>&month=<%=month%>">▶▶</a>
+			<a href="TbCal.do?command=addMonth">▷</a> 
+			<a href="TbCal.do?command=addYear">▶▶</a>
 		</caption>
 		<tr>
 			<th>일</th>
@@ -131,6 +131,7 @@
 		
 	</table>
 
+	<textarea rows="20" cols="40" placeholder="내용을 입력해주세요"></textarea>
 
 </body>
 </html>
