@@ -64,9 +64,9 @@
 		WHERE BOARD_NUM = #{boardNum}
 	</update>
 	
-	<delete id="deleteBoard">
+	<delete id="deleteBoard" parameterType="int" >
 		DELETE TB_BOARD
-		WHERE BOARD_GROUP_NUM = #{boardGroupNum}
+		WHERE BOARD_GROUP_NUM = (SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum})
 	</delete>
 	
 	<update id="updateAnswer" parameterType="TbBoardDto">

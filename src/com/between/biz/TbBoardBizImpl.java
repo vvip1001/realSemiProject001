@@ -37,7 +37,7 @@ public class TbBoardBizImpl implements TbBoardBiz{
 	public int checkBoardDelete(int boardNum) {
 		int count = dao.checkGroupBoard(boardNum);
 		int res = 0;
-		
+		System.out.println("checkBoardDelete : " +count+"BOARD_NUM : "+boardNum);
 		if(count == 1) {
 			res = dao.deleteBoard(boardNum);
 		} else {
