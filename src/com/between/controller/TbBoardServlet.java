@@ -105,17 +105,30 @@ public class TbBoardServlet extends HttpServlet {
 		} else if(command.equals("boardanswerres")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 			String boardTitle = request.getParameter("boardTitle");
-			String boardContent = request.getParameter("boardConent");
+			String boardContent = request.getParameter("boardContent");
 			String userId = request.getParameter("userId");
 			
+			HttpSession session = request.getSession();
+			TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
+			
 			TbBoardDto dto = new TbBoardDto();
+			dto.setUserId(userId);
+			dto.setBoardGender(userInfo.getUserGender());
 			dto.setBoardNum(boardNum);
 			dto.setBoardTitle(boardTitle);
 			dto.setBoardContent(boardContent);
-			dto.setUserId(userId);
+			dto.setBoardType(checkStatus(userInfo.getUserStatus()));
+			
+			
+			System.out.println(boardNum+"/"+boardTitle+"/"+boardContent+"/"+userId+"/"+checkStatus(userInfo.getUserStatus())+"/"+userInfo.getUserGender());
 			
 			int res = biz.answerProc(dto);
 			
+			if(res>0) {
+				response.sendRedirect("TbBoard.do?command=boardlist");
+			} else {
+				responseAlert("fail", "index.html", response);
+			} 
 		}
 	}
 
@@ -126,15 +139,12 @@ public class TbBoardServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	public String checkStatus(String userStatus) {
-		
 		String boardType ;
-		
 		if(userStatus.equals("ADMIN")) {
 			boardType = "NOTICE";
 		} else {
 			boardType= "NORMAL";
 		}
-		
 		return boardType;
 	}
 	
