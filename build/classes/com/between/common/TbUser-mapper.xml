@@ -119,16 +119,29 @@
  
  	
  	
- 	<select id="partnerIdSelect" parameterType="String" resultType="String">
+ 	<select id="partnerIdShow" parameterType="int" resultMap="TbGroupResultMap">
  	SELECT * FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
  	</select>
  	
+ 	
  	<update id="partnerIdInsert" parameterType="map" >
- 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId} WHERE USER_ID = #{userId}
+ 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId}, TB_GROUP_SEQ.NEXTVAL , GROUP_CHECK ='N' WHERE USER_ID = #{userId}
  	</update>
  	
- 	<update id="partnerIdDelete" parameterType="String">
- 	UPDATE TB_GROUP SET PARTNER_ID = 'N' WHERE USER_ID = #{userId}
+ 	<update id="partnerIdUpdate" parameterMap="map">
+ 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId} WHERE GROUP_NUM = #{groupNum}
+ 	</update>
+
+ 	<update id="partnerIdInsertCheckO" parameterType="TbGroupDto" >
+ 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId}, GROUP_CHECK ='Y' WHERE  GROUP_NUM = #{groupNum}
+ 	</update>
+ 	
+ 	<update id="partnerIdInsertChekX" parameterType="int" >
+ 	UPDATE TB_GROUP SET PARTNER_ID = 'N', GROUP_CHECK ='N' WHERE GROUP_NUM = #{groupNum}
+ 	</update>
+ 	
+ 	<update id="partnerIdDelete" parameterType="int">
+ 	DELETE FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
  	</update>
  	
  	

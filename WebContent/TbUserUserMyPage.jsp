@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.TbGroupDto"%>
 <%@page import="com.between.dto.TbUserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -14,19 +15,46 @@
 
 <% 
 	TbUserDto dto = (TbUserDto)session.getAttribute("dto"); 
-
+	String partnerId = String.valueOf(request.getAttribute("partnerId"));
+	
+	System.out.println(partnerId);
 %>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	alert('유저님의 마이페이지입니다. 환영합니다.');
+	
+	function alertinsert() {
+		alert('상대등록 수정은 회원정보 수정에서 해주세요');
+	}
+	
+</script>
 
 	<h1>유저 마이페이지</h1>
 	<h1>나의 애칭<%=dto.getUserNick() %></h1>
 	<table border=1>
 		<tr>
 			<td>우리자기</td>
-			<td><input type="text" value="수정에서 등록하기" readonly="readonly"></td>
+			
+			<td>
+			<form action="TbUser.do" method="post">
+				<input type="hidden" name="command" value="partnerinsert">
+				<input type="hidden" name="userId" value="<%=dto.getUserId() %>">
+				<input type="text" name="partnerId" value="<%=partnerId %>" >
+<%
+				if(partnerId==null){
+%>
+				<input type="submit" value="상대등록하기" onclick="alertinsert();"/>
+<%
+				}
+%>
+				
+			</form>
+			</td>
+
 		</tr>
 		<tr>
 			<td>email</td>
-			<td><input type="text" value="<%=dto.getUserEmail() %>"></td>
+			<td><%=dto.getUserEmail() %></td>
 		</tr>
 
 		

@@ -5,6 +5,7 @@ import java.util.List;
 import com.between.dao.TbUserDao;
 import com.between.dao.TbUserDaoImpl;
 import com.between.dto.TbBoardDto;
+import com.between.dto.TbGroupDto;
 import com.between.dto.TbUserDto;
 
 public class TbUserBizImpl implements TbUserBiz{
@@ -55,15 +56,70 @@ public class TbUserBizImpl implements TbUserBiz{
 		return dao.userBoardSearch(boardTitle, userId);
 	}
 
+	//회원 글 삭제하기 multi
 	@Override
 	public int userBoardMultiDelete(String[] boardNum) {
 		return dao.userBoardMultiDelete(boardNum);
 	}
 
+	//단일삭제 
 	@Override
 	public int userBoardDelete(int boardNum) {
 		return dao.userBoardDelete(boardNum);
 	}
+
+	//나의 커플 확인 
+	@Override
+	public String partnerIdShow(int groupNum,String userId) {
+		
+
+		String bringUserId = dao.partnerIdShow(groupNum).getUserId();
+		String bringPartnerId = dao.partnerIdShow(groupNum).getPartnerId();
+		
+		if(bringPartnerId.equals("N")) {
+			return bringUserId;
+		}else {
+
+			if(userId.equals(bringUserId)) {
+				return bringPartnerId;
+			} else {
+				return bringUserId;
+			}
+		}
+		
+	}
+
+	//커플 그룹 맺기 ->파트너아이디 입력
+	@Override
+	public int partnerIdInsert(String partnerId, String userId) {
+		return dao.partnerIdInsert(partnerId, userId);
+	}
+
+	//파트너 이름 수정 
+	@Override
+	public int partnerIdUpdate(String partnerId, int groupNum) {
+		// TODO Auto-generated method stub
+		return dao.partnerIdUpdate(partnerId, groupNum);
+	}
+
+	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 yes눌렀을때 (확인창)
+	@Override
+	public int partnerIdInsertCheckO(String partnerId, int groupNum) {
+		return dao.partnerIdInsertCheckO(partnerId, groupNum);
+	}
+
+	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 no눌렀을때 (확인창)
+	@Override
+	public int partnerIdInsertChekX(int groupNum) {
+		return dao.partnerIdInsertChekX(groupNum);
+	}
+
+	//커플 삭제하기 -->버튼 
+	@Override
+	public int partnerIdDelete(int groupNum) {
+		return dao.partnerIdDelete(groupNum);
+	}
+
 
 
 	
