@@ -38,16 +38,21 @@
 			<td>
 			<form action="TbUser.do" method="post">
 				<input type="hidden" name="command" value="partnerinsert">
-				<input type="hidden" name="userId" value="<%=dto.getUserId() %>">
-				<input type="text" name="partnerId" value="<%=partnerId %>" >
+				<input type="hidden" name="userId" value="<%=dto.getUserId() %>">	
+					
+
 <%
-				if(partnerId==null){
+				if(partnerId.equals("N")){
 %>
+				<input type="text" name="partnerId" value="<%=partnerId %>" >
 				<input type="submit" value="상대등록하기" onclick="alertinsert();"/>
 <%
+				}else{
+%>
+				<input type="text" name="partnerId" value="<%=partnerId %>" readonly="readonly" >
+<%					
 				}
 %>
-				
 			</form>
 			</td>
 
@@ -60,7 +65,7 @@
 		
 		<tr>
 			<td>회원정보 수정하기 </td>
-			<td><input type="button" onclick="location.href='TbUser.do?command=userupdateform'" value="수정" ></td>
+			<td><input type="button" onclick="location.href='TbUser.do?command=userupdateform&partnerId=<%=partnerId %>'" value="수정" ></td>
 		</tr>
 		
 	</table>

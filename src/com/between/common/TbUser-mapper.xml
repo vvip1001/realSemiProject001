@@ -47,11 +47,7 @@
 	
 	
 	
-	
 
-	<select id="idChk" parameterType="String">
-	SELECT USER_ID  FROM TB_USER WHERE MYID  =#{userId}
-	</select>
 	
 	<select id="login" resultMap="TbUserResultMap">
 	SELECT * FROM TB_USER WHERE USER_ID =#{userId} AND USER_PW=#{userPw} AND USER_DEACT= 'N'
@@ -125,10 +121,10 @@
  	
  	
  	<update id="partnerIdInsert" parameterType="map" >
- 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId}, TB_GROUP_SEQ.NEXTVAL , GROUP_CHECK ='N' WHERE USER_ID = #{userId}
+ 	INSERT INTO TB_GROUP (PARTNER_ID, GROUP_NUM, GROUP_CHECK, USER_ID) VALUES(#{partnerId},TB_GROUP_SEQ.NEXTVAL ,'N', #{userId})
  	</update>
  	
- 	<update id="partnerIdUpdate" parameterMap="map">
+ 	<update id="partnerIdUpdate" parameterType="map">
  	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId} WHERE GROUP_NUM = #{groupNum}
  	</update>
 

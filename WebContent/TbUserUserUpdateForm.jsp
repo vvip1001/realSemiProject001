@@ -13,7 +13,9 @@
 </head>
 <% 
 	TbUserDto dto = (TbUserDto)session.getAttribute("dto");
-	TbGroupDto groupdto = (TbGroupDto)request.getAttribute("groupdto");
+	String partnerId = String.valueOf(request.getAttribute("partnerId"));
+
+//TbGroupDto groupdto = (TbGroupDto)request.getAttribute("groupdto");
 %>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -46,14 +48,14 @@
 			<tr>
 				<th>우리자기</th>
 <%
-	if(groupdto.getPartnerId().equals("N") || groupdto.getPartnerId() == null){
+	if(partnerId.equals("N") ){
 
 %>
 			<td><input type="text" name="partnerId" value="상대방 아이디를 입력해 주세요" ></td>
 <% 
 	}else{
 %>
-			<td><input type="text" name="partnerId" value="<%=groupdto.getPartnerId() %>" ></td>
+			<td><input type="text" name="partnerId" value="<%=partnerId %>" ></td>
 <%
 	}
 %>	

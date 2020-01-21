@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.between.common.SqlMapConfig;
 import com.between.dto.TbBoardDto;
@@ -21,7 +22,6 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 	public TbUserDto login(String userId, String userPw) {
 		SqlSession session = null; 
 		TbUserDto dto = new TbUserDto();
-		
 		dto.setUserId(userId);
 		dto.setUserPw(userPw);
 		
@@ -228,7 +228,7 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		return dto;
 	}
 
-	//커플 그룹 맺기 ->파트너아이디 입력
+	//커플 그룹 맺기 ->파트너아이디 입력(최초 로그인시 파트너 이름 "N")
 	@Override
 	public int partnerIdInsert(String partnerId, String userId) {
 		SqlSession session = null; 
@@ -253,8 +253,23 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 	////파트너 이름 수정 
 	@Override
 	public int partnerIdUpdate(String partnerId, int groupNum) {
-		// TODO Auto-generated method stub
-		return 0;
+		SqlSession session = null; 
+		TbGroupDto dto = new TbGroupDto();
+		dto.setPartnerId(partnerId);
+		dto.setGroupNum(groupNum);
+		int res = 0; 
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.insert(usernamespace+"partnerIdUpdate",dto);
+		} catch (Exception e) {
+			System.out.println("파트너이름 수정 에러 - 다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
 	}
 
 

@@ -101,14 +101,15 @@ public class TbUserServlet extends HttpServlet {
 				
 				if(groupNum == 0 ) {
 					String partnerId = "N";
-					int res = biz.partnerIdInsert(partnerId, userId);
-					if(res > 0) {
-						request.setAttribute("partnerId", partnerId);
-					    dispatch("TbUserUserMyPage.jsp", request, response);
-					}else {
-						responseAlert("파트너아이디  입력 안되었음", "loginafter.jsp", response);
-					}
-					
+//					int res = biz.partnerIdInsert(partnerId, userId);
+//					if(res > 0) {
+//						request.setAttribute("partnerId", partnerId);
+//					    dispatch("TbUserUserMyPage.jsp", request, response);
+//					}else {
+//						responseAlert("파트너아이디  입력 안되었음", "loginafter.jsp", response);
+//					}
+					request.setAttribute("partnerId", partnerId);
+				    dispatch("TbUserUserMyPage.jsp", request, response);
 				}else {
 					String partnerId = biz.partnerIdShow(groupNum,userId);
 					request.setAttribute("partnerId", partnerId);
@@ -125,14 +126,8 @@ public class TbUserServlet extends HttpServlet {
 			
 		}else if(command.equals("userupdateform")){
 			
-			HttpSession session = request.getSession();
-			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
+			String partnerId = request.getParameter("partnerId");
 			
-			int groupNum = loginDto.getGroupNum();
-			String userId = loginDto.getUserId();
-			
-			String partnerId =biz.partnerIdShow(groupNum,userId);
-			//System.out.println("유저아이디를 복잡하게 불러서 담아보았다 "+groupdto.getPartnerId());
 			request.setAttribute("partnerId", partnerId);
 			dispatch("TbUserUserUpdateForm.jsp", request, response);
 			
@@ -142,16 +137,15 @@ public class TbUserServlet extends HttpServlet {
 			String userId = request.getParameter("userId");
 			int res = biz.partnerIdInsert(partnerId, userId);
 			if(res > 0) {
-				HttpSession session = request.getSession();
-				String logindto1 = ((TbUserDto)session.getAttribute("dto")).getUserStatus();
-				dispatch("TbUser.do?command=mypage", request, response);
-				//response.sendRedirect("TbUser.do?command=mypage");
+				
+				//dispatch("TbUser.do?command=mypage", request, response);
+				response.sendRedirect("TbUser.do?command=mypage");
 			}else {
-				responseAlert("파트너아이디를 입력해 주세요", "history.back();", response);
+				responseAlert("파트너아이디를 입력해 주세요", "TbUser.do?command=userupdateform", response);
 			}
 			
 		}else if(command.equals("userupdateformres")) {
-			
+			//여기 빈칸임 
 			
 			
 			
