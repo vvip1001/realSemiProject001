@@ -23,6 +23,7 @@
 <head>
 <meta charset="UTF-8">
 <title>속닥속닥</title>
+
 </head>
 <body>
 	<div id="head"></div>
