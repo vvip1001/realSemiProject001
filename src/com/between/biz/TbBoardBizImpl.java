@@ -11,8 +11,38 @@ public class TbBoardBizImpl implements TbBoardBiz{
 	TbBoardDao dao = new TbBoardDaoImpl();
 	
 	@Override
-	public List<TbBoardDto> selectList() {
-		return dao.selectList();
+	public List<TbBoardDto> selectList(int pageNum, int pageCount) {
+		
+		int page = 0;
+		int pageCountAfter = 0;
+
+		pageCountAfter = pageNum*pageCount; 
+		page = ((pageNum-1)*10)+1;
+		
+
+		return dao.selectList(page,pageCountAfter);
+//		select *
+//		from (SELECT *
+//		        FROM (
+//		            SELECT rownum rnum, id, title, content
+//		            FROM page_table
+//		            ) pagetable
+//		        where rnum <= 10
+//		    )
+//		where rnum >= 1;
+				// ((page-1)*10)+1
+//		-- 2페이지
+//		select *
+//		from (SELECT *
+//		        FROM (
+//		            SELECT rownum rnum, id, title, content
+//		            FROM page_table
+//		            ) pagetable
+//		        where rnum <= 20 30 40 50
+//		    )
+//		where rnum >= 11; 21 31 41
+		
+		
 	}
 
 	@Override
@@ -56,6 +86,11 @@ public class TbBoardBizImpl implements TbBoardBiz{
 		System.out.println("INSERT : "+insert);
 		
 		return insert;
+	}
+
+	@Override
+	public int countBoard() {
+		return dao.countBoard();
 	}
 
 }

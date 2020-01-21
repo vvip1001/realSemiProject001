@@ -17,6 +17,7 @@
 <%
 	TbCalBiz biz =  new TbCalBizImpl();
 	List<TbCalDto> list = (List<TbCalDto>)request.getAttribute("list");
+	
 			
 %>
 
@@ -39,13 +40,7 @@
 				<th>작성일</th>
 			</tr>
 			<tr>
-<%
-				if(list.size()==0){
-%>				
-				<td colspan="5">-----작성된 글이 없습니다-----</td>
-<%
-				}
-%>				
+			
 			</tr>
 		</table>
 	</form>

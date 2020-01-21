@@ -146,6 +146,8 @@ public class TbCalServlet extends HttpServlet {
 			dto.setCalTime(calTime);
 			int res = biz.insertEvent(dto);
 			
+			request.setAttribute("groupDto", groupDto);
+			
 			System.out.println(year);
 			System.out.println(month);
 			System.out.println(date);
@@ -155,7 +157,9 @@ public class TbCalServlet extends HttpServlet {
 			System.out.println(content);
 			System.out.println(calTime);
 			
+			
 			if(res>0) {
+				//responseAlert("일정 추가 성공", "TbCalendar.jsp", response);
 				response.sendRedirect("TbCal.do?command=calendar");
 			} else {
 				request.setAttribute("msg", "일정 추가 실패");
@@ -167,6 +171,8 @@ public class TbCalServlet extends HttpServlet {
 			year = Integer.parseInt(request.getParameter("year"));
 			month = Integer.parseInt(request.getParameter("month"));
 			int date = Integer.parseInt(request.getParameter("date"));
+			
+			
 			
 			String yyyyMMdd = year+biz.isTwo(Integer.toString(month))+biz.isTwo(Integer.toString(date));
 			
