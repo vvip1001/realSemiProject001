@@ -8,7 +8,7 @@ import com.between.dto.TbUserDto;
 
 public interface TbCalBiz {
 	
-	public List<TbCalDto> getCalList(String calTime, int groupNum);
+	public List<TbCalDto> selectCalList(String calTime, int groupNum);
 	public TbCalDto selectOne(int calNum, int groupNum);
 	public int insertEvent(TbCalDto dto);
 	public int updateEvent(TbCalDto dto);

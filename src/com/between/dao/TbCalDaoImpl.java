@@ -13,13 +13,16 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	private String namespace = "com.between.TbCal.mapper.";
 
 	@Override
-	public List<TbCalDto> getCalList(String calTime, int groupNum) {
+	public List<TbCalDto> selectCalList(String yyyyMMdd, int groupNum) {
 		SqlSession session = null;
 		List<TbCalDto> list = null;
+		TbCalDto calDto = new TbCalDto();
+		calDto.setCalTime(yyyyMMdd);
+		calDto.setGroupNum(groupNum);
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			list = session.selectList(namespace+"selectList");
+			list = session.selectList(namespace+"selectCalList",calDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

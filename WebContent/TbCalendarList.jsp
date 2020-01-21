@@ -4,7 +4,8 @@
 <%@page import="com.between.biz.TbCalBiz"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
@@ -14,34 +15,58 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-	TbCalBiz biz =  new TbCalBizImpl();
-	List<TbCalDto> list = (List<TbCalDto>)request.getAttribute("list");
-	
-			
-%>
 
-	<h1>LIST</h1>
+	<h1>일정보기</h1>
+	
+<%
+int year = (int)request.getAttribute("year");
+int month = (int)request.getAttribute("month");
+int date = (int)request.getAttribute("date");
+%>
 
 	<form action="TbCal.do" method="post">
 		<input type="hidden" name="command" value="muldel">
-		<table border="1">
+		
+		<jsp:useBean id="biz" class="com.between.biz.TbCalBizImpl"></jsp:useBean>
+		
+		<table>
 			<col width="50px;">
-			<col width="50px;">
-			<col width="300px;">
-			<col width="200px;">
 			<col width="100px;">
-			
+			<col width="200px;">			
 			<tr>
 				<th><input type="checkbox" name="all" onclick=""></th>
-				<th>번호</th>
-				<th>제목</th>
+				<th>날짜/시간</th>
 				<th>일정</th>
-				<th>작성일</th>
 			</tr>
-			<tr>
 			
+			<c:choose>
+				<c:when test="${empty list }">
+					<tr>
+						<th colspan="3">----------작성된 글이 없습니다----------</th>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${list }" var="dto">
+						<tr>
+							<td><input type="checkbox" name="chk" value="${dto.calNum }"></td>
+							<td>
+								<jsp:setProperty property="todates" name="biz" value="${dto.calTime }"/>
+								<jsp:getProperty property="todates" name="biz"/>
+							</td>
+							<td><a href="TbCal.do?command=">${dto.calTitle }</a></td>
+						</tr>
+						
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+			
+			<tr>
+				<td colspan="3">
+					<input type="button" value="글쓰기" onclick="location.href='TbCal.do?command=insertEvent&year=<%=year %>&month=<%=month %>&date=<%=date %>'">
+					<input type="submit" value="삭제" onclick="">
+				</td>
 			</tr>
+			
 		</table>
 	</form>
 	

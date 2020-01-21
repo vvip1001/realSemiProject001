@@ -21,8 +21,8 @@ public class TbCalBizImpl implements TbCalBiz {
 	}
 	
 	@Override
-	public List<TbCalDto> getCalList(String calTime, int groupNum) {
-		return dao.getCalList(calTime, groupNum);
+	public List<TbCalDto> selectCalList(String calTime, int groupNum) {
+		return dao.selectCalList(calTime, groupNum);
 	}
 
 	@Override
@@ -51,8 +51,8 @@ public class TbCalBizImpl implements TbCalBiz {
 		// yyyy-MM-dd hh:mm:ss
 		String m = calTime.substring(0,4) + "-" +
 				calTime.substring(4,6) + "-" +
-				calTime.substring(6,8) + "-" +
-				calTime.substring(8,10) + "-" +
+				calTime.substring(6,8) + " " +
+				calTime.substring(8,10) + ":" +
 				calTime.substring(10) + ":00";
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년MM월dd일 HH시mm분");

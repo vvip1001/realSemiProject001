@@ -21,19 +21,19 @@
 	
 	
 	
-  <select id="getCalList" parameterType="String" resultMap="TbCalResultMap">
+  <select id="selectCalList" parameterType="TbCalDto" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE 
-  	FROM TB_CAL WHERE CAL_TIME = {#calTime} AND GROUP_NUM = #{groupNum} ORDER BY CAL_NUM DESC
+  	FROM TB_CAL WHERE GROUP_NUM = #{groupNum} AND SUBSTR(CAL_TIME,1,8)=#{calTime} ORDER BY CAL_NUM DESC
   </select>
   
   <select id="selectOne" parameterType="int" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
-  	FROM TB_CAL WHERE CAL_NUM = {#calNum} AND GROUP_NUM = #{groupNum}
+  	FROM TB_CAL WHERE CAL_NUM = #{calNum} AND GROUP_NUM = #{groupNum}
   </select>
   
   <insert id="insertEvent" parameterType="TbCalDto">
   	INSERT INTO TB_CAL VALUES 
-  	(TB_CAL_SEQ.NEXTVAL, ${groupNum}, #{calTitle}, #{calContent}, #{calTime}, SYSDATE)
+  	(TB_CAL_SEQ.NEXTVAL, #{groupNum}, #{calTitle}, #{calContent}, #{calTime}, SYSDATE)
   </insert>
   
   <update id="updateEvent">

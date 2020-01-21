@@ -120,6 +120,36 @@ public class TbCalServlet extends HttpServlet {
 			request.setAttribute("lastDay", lastDay);
 			
 			dispatch("TbCalendar.jsp", request, response);
+		} else if(command.equals("callist")) {
+			year = Integer.parseInt(request.getParameter("year"));
+			month = Integer.parseInt(request.getParameter("month"));
+			int date = Integer.parseInt(request.getParameter("date"));
+			
+			
+			String yyyyMMdd = year+biz.isTwo(Integer.toString(month))+biz.isTwo(Integer.toString(date));
+			
+			List<TbCalDto> list = biz.selectCalList(yyyyMMdd, userInfo.getGroupNum());
+			
+			request.setAttribute("list", list);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("date", date);
+			
+			System.out.println(yyyyMMdd);
+			
+			dispatch("TbCalendarList.jsp", request, response);
+			
+		} else if(command.equals("insertEvent")) {
+			
+			year = Integer.parseInt(request.getParameter("year"));
+			month = Integer.parseInt(request.getParameter("month"));
+			int date = Integer.parseInt(request.getParameter("date"));
+			
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("date", date);
+			
+			dispatch("TbCalendarInsert.jsp", request, response);
 		} else if(command.equals("insertCal")) {
 			int groupNum = Integer.parseInt(request.getParameter("groupNum"));
 			
@@ -147,6 +177,13 @@ public class TbCalServlet extends HttpServlet {
 			int res = biz.insertEvent(dto);
 			
 			request.setAttribute("groupDto", groupDto);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("dayOfWeek", dayOfWeek);
+			request.setAttribute("lastDay", lastDay);
+			
+			request.setAttribute("date", date);
+			
 			
 			System.out.println(year);
 			System.out.println(month);
@@ -159,31 +196,14 @@ public class TbCalServlet extends HttpServlet {
 			
 			
 			if(res>0) {
-				//responseAlert("일정 추가 성공", "TbCalendar.jsp", response);
-				response.sendRedirect("TbCal.do?command=calendar");
+				dispatch("TbCalendar.jsp", request, response);
 			} else {
 				request.setAttribute("msg", "일정 추가 실패");
-				dispatch("Calendar.jsp",request,response);
+				dispatch("TbCalendar.jsp",request,response);
 			}
 			
-			dispatch("TbCalendarInsert", request, response);
-		} else if(command.equals("callist")) {
-			year = Integer.parseInt(request.getParameter("year"));
-			month = Integer.parseInt(request.getParameter("month"));
-			int date = Integer.parseInt(request.getParameter("date"));
-			
-			
-			
-			String yyyyMMdd = year+biz.isTwo(Integer.toString(month))+biz.isTwo(Integer.toString(date));
-			
-			List<TbCalDto> list = biz.getCalList(yyyyMMdd, userInfo.getGroupNum());
-			
-			request.setAttribute("list", list);
-			
-			
-			dispatch("TbCalendarList.jsp", request, response);
-			
-		}
+			//dispatch("TbCalendarInsert", request, response);
+		} 
 			
 		
 	}
