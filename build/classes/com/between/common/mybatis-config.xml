@@ -11,6 +11,7 @@
 		<typeAlias type="com.between.dto.TbBoardDto" alias="TbBoardDto" />
 		<typeAlias type="com.between.dto.TbUserDto" alias="TbUserDto"/>
 		<typeAlias type="com.between.dto.TbGroupDto" alias="TbGroupDto" />
+		<typeAlias type="com.between.dto.Criteria" alias="Cri" />
 	</typeAliases>
 
   <environments default="development">

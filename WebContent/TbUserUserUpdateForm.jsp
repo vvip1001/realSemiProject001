@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.TbGroupDto"%>
 <%@page import="com.between.dto.TbUserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,7 +11,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<% TbUserDto dto = (TbUserDto)session.getAttribute("dto"); %>
+<% 
+	TbUserDto dto = (TbUserDto)session.getAttribute("dto");
+	String partnerId = String.valueOf(request.getAttribute("partnerId"));
+
+//TbGroupDto groupdto = (TbGroupDto)request.getAttribute("groupdto");
+%>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -42,18 +48,18 @@
 			<tr>
 				<th>우리자기</th>
 <%
-	if(dto.getUserNick()==null){
+	if(partnerId.equals("N") ){
+
 %>
-			<td><input type="text" value="상대방 아이디를 입력해 주세요"></td>
-	
-<%		
+			<td><input type="text" name="partnerId" value="상대방 아이디를 입력해 주세요" ></td>
+<% 
 	}else{
 %>
-			<td><input type="text" value="<%=%>"></td>
-	
-<%		
+			<td><input type="text" name="partnerId" value="<%=partnerId %>" ></td>
+<%
 	}
-%>				
+%>	
+			
 				
 			</tr>
 			<tr>	
@@ -67,18 +73,18 @@
 			</tr>
 			<tr>	
 				<th>이메일</th>
-				<td><input type="email" value="<%=dto.getUserEmail() %>"></td>
+				<td><input type="email" name="userEmail" value="<%=dto.getUserEmail() %>"></td>
 				
 			</tr>
 			<tr>	
 				<th>나의애칭바꾸기</th>
-				<td><input type="text" value="<%=dto.getUserNick()%>"></td>
+				<td><input type="text" name="userNick" value="<%=dto.getUserNick()%>"></td>
 				
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="submit" />
-					<input type="button" />
+					<input type="submit" value="수정완료"/>
+					<input type="button" value="취소" onclick="location.href='TbUser.do?command=mypage&logindto1=<%=dto.getUserStatus() %>'"/>
 				</td>
 			</tr>
 		</table>

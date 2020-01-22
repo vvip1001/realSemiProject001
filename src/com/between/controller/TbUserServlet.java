@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.between.biz.TbUserBiz;
 import com.between.biz.TbUserBizImpl;
 import com.between.dto.TbBoardDto;
+import com.between.dto.TbGroupDto;
 import com.between.dto.TbUserDto;
 
 
@@ -34,7 +35,7 @@ public class TbUserServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		doPost(request, response);
 	}
-	
+
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -85,15 +86,38 @@ public class TbUserServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
 			
-			//내글 목록 보기에서 마이페이지로 다시 넘어올 때
-			String logindto1 = request.getParameter("logindto1");
+
+			int groupNum = loginDto.getGroupNum();
+			System.out.println("groupNum : "+groupNum);
+			String userId = loginDto.getUserId();
 			
+
 			//System.out.println(loginDto.getUserEmail());
 			//각 등급별로 마이페이지 열리기 
 			if(loginDto.getUserStatus().equals("ADMIN")) {
 				responseAlert("어드민님의 마이페이지 입니다. 환영합니다.", "TbUserAdminMyPage.jsp", response);
-			}else if(loginDto.getUserStatus().equals("USER") || loginDto.getUserStatus().equals("logindto1")  ) {
-				responseAlert("일반회원님의 마이페이지 입니다. 환영합니다.", "TbUserUserMyPage.jsp", response);
+				
+			}else if(loginDto.getUserStatus().equals("USER")) {
+				
+				if(groupNum == 0 ) {
+					String partnerId = "N";
+//					int res = biz.partnerIdInsert(partnerId, userId);
+//					if(res > 0) {
+//						request.setAttribute("partnerId", partnerId);
+//					    dispatch("TbUserUserMyPage.jsp", request, response);
+//					}else {
+//						responseAlert("파트너아이디  입력 안되었음", "loginafter.jsp", response);
+//					}
+					request.setAttribute("partnerId", partnerId);
+				    dispatch("TbUserUserMyPage.jsp", request, response);
+				}else {
+					String partnerId = biz.partnerIdShow(groupNum,userId);
+					request.setAttribute("partnerId", partnerId);
+					dispatch("TbUserUserMyPage.jsp", request, response);
+				}
+				
+				
+				//responseAlert("일반회원님의 마이페이지 입니다. 환영합니다.", "TbUserUserMyPage.jsp", response);
 			}else if(loginDto.getUserStatus().equals("COUNSELOR")) {
 				responseAlert("상담사님의 마이페이지 입니다.","TbUserCounselorMyPage.jsp", response);
 			}
@@ -101,10 +125,30 @@ public class TbUserServlet extends HttpServlet {
 			
 			
 		}else if(command.equals("userupdateform")){
-			response.sendRedirect("TbUserUserUpdateForm.jsp");
+			
+			String partnerId = request.getParameter("partnerId");
+			
+			request.setAttribute("partnerId", partnerId);
+			dispatch("TbUserUserUpdateForm.jsp", request, response);
+			
+			
+		}else if(command.equals("partnerinsert")) {
+			String partnerId = request.getParameter("partnerId");
+			String userId = request.getParameter("userId");
+			int res = biz.partnerIdInsert(partnerId, userId);
+			if(res > 0) {
+				
+				//dispatch("TbUser.do?command=mypage", request, response);
+				response.sendRedirect("TbUser.do?command=mypage");
+			}else {
+				responseAlert("파트너아이디를 입력해 주세요", "TbUser.do?command=userupdateform", response);
+			}
 			
 		}else if(command.equals("userupdateformres")) {
-			response.sendRedirect("TbUser.do?command=mypage");
+			//여기 빈칸임 
+			
+			
+			
 		
 		}else if(command.equals("userboardlist")) {
 			

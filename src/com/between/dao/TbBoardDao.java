@@ -6,7 +6,7 @@ import com.between.dto.TbBoardDto;
 
 public interface TbBoardDao {
 	
-	public List<TbBoardDto> selectList();
+	public List<TbBoardDto> selectList(int pageNum, int pageCount);
 	public TbBoardDto selectOne(int boardNum);
 	public int insertBoard(TbBoardDto dto);
 	public int updateBoard(TbBoardDto dto);
@@ -17,5 +17,7 @@ public interface TbBoardDao {
 	
 	public int updateAnswer(int parentBoardNum);
 	public int insertAnswer(TbBoardDto dto);
+	
+	public int countBoard();
 
 }

@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.between.common.SqlMapConfig;
 import com.between.dto.TbBoardDto;
+import com.between.dto.TbGroupDto;
 import com.between.dto.TbUserDto;
 
 public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
@@ -18,7 +22,6 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 	public TbUserDto login(String userId, String userPw) {
 		SqlSession session = null; 
 		TbUserDto dto = new TbUserDto();
-		
 		dto.setUserId(userId);
 		dto.setUserPw(userPw);
 		
@@ -205,6 +208,132 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		
 		return res;
 	}
+
+	//나의 커플 확인
+	@Override
+	public TbGroupDto partnerIdShow(int groupNum) {
+		SqlSession session = null; 
+		TbGroupDto dto = null; 
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			dto = session.selectOne(usernamespace+"partnerIdShow",groupNum);
+		} catch (Exception e) {
+			System.out.println("나의 커플확인 에러 -다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return dto;
+	}
+
+	//커플 그룹 맺기 ->파트너아이디 입력(최초 로그인시 파트너 이름 "N")
+	@Override
+	public int partnerIdInsert(String partnerId, String userId) {
+		SqlSession session = null; 
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("partnerId", partnerId);
+		map.put("userId", userId);
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(usernamespace+"partnerIdInsert",map);
+		} catch (Exception e) {
+			System.out.println("커플그룹맺기 -> 파트너아이디 입력 에러 -다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
+	}
+	
+	////파트너 이름 수정 
+	@Override
+	public int partnerIdUpdate(String partnerId, int groupNum) {
+		SqlSession session = null; 
+		TbGroupDto dto = new TbGroupDto();
+		dto.setPartnerId(partnerId);
+		dto.setGroupNum(groupNum);
+		int res = 0; 
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.insert(usernamespace+"partnerIdUpdate",dto);
+		} catch (Exception e) {
+			System.out.println("파트너이름 수정 에러 - 다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
+	}
+
+
+	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 yes눌렀을때 (확인창)
+	@Override
+	public int partnerIdInsertCheckO(String partnerId, int groupNum) {
+		SqlSession session = null; 
+		TbGroupDto dto = new TbGroupDto();
+		dto.setPartnerId(partnerId);
+		dto.setGroupNum(groupNum);
+		
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(usernamespace+"partnerIdInsertCheckO",dto);
+		} catch (Exception e) {
+			System.out.println("마이페이지에서 자신이 상대방에게 등록 당했을때, 수락했을 때 에러남 -다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
+	}
+
+	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 no눌렀을때 (확인창)
+	@Override
+	public int partnerIdInsertChekX(int groupNum) {
+		SqlSession session = null; 
+		int res = 0; 
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(usernamespace+"partnerIdInsertChekX",groupNum);
+		} catch (Exception e) {
+			System.out.println("마이페이지에서 자신이 상대방에게 등록 당했을때, 거절했을 때 에러남 -다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
+	}
+
+	//커플 삭제하기 -->버튼 
+	@Override
+	public int partnerIdDelete(int groupNum) {
+		SqlSession session = null; 
+		int res = 0; 
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(usernamespace+"partnerIdDelete",groupNum);
+		} catch (Exception e) {
+			System.out.println("커플 삭제하기 --> 버튼 에러남 -다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
+	}
+
 
 
 
