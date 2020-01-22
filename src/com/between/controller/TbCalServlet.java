@@ -203,9 +203,76 @@ public class TbCalServlet extends HttpServlet {
 			
 			dispatch("TbCalendarUpdate.jsp", request, response);
 		} else if(command.equals("updateCal")) {
+			year = Integer.parseInt(request.getParameter("year"));
+			month = Integer.parseInt(request.getParameter("month"));
+			String date = request.getParameter("date");
+			String hour = request.getParameter("hour");
+			String min = request.getParameter("min");
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			int calNum = Integer.parseInt(request.getParameter("calNum"));
+			int groupNum = Integer.parseInt(request.getParameter("groupNum"));
+			
+			String calTime = year +
+							biz.isTwo(Integer.toString(month)) +
+							biz.isTwo(date) +
+							biz.isTwo(hour) +
+							biz.isTwo(min);
+			
+			TbCalDto calDto = new TbCalDto();
+			calDto.setGroupNum(groupNum);
+			calDto.setCalTitle(title);
+			calDto.setCalContent(content);
+			calDto.setCalTime(calTime);
+			calDto.setCalNum(calNum);
+			
+			request.setAttribute("groupDto", groupDto);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("dayOfWeek", dayOfWeek);
+			request.setAttribute("lastDay", lastDay);
+			
+			int res = biz.updateEvent(calDto);
+			
+			System.out.println("수정된 시간 : "+hour);
+			System.out.println(calNum);
+			
+			if(res > 0) {
+				
+				dispatch("TbCalendar.jsp", request, response);
+			} else {
+				request.setAttribute("msg", "일정 수정 실패");
+				dispatch("TbCalendar.jsp",request,response);
+			}
+		} else if(command.equals("muldel")) {
+			
+			String[] seq = request.getParameterValues("chk");
+			
+			year = Integer.parseInt(request.getParameter("year"));
+			month = Integer.parseInt(request.getParameter("month"));
+			int date = Integer.parseInt(request.getParameter("date"));
+			
+			System.out.println(year);
+			System.out.println(month);
+			System.out.println(date);
 			
 			
-			//TbCalDto calDto = biz.updateEvent();
+			String yyyyMMdd = year+biz.isTwo(Integer.toString(month))+biz.isTwo(Integer.toString(date));
+			
+			List<TbCalDto> list = biz.selectCalList(yyyyMMdd, userInfo.getGroupNum());
+			
+			request.setAttribute("list", list);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("date", date);
+			
+			int res = biz.deleteEvent(seq);
+			
+			if(res > 0) {
+				dispatch("TbCalendarList.jsp", request, response);
+			} else {
+				dispatch("TbCalendarList.jsp", request, response);
+			}
 		}
 			
 		

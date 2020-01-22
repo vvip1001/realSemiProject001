@@ -1,6 +1,8 @@
 package com.between.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -87,13 +89,19 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	}
 
 	@Override
-	public int deleteEvent(int calNum) {
+	public int deleteEvent(String[] seq) {
 		SqlSession session = null;
 		int res = 0;
 		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("seqs", seq);
+		
 		try {
-			session = getSqlSessionFactory().openSession(true);
-			res = session.delete(namespace+"deleteEvent", calNum);
+			session = getSqlSessionFactory().openSession(false);
+			res = session.delete(namespace+"deleteEvent", map);
+			if(res==seq.length) {
+				session.commit();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

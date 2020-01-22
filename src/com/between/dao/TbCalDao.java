@@ -11,6 +11,6 @@ public interface TbCalDao {
 	public TbCalDto selectOne(int calNum, int groupNum);
 	public int insertEvent(TbCalDto dto);
 	public int updateEvent(TbCalDto dto);
-	public int deleteEvent(int calNum);
+	public int deleteEvent(String[] seq);
 	public TbGroupDto findPartner(int groupNum);
 }

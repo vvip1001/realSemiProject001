@@ -40,10 +40,6 @@ public class TbCalBizImpl implements TbCalBiz {
 		return dao.updateEvent(dto);
 	}
 
-	@Override
-	public int deleteEvent(int calNum) {
-		return dao.deleteEvent(calNum);
-	}
 	
 	
 	@Override
@@ -89,6 +85,12 @@ public class TbCalBizImpl implements TbCalBiz {
 	@Override
 	public TbGroupDto findPartner(int groupNum) {
 		return dao.findPartner(groupNum);
+	}
+
+	@Override
+	public int deleteEvent(String[] seq) {
+		
+		return dao.deleteEvent(seq);
 	}
 
 	

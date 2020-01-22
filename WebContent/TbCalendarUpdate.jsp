@@ -27,11 +27,10 @@
 	
 	<form action="TbCal.do" method="post">
 		<input type="hidden" name="command" value="updateCal">
-		
 		<table>
 			<tr>
 				<th>그룹번호</th>
-				<td><input type="text" name="groupNum" value="<%=groupNum %>" readonly="readonly"></td>
+				<td><input type="text" name="groupNum" value="<%=groupNum %>" readonly="readonly"><input type="hidden" name="calNum" value="<%=calNum %>"></td>
 			</tr>
 			<tr>
 				<th>날짜/시간</th>

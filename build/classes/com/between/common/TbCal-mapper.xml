@@ -44,7 +44,10 @@
   
   <delete id="deleteEvent">
   	DELETE FROM TB_CAL 
-  	WHERE CAL_NUM = #{calNum}
+  	WHERE CAL_NUM IN
+  	  	<foreach collection="seqs" item="calNum" open="(" separator="," close=")">
+  	 		#{calNum}
+  	  	</foreach>
   </delete>
   
   <select id="findPartner" resultMap="TbGroupResultMap">

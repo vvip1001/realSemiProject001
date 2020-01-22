@@ -4,43 +4,62 @@
 <%@page import="com.between.biz.TbCalBizImpl"%>
 <%@page import="com.between.biz.TbCalBiz"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<% request.setCharacterEncoding("UTF-8"); %>
-<% response.setContentType("text/html; charset=UTF-8"); %>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<%
+	response.setContentType("text/html; charset=UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	
+function allChk(tro){
+    $("input[name=chk]").each(function(){
+       $(this).prop("checked",tro);
+    });
+ }
+	
+</script>
+
+
 </head>
 <body>
 
 	<h1>일정보기</h1>
-	
-<%
-int year = (int)request.getAttribute("year");
-int month = (int)request.getAttribute("month");
-int date = (int)request.getAttribute("date");
 
-%>
+	<%
+		int year = (int) request.getAttribute("year");
+		int month = (int) request.getAttribute("month");
+		int date = (int) request.getAttribute("date");
+	%>
 
 	<form action="TbCal.do" method="post">
-		<input type="hidden" name="command" value="muldel">
-		
+		<input type="hidden" name="command" value="muldel"> <input
+			type="hidden" name="year" value="<%=year%>"> <input
+			type="hidden" name="month" value="<%=month%>"> <input
+			type="hidden" name="date" value="<%=date%>">
 		<jsp:useBean id="biz" class="com.between.biz.TbCalBizImpl"></jsp:useBean>
-		
+
 		<table>
 			<col width="50px;">
 			<col width="100px;">
-			<col width="200px;">			
+			<col width="200px;">
 			<tr>
-				<th><input type="checkbox" name="all" onclick=""></th>
+				<th><input type="checkbox" name="allChk" onclick="allChk(this.checked);"></th>
 				<th>날짜/시간</th>
 				<th>일정</th>
 			</tr>
-			
+
 			<c:choose>
 				<c:when test="${empty list }">
 					<tr>
@@ -51,27 +70,26 @@ int date = (int)request.getAttribute("date");
 					<c:forEach items="${list }" var="dto">
 						<tr>
 							<td><input type="checkbox" name="chk" value="${dto.calNum }"></td>
-							<td>
-								<jsp:setProperty property="todates" name="biz" value="${dto.calTime }"/>
-								<jsp:getProperty property="todates" name="biz"/>
-							</td>
-							<td><a href="TbCal.do?command=updateCalForm&calNum=${dto.calNum }&groupNum=${dto.groupNum}">${dto.calTitle }</a></td>
+							<td><jsp:setProperty property="todates" name="biz"
+									value="${dto.calTime }" /> <jsp:getProperty property="todates"
+									name="biz" /></td>
+							<td><a
+								href="TbCal.do?command=updateCalForm&calNum=${dto.calNum }&groupNum=${dto.groupNum}">${dto.calTitle }</a></td>
 						</tr>
-						
+
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
-			
+
 			<tr>
-				<td colspan="3">
-					<input type="button" value="글쓰기" onclick="location.href='TbCal.do?command=insertCalForm&year=<%=year %>&month=<%=month %>&date=<%=date %>'">
-					<input type="submit" value="삭제" onclick="">
-				</td>
+				<td colspan="3"><input type="button" value="글쓰기"
+					onclick="location.href='TbCal.do?command=insertCalForm&year=<%=year%>&month=<%=month%>&date=<%=date%>'">
+					<input type="submit" value="삭제"></td>
 			</tr>
-			
+
 		</table>
 	</form>
-	
-	
+
+
 </body>
 </html>
