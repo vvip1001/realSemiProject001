@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.TbUserDto"%>
 <%@page import="com.between.dto.TbCalDto"%>
 <%@page import="java.util.List"%>
 <%@page import="com.between.biz.TbCalBizImpl"%>
@@ -22,6 +23,7 @@
 int year = (int)request.getAttribute("year");
 int month = (int)request.getAttribute("month");
 int date = (int)request.getAttribute("date");
+
 %>
 
 	<form action="TbCal.do" method="post">
@@ -53,7 +55,7 @@ int date = (int)request.getAttribute("date");
 								<jsp:setProperty property="todates" name="biz" value="${dto.calTime }"/>
 								<jsp:getProperty property="todates" name="biz"/>
 							</td>
-							<td><a href="TbCal.do?command=">${dto.calTitle }</a></td>
+							<td><a href="TbCal.do?command=updateCalForm&calNum=${dto.calNum }&groupNum=${dto.groupNum}">${dto.calTitle }</a></td>
 						</tr>
 						
 					</c:forEach>

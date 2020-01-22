@@ -76,6 +76,7 @@ public class TbCalServlet extends HttpServlet {
 		
 		System.out.println(groupDto.getPartnerId());
 		
+		
 		if(command.equals("calendar")) {			
 			
 			request.setAttribute("groupDto", groupDto);
@@ -181,20 +182,8 @@ public class TbCalServlet extends HttpServlet {
 			request.setAttribute("month", month);
 			request.setAttribute("dayOfWeek", dayOfWeek);
 			request.setAttribute("lastDay", lastDay);
-			
 			request.setAttribute("date", date);
-			
-			
-			System.out.println(year);
-			System.out.println(month);
-			System.out.println(date);
-			System.out.println(hour);
-			System.out.println(min);
-			System.out.println(title);
-			System.out.println(content);
-			System.out.println(calTime);
-			
-			
+		
 			if(res>0) {
 				dispatch("TbCalendar.jsp", request, response);
 			} else {
@@ -202,8 +191,22 @@ public class TbCalServlet extends HttpServlet {
 				dispatch("TbCalendar.jsp",request,response);
 			}
 			
-			//dispatch("TbCalendarInsert", request, response);
-		} 
+			//dispatch("TbCalendar.jsp", request, response);
+		} else if(command.equals("updateCalForm")) {
+			int calNum = Integer.parseInt(request.getParameter("calNum"));
+			int groupNum = Integer.parseInt(request.getParameter("groupNum"));
+			TbCalDto calDto = biz.selectOne(calNum, groupNum);
+			
+			request.setAttribute("calNum", calNum);
+			request.setAttribute("groupNum", groupNum);
+			request.setAttribute("calDto", calDto);
+			
+			dispatch("TbCalendarUpdate.jsp", request, response);
+		} else if(command.equals("updateCal")) {
+			
+			
+			//TbCalDto calDto = biz.updateEvent();
+		}
 			
 		
 	}

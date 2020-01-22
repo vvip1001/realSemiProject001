@@ -38,8 +38,8 @@
 				<td><input type="text" name="groupNum" value="<%=userInfo.getGroupNum() %>" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th>일정</th>
-				<td><%=year %>년 <%=month %>월 <%=date %>일 <select name="hour">
+				<th>날짜/시간</th>
+				<td><input type="text" name="year" value="<%=year %>" readonly="readonly">년 <input type="text" name="month" value="<%=month %>" readonly="readonly">월 <input type="text" name="date" value="<%=date %>" readonly="readonly">일 <select name="hour">
 						<%
 							for (int i = 0; i < 24; i++) {
 						%>
