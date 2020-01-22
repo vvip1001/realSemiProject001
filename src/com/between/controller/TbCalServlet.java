@@ -139,7 +139,7 @@ public class TbCalServlet extends HttpServlet {
 			
 			dispatch("TbCalendarList.jsp", request, response);
 			
-		} else if(command.equals("insertEvent")) {
+		} else if(command.equals("insertCalForm")) {
 			
 			year = Integer.parseInt(request.getParameter("year"));
 			month = Integer.parseInt(request.getParameter("month"));

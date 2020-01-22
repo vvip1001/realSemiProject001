@@ -62,7 +62,7 @@ int date = (int)request.getAttribute("date");
 			
 			<tr>
 				<td colspan="3">
-					<input type="button" value="글쓰기" onclick="location.href='TbCal.do?command=insertEvent&year=<%=year %>&month=<%=month %>&date=<%=date %>'">
+					<input type="button" value="글쓰기" onclick="location.href='TbCal.do?command=insertCalForm&year=<%=year %>&month=<%=month %>&date=<%=date %>'">
 					<input type="submit" value="삭제" onclick="">
 				</td>
 			</tr>
