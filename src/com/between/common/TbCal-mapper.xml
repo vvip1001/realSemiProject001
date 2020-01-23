@@ -38,7 +38,7 @@
   
   <update id="updateEvent">
   	UPDATE TB_CAL 
-  	SET CAL_TITLE = #{calTitle}, CAL_CONTENT = #{calContent} 
+  	SET CAL_TITLE = #{calTitle}, CAL_CONTENT = #{calContent}, CAL_TIME = #{calTime}
   	WHERE CAL_NUM = #{calNum} AND GROUP_NUM = #{groupNum}
   </update>
   

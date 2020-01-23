@@ -19,15 +19,32 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	
-function allChk(tro){
-    $("input[name=chk]").each(function(){
-       $(this).prop("checked",tro);
-    });
- }
+function allChk(bool){
+	var $box = $("input[name=chk]");
+	for(var i = 0; i < $box.length; i++){
+		$box[i].checked = bool;
+	}
+}
+
+$(function(){
+	$("#muldelform").submit(function(){
+		if($("#muldelform input:checked").length==0){
+			alert("하나 이상 체크해주세요");
+			return false;
+		}
+	});
+	
+	$("input[name=chk]").click(function(){
+		if($("input[name=chk]").length==$("input[name=chk]:checked").length){
+			$("input[name=all]").prop("checked", true);
+		} else {
+			$("input[name=all]").prop("checked", false);
+		}
+	});
+});
 	
 </script>
 
@@ -43,7 +60,7 @@ function allChk(tro){
 		int date = (int) request.getAttribute("date");
 	%>
 
-	<form action="TbCal.do" method="post">
+	<form action="TbCal.do" method="post" id="muldelform">
 		<input type="hidden" name="command" value="muldel"> <input
 			type="hidden" name="year" value="<%=year%>"> <input
 			type="hidden" name="month" value="<%=month%>"> <input
@@ -55,7 +72,7 @@ function allChk(tro){
 			<col width="100px;">
 			<col width="200px;">
 			<tr>
-				<th><input type="checkbox" name="allChk" onclick="allChk(this.checked);"></th>
+				<th><input type="checkbox" name="all" onclick="allChk(this.checked);"/></th>
 				<th>날짜/시간</th>
 				<th>일정</th>
 			</tr>

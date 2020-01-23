@@ -258,6 +258,7 @@ public class TbCalServlet extends HttpServlet {
 			
 			
 			String yyyyMMdd = year+biz.isTwo(Integer.toString(month))+biz.isTwo(Integer.toString(date));
+			int res = biz.deleteEvent(seq);
 			
 			List<TbCalDto> list = biz.selectCalList(yyyyMMdd, userInfo.getGroupNum());
 			
@@ -266,7 +267,6 @@ public class TbCalServlet extends HttpServlet {
 			request.setAttribute("month", month);
 			request.setAttribute("date", date);
 			
-			int res = biz.deleteEvent(seq);
 			
 			if(res > 0) {
 				dispatch("TbCalendarList.jsp", request, response);
