@@ -36,9 +36,10 @@
 	}
 %>
 
+	<div>
 <h1>내글 수정하기 </h1>
 
-	<div>
+
 	<form action="TbUser.do" method="post" >
 	<input type="hidden" name="command" value="userboardupdateres"/>
 	<input type="hidden" name="boardNum" value="<%=board.getBoardNum() %>" />
@@ -72,5 +73,6 @@
 	</fieldset>
 	</form>
 	</div>
+	
 </body>
 </html>

@@ -28,7 +28,7 @@
 	}
 	
 </script>
-
+<div>
 	<h1>유저 마이페이지</h1>
 	<h1>나의 애칭<%=dto.getUserNick() %></h1>
 	<table border=1>
@@ -78,6 +78,6 @@
 			<input type="submit" value="비밀번호">
 		</form>
 
-
+</div>
 </body>
 </html>

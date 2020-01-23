@@ -10,12 +10,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div>
 <h1>관리자 페이지</h1>
 	<form action="">
 	<table>
 	
 	</table>
 	</form>
+</div>
 </body>
 </html>
