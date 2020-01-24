@@ -101,15 +101,9 @@ public class TbUserServlet extends HttpServlet {
 				
 				if(groupNum == 0 ) {
 					String partnerId = "N";
-//					int res = biz.partnerIdInsert(partnerId, userId);
-//					if(res > 0) {
-//						request.setAttribute("partnerId", partnerId);
-//					    dispatch("TbUserUserMyPage.jsp", request, response);
-//					}else {
-//						responseAlert("파트너아이디  입력 안되었음", "loginafter.jsp", response);
-//					}
-					request.setAttribute("partnerId", partnerId);
-				    dispatch("TbUserUserMyPage.jsp", request, response);
+
+				request.setAttribute("partnerId", partnerId);
+			    dispatch("TbUserUserMyPage.jsp", request, response);
 				}else {
 					String partnerId = biz.partnerIdShow(groupNum,userId);
 					request.setAttribute("partnerId", partnerId);
@@ -124,6 +118,27 @@ public class TbUserServlet extends HttpServlet {
 			
 			
 			
+		}else if(command.equals("partnerinsert")) {
+			String partnerId = request.getParameter("partnerId");
+			String userId = request.getParameter("userId");
+			
+			int res = biz.partnerIdInsert(partnerId, userId);
+				if(res > 0) {
+					
+				   int afterres = biz.partnerNumUpdateUT(userId);
+				
+				  if(afterres>0) {
+					request.setAttribute("partnerId", partnerId);
+				    dispatch("TbUserUserMyPage.jsp", request, response);
+				  }else {
+					responseAlert("파트너 유저테이블에 입력 불가 ", "index.html", response);
+				}
+			}else {
+				responseAlert("파트너 입력하는 유저테이블에서 오류", "loginafter.jsp", response);
+			}
+			
+			
+			
 		}else if(command.equals("userupdateform")){
 			
 			String partnerId = request.getParameter("partnerId");
@@ -132,10 +147,12 @@ public class TbUserServlet extends HttpServlet {
 			dispatch("TbUserUserUpdateForm.jsp", request, response);
 			
 			
-		}else if(command.equals("partnerinsert")) {
-			String partnerId = request.getParameter("partnerId");
-			String userId = request.getParameter("userId");
-			int res = biz.partnerIdInsert(partnerId, userId);
+		}else if(command.equals("userupdateformres")) {
+			//수정될 파트너 아이디 비밀번호 등을 받아서 처리하자 
+			//커플 테이블에 정보를 넣고 생성된 번호를 유저테이블에 저장 
+			
+			
+			int res = biz.partnerIdUpdate(partnerId, groupNum);
 			if(res > 0) {
 				
 				//dispatch("TbUser.do?command=mypage", request, response);
@@ -143,10 +160,6 @@ public class TbUserServlet extends HttpServlet {
 			}else {
 				responseAlert("파트너아이디를 입력해 주세요", "TbUser.do?command=userupdateform", response);
 			}
-			
-		}else if(command.equals("userupdateformres")) {
-			//여기 빈칸임 
-			
 			
 			
 		

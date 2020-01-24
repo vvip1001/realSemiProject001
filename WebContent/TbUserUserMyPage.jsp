@@ -24,7 +24,8 @@
 	alert('유저님의 마이페이지입니다. 환영합니다.');
 	
 	function alertinsert() {
-		alert('상대등록 수정은 회원정보 수정에서 해주세요');
+		alert('두번째 상대등록은  수정버튼을 눌러 회원정보 수정에서 해주세요');
+		location.href = '';
 	}
 	
 </script>
@@ -44,8 +45,8 @@
 <%
 				if(partnerId.equals("N")){
 %>
-				<input type="text" name="partnerId" value="<%=partnerId %>" >
-				<input type="submit" value="상대등록하기" onclick="alertinsert();"/>
+				<input type="text" name="partnerId" value="상대의 아이디  입력" >
+				<input type="submit" value="상대등록하기" />
 <%
 				}else{
 %>

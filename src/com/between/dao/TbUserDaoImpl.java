@@ -250,6 +250,27 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		return res;
 	}
 	
+	//파트너를 등록했을 경우 유저테이블 - 커플 그룹번호 입력 
+	
+	@Override
+	public int partnerNumUpdateUT(String userId) {
+
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(usernamespace+"partnerNumUpdateUT",userId);
+		} catch (Exception e) {
+			System.out.println("파트너 생성뒤 자신의 유저테이블 파트너 넘버 등록 에러 -다오");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	
+
 	////파트너 이름 수정 
 	@Override
 	public int partnerIdUpdate(String partnerId, int groupNum) {
@@ -275,17 +296,17 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 
 	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 yes눌렀을때 (확인창)
 	@Override
-	public int partnerIdInsertCheckO(String partnerId, int groupNum) {
+	public int partnerIdInsertCheckO( int groupNum) {
 		SqlSession session = null; 
-		TbGroupDto dto = new TbGroupDto();
+/*		TbGroupDto dto = new TbGroupDto();
 		dto.setPartnerId(partnerId);
-		dto.setGroupNum(groupNum);
+		dto.setGroupNum(groupNum);*/
 		
 		int res = 0;
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(usernamespace+"partnerIdInsertCheckO",dto);
+			res = session.update(usernamespace+"partnerIdInsertCheckO",groupNum);
 		} catch (Exception e) {
 			System.out.println("마이페이지에서 자신이 상대방에게 등록 당했을때, 수락했을 때 에러남 -다오");
 			e.printStackTrace();
@@ -297,14 +318,15 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 	}
 
 	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 no눌렀을때 (확인창)
+	//커플 삭제하기 -->버튼 
 	@Override
-	public int partnerIdInsertChekX(int groupNum) {
+	public int partnerIdInsertChekXnDelete(int groupNum) {
 		SqlSession session = null; 
 		int res = 0; 
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(usernamespace+"partnerIdInsertChekX",groupNum);
+			res = session.update(usernamespace+"partnerIdInsertChekXnDelete",groupNum);
 		} catch (Exception e) {
 			System.out.println("마이페이지에서 자신이 상대방에게 등록 당했을때, 거절했을 때 에러남 -다오");
 			e.printStackTrace();
@@ -315,24 +337,6 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		return res;
 	}
 
-	//커플 삭제하기 -->버튼 
-	@Override
-	public int partnerIdDelete(int groupNum) {
-		SqlSession session = null; 
-		int res = 0; 
-		
-		try {
-			session = getSqlSessionFactory().openSession(true);
-			res = session.update(usernamespace+"partnerIdDelete",groupNum);
-		} catch (Exception e) {
-			System.out.println("커플 삭제하기 --> 버튼 에러남 -다오");
-			e.printStackTrace();
-		}finally {
-			session.close();
-		}
-		
-		return res;
-	}
 
 
 

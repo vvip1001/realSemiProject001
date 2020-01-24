@@ -23,15 +23,8 @@
 <meta name="google-signin-client_id" content="1086121226988-79i2g3qsvsr85hmu6kh2i5jkelnofqrm.apps.googleusercontent.com">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-
-<style >
-	
-	#kakaobtn{
-		width : 10px;
-		height : 10px;
-		
-	}
-	
+<!-- 일반 로그인 팝업창  -->
+<style>	
 	#login {
 		width : 300px;
 		height : 500px;
@@ -44,9 +37,8 @@
 	}
 	
 </style>
+<!-- 일반 로그인 스크립트  -->
 <script type="text/javascript">
-
-
 function loginpopup(){
 	var lo = document.getElementById("login");
 	lo.style.display = "block";
@@ -75,11 +67,9 @@ function closewin(){
 	}
 	
 }
-
-
-
-
 </script>
+
+<!-- 카카오톡 로그인 스크립트 -->
 <script type='text/javascript'>
 function kakaologin() {
 	 Kakao.init('3ffc02510f976b23accd140b3077863a');
@@ -125,7 +115,7 @@ function kakaologin() {
     }
 
 </script>
-
+<!-- 구글 로그인 스크립트  -->
 <script>
         function onSignIn(googleUser) {
             // Useful data for your client-side scripts:

@@ -104,20 +104,21 @@ public class TbUserBizImpl implements TbUserBiz{
 
 	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 yes눌렀을때 (확인창)
 	@Override
-	public int partnerIdInsertCheckO(String partnerId, int groupNum) {
-		return dao.partnerIdInsertCheckO(partnerId, groupNum);
+	public int partnerIdInsertCheckO(int groupNum) {
+		return dao.partnerIdInsertCheckO( groupNum);
 	}
 
 	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 no눌렀을때 (확인창)
-	@Override
-	public int partnerIdInsertChekX(int groupNum) {
-		return dao.partnerIdInsertChekX(groupNum);
-	}
-
 	//커플 삭제하기 -->버튼 
 	@Override
-	public int partnerIdDelete(int groupNum) {
-		return dao.partnerIdDelete(groupNum);
+	public int partnerIdInsertChekXnDelete(int groupNum) {
+		return dao.partnerIdInsertChekXnDelete(groupNum);
+	}
+
+	@Override
+	public int partnerNumUpdateUT(String userId) {
+		// TODO Auto-generated method stub
+		return dao.partnerNumUpdateUT(userId);
 	}
 
 
