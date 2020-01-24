@@ -1,5 +1,6 @@
 package com.between.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +121,27 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 		dto = session.selectOne(namespace+"findPartner", groupNum);
 		
 		return dto;
+	}
+
+	@Override
+	public List<TbCalDto> selectCalListView(String yyyyMM, int groupNum) {
+		SqlSession session = null;
+		List<TbCalDto> list = new ArrayList<TbCalDto>();
+		TbCalDto calDto = new TbCalDto();
+		calDto.setCalTime(yyyyMM);
+		calDto.setGroupNum(groupNum);
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			list = session.selectList(namespace+"selectCalListView",calDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return list;
+		
 	}
 
 	

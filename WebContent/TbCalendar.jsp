@@ -1,3 +1,7 @@
+<%@page import="com.between.dao.TbCalDaoImpl"%>
+<%@page import="com.between.dao.TbCalDao"%>
+<%@page import="com.between.dto.TbCalDto"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.between.biz.TbCalBizImpl"%>
 <%@page import="com.between.biz.TbCalBiz"%>
@@ -17,6 +21,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript" src="dday.js"></script>
 
 <style type="text/css">
 #calendar {
@@ -53,6 +59,12 @@ a {
 	height: 500px;
 	margin: 0 auto;
 }
+
+.preList>p {
+	font-size: 10px;
+	margin: 1px;
+	background-color: pink;
+}
 </style>
 
 </head>
@@ -69,6 +81,11 @@ a {
 		int month = (int) request.getAttribute("month");
 		int dayOfWeek = (int) request.getAttribute("dayOfWeek");
 		int lastDay = (int) request.getAttribute("lastDay");
+		
+		TbCalDao dao = new TbCalDaoImpl();
+		String yyyyMM = year + biz.isTwo(String.valueOf(month));
+		List<TbCalDto> clist = dao.selectCalListView(yyyyMM, groupNum);
+		
 	%>
 
 	<h1><%=groupDto.getUserId()%>&
@@ -77,17 +94,9 @@ a {
 
 	<div id="wrap">
 		<div class="D-Day">
-			<table>
-				<tr>
-					<td><input type="button" value="사귄날 등록" onclick=""></td>
-				</tr>
-				<tr>
-					<th>기념일</th>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-			</table>
+			<input type="text" id="first" placeholder="예)2019-12-25">
+			<input type="button" id="addDate" value="사귄날 등록" onclick="load();">
+			<div id="result"></div>
 		</div>
 		<div class="cal">
 			<table id="calendar">
@@ -125,7 +134,9 @@ a {
 					%>
 					<td><a class="countview"
 						href="TbCal.do?command=callist&year=<%=year%>&month=<%=month%>&date=<%=i%>"
-						style="color: <%=biz.fontColor(i, dayOfWeek)%>"><%=i%> </a></td>
+						style="color: <%=biz.fontColor(i, dayOfWeek)%>"><%=i%> </a>
+						<div class="preList"><%=biz.getCalView(i, clist) %></div>
+					</td>
 					<%
 						if (cnt % 7 == 0) {
 					%>

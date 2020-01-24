@@ -13,4 +13,6 @@ public interface TbCalDao {
 	public int updateEvent(TbCalDto dto);
 	public int deleteEvent(String[] seq);
 	public TbGroupDto findPartner(int groupNum);
+	
+	public List<TbCalDto> selectCalListView(String yyyyMM, int groupNum);
 }

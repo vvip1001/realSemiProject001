@@ -78,8 +78,20 @@ public class TbCalBizImpl implements TbCalBiz {
 
 	@Override
 	public String getCalView(int i, List<TbCalDto> clist) {
+		String d = isTwo(i+"");
+		String res = "";
 		
-		return null;
+		for(TbCalDto dto : clist) {
+			if(dto.getCalTime().substring(6, 8).equals(d)) {
+				res += "<p>"
+						+ ((dto.getCalTitle().length() > 6) ?
+								dto.getCalTitle().substring(0,6)+"..." :
+									dto.getCalTitle())
+						+"</p>";
+			}
+		}
+		
+		return res;
 	}
 
 	@Override
