@@ -133,7 +133,7 @@
  	</update>
 
  	<update id="partnerIdInsertCheckO" parameterType="int" >
- 	UPDATE TB_GROUP SET GROUP_CHECK ='Y' WHERE  GROUP_NUM = #{groupNum}
+ 	UPDATE TB_GROUP dSET GROUP_CHECK ='Y' WHERE  GROUP_NUM = #{groupNum}
  	</update>
  	
  	<update id="partnerIdInsertChekXnDelete" parameterType="int" >
