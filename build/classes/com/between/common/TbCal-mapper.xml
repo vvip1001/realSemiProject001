@@ -21,30 +21,42 @@
 	
 	
 	
-  <select id="getCalList" parameterType="String" resultMap="TbCalResultMap">
+  <select id="selectCalList" parameterType="TbCalDto" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE 
-  	FROM TB_CAL WHERE CAL_TIME = {#calTime} AND GROUP_NUM = #{groupNum} ORDER BY CAL_NUM DESC
+  	FROM TB_CAL WHERE GROUP_NUM = #{groupNum} AND SUBSTR(CAL_TIME,1,8)=#{calTime} ORDER BY CAL_NUM DESC
   </select>
   
   <select id="selectOne" parameterType="int" resultMap="TbCalResultMap">
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
-  	FROM TB_CAL WHERE CAL_NUM = {#calNum} AND GROUP_NUM = #{groupNum}
+  	FROM TB_CAL WHERE CAL_NUM = #{calNum} AND GROUP_NUM = #{groupNum}
+  </select>
+  
+  <select id="selectCalListView" parameterType="TbCalDto" resultMap="TbCalResultMap" >
+  	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
+  	FROM (SELECT
+  	(ROW_NUMBER() OVER (PARTITION BY SUBSTR(CAL_TIME,1,8)ORDER BY CAL_TIME))RN,
+  	CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE 
+  	FROM TB_CAL WHERE GROUP_NUM = #{groupNum} AND SUBSTR(CAL_TIME,1,6)=#{calTime})
+  	WHERE RN BETWEEN 1 AND 3 ORDER BY CAL_TIME 
   </select>
   
   <insert id="insertEvent" parameterType="TbCalDto">
   	INSERT INTO TB_CAL VALUES 
-  	(TB_CAL_SEQ.NEXTVAL, ${groupNum}, #{calTitle}, #{calContent}, #{calTime}, SYSDATE)
+  	(TB_CAL_SEQ.NEXTVAL, #{groupNum}, #{calTitle}, #{calContent}, #{calTime}, SYSDATE)
   </insert>
   
   <update id="updateEvent">
   	UPDATE TB_CAL 
-  	SET CAL_TITLE = #{calTitle}, CAL_CONTENT = #{calContent} 
+  	SET CAL_TITLE = #{calTitle}, CAL_CONTENT = #{calContent}, CAL_TIME = #{calTime}
   	WHERE CAL_NUM = #{calNum} AND GROUP_NUM = #{groupNum}
   </update>
   
   <delete id="deleteEvent">
   	DELETE FROM TB_CAL 
-  	WHERE CAL_NUM = #{calNum}
+  	WHERE CAL_NUM IN
+  	  	<foreach collection="seqs" item="calNum" open="(" separator="," close=")">
+  	 		#{calNum}
+  	  	</foreach>
   </delete>
   
   <select id="findPartner" resultMap="TbGroupResultMap">

@@ -1,6 +1,9 @@
 package com.between.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -13,13 +16,16 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	private String namespace = "com.between.TbCal.mapper.";
 
 	@Override
-	public List<TbCalDto> getCalList(String calTime, int groupNum) {
+	public List<TbCalDto> selectCalList(String yyyyMMdd, int groupNum) {
 		SqlSession session = null;
 		List<TbCalDto> list = null;
+		TbCalDto calDto = new TbCalDto();
+		calDto.setCalTime(yyyyMMdd);
+		calDto.setGroupNum(groupNum);
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			list = session.selectList(namespace+"selectList");
+			list = session.selectList(namespace+"selectCalList",calDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -84,13 +90,19 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 	}
 
 	@Override
-	public int deleteEvent(int calNum) {
+	public int deleteEvent(String[] seq) {
 		SqlSession session = null;
 		int res = 0;
 		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("seqs", seq);
+		
 		try {
-			session = getSqlSessionFactory().openSession(true);
-			res = session.delete(namespace+"deleteEvent", calNum);
+			session = getSqlSessionFactory().openSession(false);
+			res = session.delete(namespace+"deleteEvent", map);
+			if(res==seq.length) {
+				session.commit();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -109,6 +121,27 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 		dto = session.selectOne(namespace+"findPartner", groupNum);
 		
 		return dto;
+	}
+
+	@Override
+	public List<TbCalDto> selectCalListView(String yyyyMM, int groupNum) {
+		SqlSession session = null;
+		List<TbCalDto> list = new ArrayList<TbCalDto>();
+		TbCalDto calDto = new TbCalDto();
+		calDto.setCalTime(yyyyMM);
+		calDto.setGroupNum(groupNum);
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			list = session.selectList(namespace+"selectCalListView",calDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return list;
+		
 	}
 
 	

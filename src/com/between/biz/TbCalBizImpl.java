@@ -21,8 +21,8 @@ public class TbCalBizImpl implements TbCalBiz {
 	}
 	
 	@Override
-	public List<TbCalDto> getCalList(String calTime, int groupNum) {
-		return dao.getCalList(calTime, groupNum);
+	public List<TbCalDto> selectCalList(String calTime, int groupNum) {
+		return dao.selectCalList(calTime, groupNum);
 	}
 
 	@Override
@@ -40,10 +40,6 @@ public class TbCalBizImpl implements TbCalBiz {
 		return dao.updateEvent(dto);
 	}
 
-	@Override
-	public int deleteEvent(int calNum) {
-		return dao.deleteEvent(calNum);
-	}
 	
 	
 	@Override
@@ -51,8 +47,8 @@ public class TbCalBizImpl implements TbCalBiz {
 		// yyyy-MM-dd hh:mm:ss
 		String m = calTime.substring(0,4) + "-" +
 				calTime.substring(4,6) + "-" +
-				calTime.substring(6,8) + "-" +
-				calTime.substring(8,10) + "-" +
+				calTime.substring(6,8) + " " +
+				calTime.substring(8,10) + ":" +
 				calTime.substring(10) + ":00";
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년MM월dd일 HH시mm분");
@@ -82,13 +78,31 @@ public class TbCalBizImpl implements TbCalBiz {
 
 	@Override
 	public String getCalView(int i, List<TbCalDto> clist) {
+		String d = isTwo(i+"");
+		String res = "";
 		
-		return null;
+		for(TbCalDto dto : clist) {
+			if(dto.getCalTime().substring(6, 8).equals(d)) {
+				res += "<p>"
+						+ ((dto.getCalTitle().length() > 6) ?
+								dto.getCalTitle().substring(0,6)+"..." :
+									dto.getCalTitle())
+						+"</p>";
+			}
+		}
+		
+		return res;
 	}
 
 	@Override
 	public TbGroupDto findPartner(int groupNum) {
 		return dao.findPartner(groupNum);
+	}
+
+	@Override
+	public int deleteEvent(String[] seq) {
+		
+		return dao.deleteEvent(seq);
 	}
 
 	

@@ -13,16 +13,17 @@
 <title>Insert title here</title>
 </head>
 <%
-	int year = Integer.parseInt(request.getParameter("year"));
-	int month = Integer.parseInt(request.getParameter("month"));
-	int date = Integer.parseInt(request.getParameter("date"));
-	int lastDay = Integer.parseInt(request.getParameter("lastday"));
+	
 	
 	Calendar cal = Calendar.getInstance();
 	int hour = cal.get(Calendar.HOUR_OF_DAY);
 	int min = cal.get(Calendar.MINUTE);
 	
 	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
+	
+	int year = (int)request.getAttribute("year");
+	int month = (int)request.getAttribute("month");
+	int date = (int)request.getAttribute("date");
 	
 %>
 <body>
@@ -37,34 +38,8 @@
 				<td><input type="text" name="groupNum" value="<%=userInfo.getGroupNum() %>" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th>일정</th>
-				<td><select name="year">
-
-						<%
-							for (int i = year - 5; i <= year + 5; i++) {
-						%>
-						<option value="<%=i%>" <%=(year == i) ? "selected" : ""%>><%=i%></option>
-						<%
-							}
-						%>
-
-				</select>년 <select name="month">
-						<%
-							for (int i = 1; i <= 12; i++) {
-						%>
-						<option value="<%=i%>" <%=(month == i) ? "selected" : ""%>><%=i%></option>
-						<%
-							}
-						%>
-				</select>월 <select name="date">
-						<%
-							for (int i = 1; i <= lastDay; i++) {
-						%>
-						<option value="<%=i%>" <%=(date == i) ? "selected" : ""%>><%=i%></option>
-						<%
-							}
-						%>
-				</select>일 <select name="hour">
+				<th>날짜/시간</th>
+				<td><input type="text" name="year" value="<%=year %>" readonly="readonly">년 <input type="text" name="month" value="<%=month %>" readonly="readonly">월 <input type="text" name="date" value="<%=date %>" readonly="readonly">일 <select name="hour">
 						<%
 							for (int i = 0; i < 24; i++) {
 						%>
@@ -93,7 +68,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="일정작성">
-					<input type="button" value="취소" onclick="location.href='TbCal.do?command=calendar'">
+					<input type="button" value="취소" onclick="location.href='TbCal.do?command=callist&year=<%=year %>&month=<%=month %>&date=<%=date %>'">
 				</td>
 			</tr>
 		</table>

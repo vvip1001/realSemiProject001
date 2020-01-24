@@ -14,6 +14,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="resources/summernote/summernote-lite.js"></script>
+<script src="resources/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="resources/summernote/summernote-lite.css">
+
+<script type="text/javascript">
+	$(function() {
+	  $('#summernote').summernote({
+	    height: 300,
+	    lang: 'ko-KR' // 언어 세팅
+	  });
+	});
+</script>
+
 </head>
 <body>
 
@@ -32,7 +46,7 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="15" cols="30" name="boardContent">${board.boardContent }</textarea>
+				<td><textarea rows="15" cols="30" name="boardContent" id="summernote" >${board.boardContent }</textarea>
 				</td>
 			</tr>
 			<tr>

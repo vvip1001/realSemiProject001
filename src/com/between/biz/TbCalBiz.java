@@ -8,11 +8,11 @@ import com.between.dto.TbUserDto;
 
 public interface TbCalBiz {
 	
-	public List<TbCalDto> getCalList(String calTime, int groupNum);
+	public List<TbCalDto> selectCalList(String calTime, int groupNum);
 	public TbCalDto selectOne(int calNum, int groupNum);
 	public int insertEvent(TbCalDto dto);
 	public int updateEvent(TbCalDto dto);
-	public int deleteEvent(int calNum);
+	public int deleteEvent(String[] seq);
 	public TbGroupDto findPartner(int groupNum);
 	
 	public void setTodates(String calTime);
