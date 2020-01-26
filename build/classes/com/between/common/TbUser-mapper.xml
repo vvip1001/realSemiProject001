@@ -119,6 +119,9 @@
  	SELECT * FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
  	</select>
  	
+ 	<select id="partnerDtoDummy" parameterType="String" resultMap="TbGroupResultMap">
+ 	SELECT * FROM TB_GROUP WHERE (USER_ID = #{userId} OR PARTNER_ID = #{userId})
+ 	</select>
  	
  	<update id="partnerIdInsert" parameterType="map" >
  	INSERT INTO TB_GROUP (PARTNER_ID, GROUP_NUM, GROUP_CHECK, USER_ID) VALUES(#{partnerId},TB_GROUP_SEQ.NEXTVAL ,'N', #{userId})
@@ -133,14 +136,16 @@
  	</update>
 
  	<update id="partnerIdInsertCheckO" parameterType="int" >
- 	UPDATE TB_GROUP dSET GROUP_CHECK ='Y' WHERE  GROUP_NUM = #{groupNum}
+ 	UPDATE TB_GROUP SET GROUP_CHECK ='Y' WHERE  GROUP_NUM = #{groupNum}
  	</update>
  	
- 	<update id="partnerIdInsertChekXnDelete" parameterType="int" >
+ 	<delete id="partnerIdInsertChekXnDelete" parameterType="int" >
  	DELETE FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
- 	</update>
+ 	</delete>
  	
- 
+ 	<update id="partnerNumUpdateUTDelete">
+ 	UPDATE TB_USER SET GROUP_NUM = NULL WHERE GROUP_NUM = #{groupNum}
+ 	</update>
  	
  	
  	

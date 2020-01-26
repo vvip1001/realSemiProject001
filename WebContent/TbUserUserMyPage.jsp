@@ -17,7 +17,7 @@
 	TbUserDto dto = (TbUserDto)session.getAttribute("dto"); 
 	String partnerId = String.valueOf(request.getAttribute("partnerId"));
 	
-	System.out.println(partnerId);
+	//System.out.println(partnerId);
 %>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">

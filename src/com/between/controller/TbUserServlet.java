@@ -65,14 +65,78 @@ public class TbUserServlet extends HttpServlet {
 			
 			//로그인 받은 정보에 따른 판별
 			if(dto != null) {
-				HttpSession session =  request.getSession(true);
-				session.setAttribute("dto", dto);
+				TbGroupDto groupdto = biz.partnerDtoDummy(userId);
+				
+				if(groupdto != null) {
+					HttpSession session =  request.getSession(true);
+					session.setAttribute("dto", dto);
+					request.setAttribute("groupdto", groupdto);
+					dispatch("loginafter.jsp", request, response);
+					
+				}else if(groupdto == null){
+					HttpSession session =  request.getSession(true);
+					session.setAttribute("dto", dto);
+					dispatch("loginafter.jsp", request, response);
+				}
+				
 				//session.setMaxInactiveInterval(60*10);
 				}
-			response.sendRedirect("loginafter.jsp");
+
+			
+			 
 			
 			
+		}else if(command.equals("loginafter2")) { 
+			HttpSession session = request.getSession();
+			TbUserDto dto = (TbUserDto)session.getAttribute("dto");
+			String userId = dto.getUserId();
 			
+
+			//상대방이 자신을 파트너로 등록 했을 경우 서로 커플 맺기
+			TbGroupDto groupdto = biz.partnerDtoDummy(userId);
+			
+			
+			if(groupdto != null) {
+				session.setAttribute("dto", dto);
+				request.setAttribute("groupdto", groupdto);
+				dispatch("loginafter2.jsp", request, response);
+			}
+			
+
+			
+		}else if(command.equals("after2")){
+			//커플 신청이 들어왔을때 승낙시
+			String userId = request.getParameter("userId");
+			String check = request.getParameter("check");
+			int groupNum = Integer.parseInt(request.getParameter("groupNum"));
+			
+			if(check.equals("yes")) {
+				int res = biz.partnerIdInsertCheckO(groupNum);
+				if(res >0) {
+					int res2 = biz.partnerNumUpdateUT(userId);
+					if(res2 > 0) {
+						responseAlert("커플등록 성공하였습니다", "loginafter.jsp", response);	
+					}
+					
+				}else {
+					responseAlert("커플등록 실패 하였습니다", "loginafter2.jsp", response);
+				}
+			}else if(check.equals("no")){
+				//커플 신청이 들어왔을때 거절시
+				int res = biz.partnerIdInsertChekXnDelete(groupNum);
+				if(res >0) {
+					int res2 = biz.partnerNumUpdateUTDelete(groupNum);
+					if(res2 >0) {
+						responseAlert("커플등록 거절 하였습니다", "loginafter.jsp", response);	
+					}
+					
+				}else {
+					responseAlert("커플등록을 실패하였습니다", "loginafter2.jsp", response);
+				}
+			}else {
+				response.sendRedirect("loginafter2.jsp");
+			}
+				
 		}else if(command.equals("logout")) {
 			
 			//세션 만료 
@@ -88,7 +152,7 @@ public class TbUserServlet extends HttpServlet {
 			
 
 			int groupNum = loginDto.getGroupNum();
-			System.out.println("groupNum : "+groupNum);
+			//System.out.println("groupNum : "+groupNum);
 			String userId = loginDto.getUserId();
 			
 
@@ -111,12 +175,8 @@ public class TbUserServlet extends HttpServlet {
 					dispatch("TbUserUserMyPage.jsp", request, response);
 				}
 				
-				//상대방이 자신을 파트너로 등록 했을 경우 서로 커플 맺기
+
 				
-				/*if() {
-					
-				}
-				*/
 				
 				//responseAlert("일반회원님의 마이페이지 입니다. 환영합니다.", "TbUserUserMyPage.jsp", response);
 			}else if(loginDto.getUserStatus().equals("COUNSELOR")) {
@@ -161,17 +221,46 @@ public class TbUserServlet extends HttpServlet {
 		}else if(command.equals("userupdateformres")) {
 			//수정될 파트너 아이디 비밀번호 등을 받아서 처리하자 
 			//커플 테이블에 정보를 넣고 생성된 번호를 유저테이블에 저장 
+			String partnerId = request.getParameter("partnerId");
+			String userId = request.getParameter("userId");
+			TbGroupDto groupdto = biz.partnerDtoDummy(userId);
+
 			
-			/*
-			int res = biz.partnerIdUpdate(partnerId, groupNum);
+			String userPw = request.getParameter("userPw");
+			String userEmail = request.getParameter("userEmail");
+			String userNick = request.getParameter("userNick");
+			
+			TbUserDto dto = new TbUserDto();
+			dto.setUserPw(userPw);
+			dto.setUserEmail(userEmail);
+			dto.setUserNick(userNick);
+			
+			int res = biz.userUpdate(dto);
 			if(res > 0) {
-				
-				//dispatch("TbUser.do?command=mypage", request, response);
-				response.sendRedirect("TbUser.do?command=mypage");
-			}else {
-				responseAlert("파트너아이디를 입력해 주세요", "TbUser.do?command=userupdateform", response);
+				if(partnerId.equals("N")) {
+					responseAlert("회원정보 수정이 완료되었습니다", "TbUser.do?command=mypage", response);
+				}else if(!partnerId.equals("N")){
+					//기존 상대방 아이디 및 커플 번호 삭제 -> 새로 신청
+					int groupNum = groupdto.getGroupNum();
+					int res1 = biz.partnerIdInsertChekXnDelete(groupNum);
+					if(res1 > 0) {
+						//내 유저테이블에서 그룹 넘버 삭제 하기
+						int res2 = biz.partnerNumUpdateUTDelete(groupNum);
+						if(res2 > 0) {
+							//신규 상대방 아이디 신청
+							int res3 = biz.partnerIdInsert(partnerId, userId);
+							if(res3 > 0) {
+								//나의 유저 테이블에서 저장하기 
+								int res4 = biz.partnerNumUpdateUT(userId);
+								if(res4 > 0) {
+									responseAlert("회원정보 수정이 완료 되었습니다, 새로운 상대방에게 커플신청을 했습니다", "TbUser.do?command=mypage", response);
+								}
+							}
+						}
+					}
+					
+				}
 			}
-			*/
 			
 		
 		}else if(command.equals("userboardlist")) {

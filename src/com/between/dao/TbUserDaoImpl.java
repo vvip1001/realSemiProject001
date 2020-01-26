@@ -326,7 +326,7 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(usernamespace+"partnerIdInsertChekXnDelete",groupNum);
+			res = session.delete(usernamespace+"partnerIdInsertChekXnDelete",groupNum);
 		} catch (Exception e) {
 			System.out.println("마이페이지에서 자신이 상대방에게 등록 당했을때, 거절했을 때 에러남 -다오");
 			e.printStackTrace();
@@ -337,8 +337,47 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		return res;
 	}
 
+	//커플그룹 dto더미 만들기 
+	@Override
+	public TbGroupDto partnerDtoDummy(String userId) {
+		SqlSession session = null; 
+		TbGroupDto dto = null; 
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			dto = session.selectOne(usernamespace+"partnerDtoDummy",userId);
+		} catch (Exception e) {
+			System.out.println("커플 테이블 더미 데이터 불러오기 실패 - 다오 ");
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		
+		
+		return dto;
+	}
+
+	//유저테이블에서 커플넘버 null값으로 바꾸기 
+	@Override
+	public int partnerNumUpdateUTDelete(int groupNum) {
+		SqlSession session = null; 
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(usernamespace+"partnerNumUpdateUTDelete",groupNum);
+		} catch (Exception e) {
+			System.out.println("파트너 넘버를 유저테이블에서 null값으로 바꾸기 에러남 - 다오");
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return res;
+	}
 
 
+	
 
 
 		

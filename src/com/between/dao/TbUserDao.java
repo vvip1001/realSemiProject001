@@ -57,6 +57,10 @@ public interface TbUserDao {
 	//커플 삭제하기 -->버튼 
 	public int partnerIdInsertChekXnDelete (int groupNum);
 	
-
+	//커플 테이블 dto 더미 호출 
+	public TbGroupDto partnerDtoDummy(String userId);
+	
+	//유저테이블에서 커플넘버지우기 
+	public int partnerNumUpdateUTDelete(int groupNum);
 	
 }

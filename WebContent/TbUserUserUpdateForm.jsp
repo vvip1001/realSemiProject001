@@ -15,7 +15,7 @@
 	TbUserDto dto = (TbUserDto)session.getAttribute("dto");
 	String partnerId = String.valueOf(request.getAttribute("partnerId"));
 
-//TbGroupDto groupdto = (TbGroupDto)request.getAttribute("groupdto");
+    
 %>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -23,7 +23,8 @@
 	$(function(){ $("#alert-success").hide(); 
 	$("#alert-danger").hide();
 	$("input").keyup(function(){ var pwd1=$("#pwd1").val(); 
-	var pwd2=$("#pwd2").val(); if(pwd1 != "" || pwd2 != ""){ 
+	var pwd2=$("#pwd2").val(); 
+	if(pwd1 != "" || pwd2 != ""){ 
 		if(pwd1 == pwd2){ 
 			$("#alert-success").show(); 
 			$("#alert-danger").hide(); 
@@ -46,6 +47,8 @@
 
 	<form action="TbUser.do" method="post">
 	<input type="hidden" name="command" value="userupdateformres">
+	<input type="hidden" name="userId" value="<%=dto.getUserId()%>">
+	
 		<table border=1>	
 			<tr>
 				<th>우리자기</th>
@@ -53,11 +56,13 @@
 	if(partnerId.equals("N") ){
 
 %>
-			<td><input type="text" name="partnerId" value="상대방 아이디를 입력해 주세요" ></td>
+			<td>
+			<input type="hidden" name="partnerId" value="<%=partnerId %>">
+			<input type="text"  value="우리자기 등록하기  먼저 해주세요" readonly="readonly" style="width:210px;"></td>
 <% 
 	}else{
 %>
-			<td><input type="text" name="partnerId" value="<%=partnerId %>" ></td>
+			<td><input type="text" name="partnerId" ></td>
 <%
 	}
 %>	
@@ -66,27 +71,26 @@
 			</tr>
 			<tr>	
 				<th>새로운 비밀번호</th>
-				<td> <input type="password" name="userPwd" id="pwd1" class="form-control" required /> </td>
+				<td> <input type="password" name="userPw" id="pwd1" class="form-control" required /> </td>
 			</tr>
 			<tr>	
 				<th>새로운 비밀번호 확인</th>
 				<td><input type="password" name="reuserPwd" id="pwd2" class="form-control" required /></td>
-
 			</tr>
 			<tr>	
 				<th>이메일</th>
-				<td><input type="email" name="userEmail" value="<%=dto.getUserEmail() %>"></td>
+				<td><input type="email" name="userEmail" placeholder="<%=dto.getUserEmail()%>" ></td>
 				
 			</tr>
 			<tr>	
 				<th>나의애칭바꾸기</th>
-				<td><input type="text" name="userNick" value="<%=dto.getUserNick()%>"></td>
+				<td><input type="text" name="userNick" placeholder="<%=dto.getUserNick() %>"></td>
 				
 			</tr>
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="수정완료"/>
-					<input type="button" value="취소" onclick="location.href='TbUser.do?command=mypage&logindto1=<%=dto.getUserStatus() %>'"/>
+					<input type="button" value="취소" onclick="location.href='TbUser.do?command=mypage'"/>
 				</td>
 			</tr>
 		</table>
