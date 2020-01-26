@@ -21,8 +21,11 @@ public interface TbUserDao {
 	//회원 탈퇴 -> 활동 y으로 변경
 	public int userDelete(String userId);
 	
+	//페이징 카운트 보드 
+	public int countBoard(String userId);
+	
 	//회원 글목록 보기 
-	public List<TbBoardDto> userBoardList(String userId);
+	public List<TbBoardDto> userBoardList(String userId,int pageNum, int pageCount );
 
 	//글 하나 선택시 
 	public TbBoardDto userBoardSelectOne(int boardNum);

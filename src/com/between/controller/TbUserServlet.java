@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import com.between.biz.TbUserBiz;
 import com.between.biz.TbUserBizImpl;
+import com.between.dto.Criteria;
+import com.between.dto.PageMaker;
 import com.between.dto.TbBoardDto;
 import com.between.dto.TbGroupDto;
 import com.between.dto.TbUserDto;
@@ -271,10 +273,26 @@ public class TbUserServlet extends HttpServlet {
 			
 			if(equserPw.equals(loginDto.getUserPw())) {
 				
+				String paramPage = request.getParameter("page");
+				System.out.println("파람페이지이게 뭘까 "+paramPage);
 				String userId = request.getParameter("userId");
+				Criteria cri = new Criteria(); 
+				if(paramPage == null) {
+					cri.setPage(1);
+					cri.setPageCount(10);
+				}else {
+					int page = Integer.parseInt(paramPage);
+					cri.setPage(page);
+					cri.setPageCount(10);
+				}
+				PageMaker pageMaker = new PageMaker();
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(biz.countBoard(userId));
 				
-				List<TbBoardDto> list = biz.userBoardList(userId);
+				List<TbBoardDto> list = biz.userBoardList(userId, cri.getPage(), cri.getPageCount());
 				request.setAttribute("list", list);
+				request.setAttribute("pageMaker", pageMaker);
+				System.out.println("페이지메이커에 들어있는 값은 뭐지 "+pageMaker);
 				dispatch("TbUserboardList.jsp", request, response);
 					
 			}else {
@@ -282,11 +300,28 @@ public class TbUserServlet extends HttpServlet {
 			}
 			
 			
-		}else if(command.equals("justuserboardlist")){
+		}else if(command.equals("mylist")) {
 			
 			HttpSession session = request.getSession();
 			String userId = ((TbUserDto)session.getAttribute("dto")).getUserId();
-			List<TbBoardDto> list = biz.userBoardList(userId);
+			String paramPage = request.getParameter("page");
+			
+			Criteria cri = new Criteria(); 
+			if(paramPage == null) {
+				cri.setPage(1);
+				cri.setPageCount(10);
+			}else {
+				int page = Integer.parseInt(paramPage);
+				cri.setPage(page);
+				cri.setPageCount(10);
+			}
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(biz.countBoard(userId));
+			
+			List<TbBoardDto> list = biz.userBoardList(userId, cri.getPage(), cri.getPageCount());
+			
+			request.setAttribute("pageMaker", pageMaker);
 			request.setAttribute("list", list);
 			dispatch("TbUserboardList.jsp", request, response);
 			
@@ -295,21 +330,41 @@ public class TbUserServlet extends HttpServlet {
 			String userId = request.getParameter("userId");
 			String boardTitle = request.getParameter("boardTitle");
 			
-			/*
-			List<TbBoardDto> list = biz.userBoardSearch(boardTitle, userId);
-			request.setAttribute("list", list);
-			dispatch("TbUserboardList.jsp", request, response);
-			*/
-			
 			List<TbBoardDto> list = new ArrayList<TbBoardDto>();
 			list = biz.userBoardSearch(boardTitle, userId);
 			
+			String paramPage = request.getParameter("page");
+			Criteria cri = new Criteria(); 
+
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(biz.countBoard(userId));
+			
 			
 				if(list.size()>0) {
+					if(paramPage == null) {
+						cri.setPage(1);
+						cri.setPageCount(10);
+					}else {
+						int page = Integer.parseInt(paramPage);
+						cri.setPage(page);
+						cri.setPageCount(10);
+					}
+					request.setAttribute("pageMaker", pageMaker);
 					request.setAttribute("list", list);
 					dispatch("TbUserboardList.jsp", request, response);
 				}else if(list.size()==0){
-					List<TbBoardDto> list2 = biz.userBoardList(userId);
+					if(paramPage == null) {
+						cri.setPage(1);
+						cri.setPageCount(10);
+					}else {
+						int page = Integer.parseInt(paramPage);
+						cri.setPage(page);
+						cri.setPageCount(10);
+					}
+					
+					List<TbBoardDto> list2 = biz.userBoardList(userId, cri.getPage(), cri.getPageCount());
+					request.setAttribute("pageMaker", pageMaker);
 					request.setAttribute("list", list2);
 					dispatch("TbUserboardList.jsp", request, response);
 			}
@@ -364,23 +419,7 @@ public class TbUserServlet extends HttpServlet {
 				responseAlert("글수정 실패 다시작성해주세요", "TbUser.do?command=userboardupdate", response);
 			}
 			
-		}else if(command.equals("mylist")) {
-			//에러문제 자꾸만 null이 뜸 
-			//String userId = request.getParameter("userId");
-			
-			HttpSession session = request.getSession();
-			String userId = ((TbUserDto)session.getAttribute("dto")).getUserId();
-			//System.out.println("나의 글 목록 보기 "+userId);
-			
-			List<TbBoardDto> list = biz.userBoardList(userId);
-			
-			request.setAttribute("list", list);
-			dispatch("TbUserboardList.jsp", request, response);
-			
 		}else if(command.equals("muldel")) {
-						
-			String userId = request.getParameter("userId");
-			//System.out.println("멀티딜리트"+userId);
 			
 			String[] boardNum = request.getParameterValues("chk");
 			if(boardNum == null || boardNum.length == 0) {

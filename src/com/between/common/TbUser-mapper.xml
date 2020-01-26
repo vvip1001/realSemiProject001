@@ -73,8 +73,18 @@
  	
  	
  	
+ 	<select id="countBoard" resultType="int" >
+		SELECT COUNT(*) FROM TB_BOARD WHERE USER_ID = #{userId}
+	</select>
  	
- 	
+ 	<select id="selectList"  resultMap="TbBoardResultMap">
+	<![CDATA[
+		SELECT * FROM (
+		SELECT * FROM (
+		SELECT ROWNUM RNM,USER_ID,BOARD_GENDER,BOARD_NUM,BOARD_GROUP_NUM,BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
+		FROM (SELECT * FROM TB_BOARD WHERE USER_ID = #{userId} ORDER BY BOARD_GROUP_NUM DESC)) WHERE RNM <=#{pageCount}) WHERE RNM >=#{page}
+	]]>	
+	</select>
  	
  	<select id="userBoardList" parameterType="String" resultMap="TbBoardResultMap">
 	SELECT * FROM TB_BOARD WHERE USER_ID = #{userId} ORDER BY BOARD_NUM DESC

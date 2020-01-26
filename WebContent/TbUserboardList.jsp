@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.PageMaker"%>
 <%@page import="com.between.biz.TbUserBizImpl"%>
 <%@page import="com.between.biz.TbBoardBizImpl"%>
 <%@page import="com.between.biz.TbUserBiz"%>
@@ -18,7 +19,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <% TbUserDto dto = (TbUserDto) session.getAttribute("dto");
-	
+	PageMaker pageMaker = (PageMaker)request.getAttribute("pageMaker");
 	
 	List<TbBoardDto> list = (List<TbBoardDto>)request.getAttribute("list");
 	
@@ -130,6 +131,23 @@
 					<input type="button" value="마이페이지로" onclick="location.href='TbUser.do?command=mypage'">
 				</td>
 			</tr>
+
+	<tr>
+		<td colspan="5" align="center">
+			<c:if test="${pageMaker.prev}">
+				<a href="TbUser.do?command=mylist&page=1">처음으로</a>
+				<a href="TbUser.do?command=mylist&page=${pageMaker.startPage-1 }">이전</a>
+			</c:if>
+			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
+				<a href='<c:url value="TbUser.do?command=mylist&page=${pageNum }"/>'>${pageNum }</a>
+			</c:forEach>
+			<c:if test="${pageMaker.next && pageMaker.endPage >0 }">
+				<a href="TbUser.do?command=mylist&page=<%=pageMaker.getEndPage()+1%>">다음</a>
+				<a href="TbUser.do?command=mylist&page=<%=pageMaker.getTempEndPage()%>">마지막페이지</a>
+			</c:if>
+	</td>	
+ </tr>
+			
 		</table>
 	</fieldset>
 	</form>

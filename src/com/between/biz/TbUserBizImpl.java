@@ -32,8 +32,8 @@ public class TbUserBizImpl implements TbUserBiz{
 
 	//내 글목록 보기 
 	@Override
-	public List<TbBoardDto> userBoardList(String userId) {
-		return dao.userBoardList(userId);
+	public List<TbBoardDto> userBoardList(String userId,int pageNum, int pageCount ) {
+		return dao.userBoardList(userId,pageNum,pageCount);
 	}
 	
 	
@@ -132,6 +132,13 @@ public class TbUserBizImpl implements TbUserBiz{
 	public int partnerNumUpdateUTDelete(int groupNum) {
 		// TODO Auto-generated method stub
 		return dao.partnerNumUpdateUTDelete(groupNum);
+	}
+
+	//페이징 
+	@Override
+	public int countBoard(String userId) {
+		// TODO Auto-generated method stub
+		return dao.countBoard(userId);
 	}
 
 
