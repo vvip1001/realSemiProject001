@@ -149,14 +149,10 @@ public class TbUserServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
-			
 
 			int groupNum = loginDto.getGroupNum();
-			//System.out.println("groupNum : "+groupNum);
 			String userId = loginDto.getUserId();
-			
-
-			//System.out.println(loginDto.getUserEmail());
+	
 			//각 등급별로 마이페이지 열리기 
 			if(loginDto.getUserStatus().equals("ADMIN")) {
 				responseAlert("어드민님의 마이페이지 입니다. 환영합니다.", "TbUserAdminMyPage.jsp", response);
@@ -170,7 +166,9 @@ public class TbUserServlet extends HttpServlet {
 				request.setAttribute("partnerId", partnerId);
 			    dispatch("TbUserUserMyPage.jsp", request, response);
 				}else {
+					
 					String partnerId = biz.partnerIdShow(groupNum,userId);
+					
 					request.setAttribute("partnerId", partnerId);
 					dispatch("TbUserUserMyPage.jsp", request, response);
 				}
@@ -283,6 +281,14 @@ public class TbUserServlet extends HttpServlet {
 				responseAlert("비밀번호를 제대로 입력하세요 ", "TbUser.do?command=mypage", response);
 			}
 			
+			
+		}else if(command.equals("justuserboardlist")){
+			
+			HttpSession session = request.getSession();
+			String userId = ((TbUserDto)session.getAttribute("dto")).getUserId();
+			List<TbBoardDto> list = biz.userBoardList(userId);
+			request.setAttribute("list", list);
+			dispatch("TbUserboardList.jsp", request, response);
 			
 		}else if(command.equals("search")) {
 			

@@ -98,7 +98,7 @@ function closelayer(){
 <body>
 <h1>뭐라도 좋으니 좀 떠봐라 이녀석아 </h1>	
 
-<input type="button" Class="btn" value="팝업레이어 열기" onCLick="layer_popup('#popuplayer');">
+<input type="button" Class="btn" value="커플 알림 내용 열기" onCLick="layer_popup('#popuplayer');">
 
 <div class="background">
 <div class="dimBackground"></div>
@@ -114,8 +114,8 @@ function closelayer(){
 			수락하시겠습니까?<br>
 		</th>
 		<td>
-			<input type="button" value="yse" class="btn" onclick="location.href='TbUser.do?command=after2&check=yes&groupNum=<%=groupdto.getGroupNum() %>&userId=<%=dto.getUserId() %>'">
-			<input type="button" value="no" class="btn"onclick="location.href='TbUser.do?command=after2&check=no&groupNum=<%=groupdto.getGroupNum() %>&userId=<%=dto.getUserId() %>'">
+			<input type="button" value="수락하기" class="btn" onclick="location.href='TbUser.do?command=after2&check=yes&groupNum=<%=groupdto.getGroupNum() %>&userId=<%=dto.getUserId() %>'">
+			<input type="button" value="거절하기" class="btn"onclick="location.href='TbUser.do?command=after2&check=no&groupNum=<%=groupdto.getGroupNum() %>&userId=<%=dto.getUserId() %>'">
 			
 		</td>
 	</tr>
@@ -142,6 +142,8 @@ function closelayer(){
 </div>
 </div>
 
+	<input type="button" value="로그아웃" onclick="location.href='TbUser.do?command=logout'">
+	<input type="button" value="로그인뒤 보이는 첫페이지로" onclick="location.href='TbUser.do?command=loginres&userId=<%=dto.getUserId() %>&userPw=<%=dto.getUserPw() %>'">
 
 
 	

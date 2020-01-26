@@ -61,9 +61,14 @@
 				<td colspan="2" align="right"  >
 					<input type="submit" value="수정"/>
 					<input type="button" value="삭제" onclick="location.href='TbUser.do?command=userboarddeleteone&boardNum=<%=board.getBoardNum() %>'"/>
+					
+					<input type="button" value="취소" onclick="location.href='TbUser.do?command=justuserboardlist'">
+					
 				</td>
 			</tr>
 		</table>
+		<input type="button" value="로그아웃" onclick="location.href='TbUser.do?command=logout'">
+		
 	</fieldset>
 	</form>
 	</div>

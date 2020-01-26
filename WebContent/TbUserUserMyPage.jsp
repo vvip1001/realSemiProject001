@@ -45,7 +45,7 @@
 <%
 				if(partnerId.equals("N")){
 %>
-				<input type="text" name="partnerId" value="상대의 아이디  입력" >
+				<input type="text" name="partnerId" placeholder="상대의 아이디  입력" >
 				<input type="submit" value="상대등록하기" />
 <%
 				}else{
@@ -78,7 +78,9 @@
 			<input type="password" name = "equserPw">
 			<input type="submit" value="비밀번호">
 		</form>
-
+	<input type="button" value="로그아웃" onclick="location.href='TbUser.do?command=logout'">
+	<input type="button" value="로그인뒤 보이는 첫페이지로" onclick="location.href='TbUser.do?command=loginres&userId=<%=dto.getUserId() %>&userPw=<%=dto.getUserPw() %>'">
+	
 </div>
 </body>
 </html>

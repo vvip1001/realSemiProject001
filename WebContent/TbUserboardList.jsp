@@ -127,14 +127,15 @@
 			<tr>
 				<td colspan="5" align="right" >
 					<input type="submit" value="글삭제">
-					<input type="button" value="마이페이지로" onclick="location.href='TbUser.do?command=mypage&logindto1=<%=dto.getUserStatus()%>'">
+					<input type="button" value="마이페이지로" onclick="location.href='TbUser.do?command=mypage'">
 				</td>
 			</tr>
 		</table>
 	</fieldset>
 	</form>
 	</div>
-
+	<input type="button" value="로그인뒤 보이는 첫페이지로" onclick="location.href='TbUser.do?command=loginres&userId=<%=dto.getUserId() %>&userPw=<%=dto.getUserPw() %>'">
+		<input type="button" value="로그아웃" onclick="location.href='TbUser.do?command=logout'">
 </div>
 
 </body>
