@@ -1,3 +1,4 @@
+<%@page import="com.between.dto.TbGroupDto"%>
 <%@page import="com.between.dto.TbUserDto"%>
 <%
 	response.setHeader("Pragma","no-cache");
@@ -17,15 +18,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
 <%
 	TbUserDto dto = (TbUserDto)session.getAttribute("dto");
     if(dto==null){
  	  pageContext.forward("index.html");	
      }
-
+	
+    TbGroupDto groupdto = (TbGroupDto)request.getAttribute("groupdto");
 %>
 
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+</script>
+<body>
 
 <div>
 	
@@ -37,6 +43,16 @@
 		<input type="submit" value="마이페이지">
 		
 	</form>
+<%
+ if(groupdto != null){
+	 
+%> 
+	<input type="button" value="로그인 2번째 페이지로...이창내에서 팝업 어케할지 모르겠음 " onclick="location.href='TbUser.do?command=loginafter2'">
+<%
+ }
+%>	
+	
+	
 </div>	
 </body>
 </html>
