@@ -3,14 +3,14 @@ package com.between.dto;
 import java.sql.Date;
 
 //댓글 게시판 
-public class TbReBoard {
+public class TbReBoardDto {
  
  // 글번호 
  private int boardNum;
  // 댓글번호
  private int reNum;
  // 작성자 
- private String writer;
+ private String userId;
  // 댓글내용 
  private String reContent;
  // 그룹번호 
@@ -25,8 +25,34 @@ public class TbReBoard {
  private String reFlag;
  // 신고유형 
  private String reFlagType;
+ 
+ private int reOrder;
+ private String reGender;
 
- public int getBoardNum() {
+ 
+ 
+ 
+ public int getReOrder() {
+	return reOrder;
+}
+
+
+public void setReOrder(int reOrder) {
+	this.reOrder = reOrder;
+}
+
+
+public String getReGender() {
+	return reGender;
+}
+
+
+public void setReGender(String reGender) {
+	this.reGender = reGender;
+}
+
+
+public int getBoardNum() {
      return boardNum;
  }
  
@@ -45,15 +71,17 @@ public void setBoardNum(int boardNum) {
      this.boardNum = boardNum;
  }
 
- public String getWriter() {
-     return writer;
- }
+ public String getUserId() {
+	return userId;
+}
 
- public void setWriter(String writer) {
-     this.writer = writer;
- }
 
- public String getReContent() {
+public void setUserId(String userId) {
+	this.userId = userId;
+}
+
+
+public String getReContent() {
      return reContent;
  }
 
@@ -112,7 +140,7 @@ public void setBoardNum(int boardNum) {
 
 @Override
 public String toString() {
-	return "TbReBoard [boardNum=" + boardNum + ", reNum=" + reNum + ", writer=" + writer + ", reContent=" + reContent
+	return "TbReBoard [boardNum=" + boardNum + ", reNum=" + reNum + ", userId=" + userId + ", reContent=" + reContent
 			+ ", reGroupNum=" + reGroupNum + ", reTab=" + reTab + ", reDate=" + reDate + ", reDeleteCheck="
 			+ reDeleteCheck + ", reFlag=" + reFlag + ", reFlagType=" + reFlagType + "]";
 }

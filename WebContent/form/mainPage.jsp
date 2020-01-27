@@ -1,20 +1,19 @@
-<%
-	response.setHeader("Pragma","no-cache");
-	response.setHeader("Cache-control","no-store");
-	response.setHeader("Expires","0");
-%>
+<%@page import="com.between.dto.TbUserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <% request.setCharacterEncoding("UTF-8");%>
-    <% response.setContentType("text/html; charset=UTF-8");%>
-   
+	pageEncoding="UTF-8"%>
+
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<%
+	response.setContentType("text/html; charset=UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-<title>Insert title here</title>
+<title>사이</title>
+<link href="css/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- 카카오 sdk -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -35,6 +34,21 @@
 		left: 500px;
 		display: none;
 	}
+	.btn{
+		border:0;
+		outline:0;
+		background-color: white;
+	}
+	.loginbtn{
+		border:0;
+		outline:0;
+		color: skyblue;
+		background-color: white;
+	}
+	.loginbtn:hover{
+		cursor: pointer;
+		color: darkviolet;
+	}
 	
 </style>
 <!-- 일반 로그인 스크립트  -->
@@ -49,7 +63,8 @@ function loginpopup(){
 	var btns = document.getElementsByName("btn");
 	for(var i in btns){
 		btns[i].disabled = true;
-		btns[i].style.backgroundColor = "gray";
+		btns[i].style.background="gray";
+
 	}
 	
 	
@@ -58,14 +73,15 @@ function loginpopup(){
 function closewin(){
 	var lo = document.getElementById("login");
 	lo.style.display = "none";
-	document.body.style.background= "white";
+	document.body.style.backgroundColor= "white";
 	
 	
 	//비활성화 되었던 버튼 재활성화 시키기 
 	var btns = document.getElementsByName("btn");
+	$("")
 	for(var i in btns){
 		btns[i].disabled = false ;
-		btns[i].style.backgroundColor = "white";
+		btns[i].style.backgroundColor="white";
 	}
 	
 }
@@ -143,53 +159,107 @@ function kakaologin() {
         }
 
     </script>
+
 </head>
 <body>
-<!-- 큰 div로 묶었음 -->
-<div>
-<!-- 로그인 팝업창 띄우는  버튼   -->
-	 <input type="button" name="btn" onclick="loginpopup()" value="로그인 팝업창">
-	 
-<!-- 로그인 팝업창 -->    
-	<div id=login align="center">	
-		<h1>로그인 하세요 </h1>
+<%
+	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
+//	System.out.println(userInfo);
+%>
+	<header>
 	
-	<!-- 구글 로그인 -->
-	<div class="g-signin2" data-width="220" data-height="45" data-onsuccess="onSignIn" data-longtitle="true"></div>
-	<a href ="#" onclick="signOut();">구글로그아웃</a>
-	
-	<!-- 카카오톡 로그인 -->
-	<div>
-	<a href="#" onclick="kakaologin();return false;"><img src="images/kakao_account_login_btn_medium_narrow.png" alt="카카오로그인"></a>
-	<input type="button" onclick="kout()" value="카카오로그아웃">
-	</div>
+		<div align="right">
+<%
+			if(userInfo==null){
+%>
+			<input type="button" onclick="loginpopup()" name="btn" class="login btn" value="로그인"/> 
+			<input type="button" name="btn" class="login btn" value="회원가입"/>
+<%
+			} else {
+%>
 
-	<!-- 일반 로그인 -->
-	<div>
-	<form action="TbUser.do" method="post">
-		<input type="hidden" name="command" value="loginres"/>
-		<table border="1">
-			<tr>
-				<th>아이디</th>
-				<td><input type="text" name="userId" id="userId"></td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td><input type="password" name="userPw" id="userPw"></td>
-			</tr>
-			<tr><!-- location.href='TbUser.do?command=main -->
-				<td colspan="2">
-					<input type="submit" value="로그인">
-					<input type="button" value="회원가입" onclick="location.href='TbUser.do?command=registerform'" >
-					<input type="button" value="취소" onclick="closewin()" >
-				</td>
-			</tr>		
-		</table> 
-	</form>
-	</div>
-	
+			<input type="button" onclick="location.href='TbUser.do?command=logout'" name="btn" class="login btn" value="로그아웃"/> 
+			<input type="button" onclick="location.href='TbUser.do?command=mypage&userStatus=<%=userInfo.getUserStatus()%>'"name="btn" class="login btn" value="마이페이지"/>
+<%
+			}
+%>
+			
+		</div>
+		<a><img alt="" src="images/logo.gif" class="logo"></a>
+	</header>
+	<div class="nav" align="center">
+		<div class="dropdown">
+
+			<div class="option">
+				<a class="menu">우리사이</a>
+				<a class="menu">커플사이</a>
+				<a class="menu">사이다</a>
+			</div>
+			<div class="dropdown-content">
+				<div class="row">
+					<div class="column">
+						<a href="">커플테스트</a> <a href="">니캉내캉</a> <a href="">사진분석</a>
+					</div>
+					<div class="column">
+						<a href="">앨범</a> <a href="">다이어리</a> <a href="">사이톡</a> <a
+							href="">영상통화</a>
+					</div>
+					<div class="column">
+						<a href="">전문상담사</a> <a href="TbBoard.do?command=boardlist">속닥속닥</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
+
+	<div class="content">
+	</div>
+	
+	<!-- 큰 div로 묶었음 -->
+	<div>
+
+		<!-- 로그인 팝업창 -->
+		<div id=login align="center">
+			<h1>로그인 하세요</h1>
+
+			<!-- 구글 로그인 -->
+			<div class="g-signin2" data-width="220" data-height="45"
+				data-onsuccess="onSignIn" data-longtitle="true"></div>
+			<a href="#" onclick="signOut();">구글로그아웃</a>
+
+			<!-- 카카오톡 로그인 -->
+			<div>
+				<a href="#" onclick="kakaologin();return false;"><img
+					src="images/kakao_account_login_btn_medium_narrow.png" alt="카카오로그인"></a>
+				<input type="button" onclick="kout()" value="카카오로그아웃">
+			</div>
+
+			<!-- 일반 로그인 -->
+			<div>
+				<form action="TbUser.do" method="post">
+					<input type="hidden" name="command" value="loginres" />
+					<table >
+						<tr>
+							<th>아이디</th>
+							<td><input type="text" name="userId" id="userId"></td>
+						</tr>
+						<tr>
+							<th>비밀번호</th>
+							<td><input type="password" name="userPw" id="userPw"></td>
+						</tr>
+						<tr>
+							<!-- location.href='TbUser.do?command=main -->
+							<td colspan="2" align="center"><input type="submit" class="loginbtn" value="로그인"> <input
+								class="loginbtn" type="button" value="회원가입"
+								onclick="location.href='TbUser.do?command=registerform'">
+								<input class="loginbtn" type="button" value="취소" onclick="closewin()"></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
+		</div>
+	</div>
 </body>
 </html>

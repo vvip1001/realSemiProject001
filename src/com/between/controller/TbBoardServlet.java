@@ -1,6 +1,7 @@
 package com.between.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,9 +13,12 @@ import javax.servlet.http.HttpSession;
 
 import com.between.biz.TbBoardBiz;
 import com.between.biz.TbBoardBizImpl;
+import com.between.biz.TbReBoardBiz;
+import com.between.biz.TbReBoardBizImpl;
 import com.between.dto.Criteria;
 import com.between.dto.PageMaker;
 import com.between.dto.TbBoardDto;
+import com.between.dto.TbReBoardDto;
 import com.between.dto.TbUserDto;
 
 import static com.between.controller.ServletUtil.*;
@@ -32,6 +36,7 @@ public class TbBoardServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		
 		TbBoardBiz biz = new TbBoardBizImpl();
+		TbReBoardBiz reBiz = new TbReBoardBizImpl();
 		
 		String command = request.getParameter("command");
 		
@@ -67,16 +72,34 @@ public class TbBoardServlet extends HttpServlet {
 			
 			
 			
-			
-			
-			
-			
-			
 		} else if(command.equals("boarddetail")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardnum"));
+			String paramPage = request.getParameter("page");
+			
 			TbBoardDto dto = biz.selectOne(boardNum);
+			
+			Criteria cri = new Criteria();
+			
+			if(paramPage==null) {
+				cri.setPage(1);
+				cri.setPageCount(10);
+			} else {
+				int page = Integer.parseInt(paramPage);
+				cri.setPage(page);
+				cri.setPageCount(10);
+			}
+			
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(reBiz.countBoard());
+			
+			List<TbReBoardDto> list = reBiz.selectList(cri.getPage(), cri.getPageCount(), boardNum);
+
+			request.setAttribute("pageMaker", pageMaker);
+			request.setAttribute("list", list);
 			request.setAttribute("board", dto);
 			dispatch("TbBoardDetail.jsp",request,response);
+			
 		} else if(command.equals("boardwriteform")) {
 			response.sendRedirect("TbBoardWriteForm.jsp");
 		} else if(command.equals("boardwriteres")) {

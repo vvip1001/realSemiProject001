@@ -26,6 +26,9 @@
 
 </head>
 <body>
+
+	<%@ include file="./form/mainPage.jsp" %>
+	
 	<div id="head"></div>
 
 	<div>
