@@ -80,11 +80,10 @@
 	</form>
 		<fieldset>
 		<form action="TbBoard.do" method="post" >
-			<input type="hidden" name="command" value="boardReple" />
+			<input type="hidden" name="command" value="boardreple" />
 			<input type="hidden" name="boardNum" value="<%=board.getBoardNum()%>"/>
 			<input type="hidden" name="userId" value="<%=userInfo.getUserId()%>"/>
-			
-			
+			<input type="hidden" name="reGender" value="<%=userInfo.getUserGender()%>"/>
 			<table>
 <%
 				for(int i = 0; i < list.size(); i++){
@@ -125,7 +124,7 @@
 				</tr>
 				<tr>
 					<td>
-						<textarea  name="recontent" rows="5" cols="35" ></textarea>
+						<textarea  name="reContent" rows="5" cols="35" ></textarea>
 					</td>
 				</tr>
 				<tr>

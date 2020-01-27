@@ -96,11 +96,13 @@ CREATE TABLE TB_CAL(
     CONSTRAINT TB_CAL_PK PRIMARY KEY (CAL_NUM)
 )
 
+
+
 CREATE SEQUENCE TB_CAL_SEQ
 
 <<<<<<< HEAD
 =======
-DELETE TB_BOARD WHERE BOARD_GROUP_NUM =
+DELETE TB_B OARD WHERE BOARD_GROUP_NUM =
 (SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = 70)
         
 INSERT INTO TB_CAL VALUES 
@@ -322,10 +324,12 @@ SELECT * FROM TB_BOARD
 --글번호 댓글번호 작성자 내용 그룹번호 댓글탭번호 작성일 삭제여부 신고 신고유형
 --0115  댓글번호 컬럼 추가됨
 --		댓글번호 시퀀스 추가
+--		댓글그룹번호 시퀀스 추가
 --0116  글번호는 게시판테이블의 글번호와 참조관계
 --0125  WRITER ->USER_ID 변경
 --		그룹오더,성별 컬럼 추가
-
+--0127  신고유형별로 나눠서 확인할 테이블이 필요한데 그게 안됐음..
+--		아쉬운 점
 CREATE TABLE TB_RE_BOARD(
     USER_ID            VARCHAR2(20)    NOT NULL,
     RE_GENDER		   VARCHAR2(6)     NOT NULL,
@@ -347,6 +351,12 @@ INSERT INTO TB_RE_BOARD VALUES('USER@NAVER.COM','MALE',80,1,80,1,0,'N','TEST',SY
 DROP TABLE TB_RE_BOARD
 
 CREATE SEQUENCE TB_RE_BOARD_SEQ;
+CREATE SEQUENCE TB_RE_BOARD_GROUP_SEQ;
+
+
+
+
+
 
 
 --ALTER TABLE TB_RE_BOARD

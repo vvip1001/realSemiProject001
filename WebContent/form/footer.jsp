@@ -18,7 +18,7 @@
 <body>
 
 
-<footer><div id="foot" >kh정보교육원 &copy; all rights reserved... </div></footer>
+<footer><div id="foot" >kh정보교육원 &copy; all rights reserved...</div></footer>
 
 </body>
 </html>

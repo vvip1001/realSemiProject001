@@ -15,6 +15,7 @@ public class TbReBoardDaoImpl extends SqlMapConfig implements TbReBoardDao {
 	
 	@Override
 	public List<TbReBoardDto> selectList(int pageNum, int pageCount, int boardNum) {
+		//완
 		SqlSession session = null;
 		List<TbReBoardDto> list = new ArrayList<TbReBoardDto>();
 		
@@ -40,6 +41,10 @@ public class TbReBoardDaoImpl extends SqlMapConfig implements TbReBoardDao {
 		//글작성
 		SqlSession session = null;
 		int res = 0;
+		System.out.println(dto.getReContent());
+		System.out.println(dto.getReGender());
+		System.out.println(dto.getBoardNum());
+		System.out.println(dto.getUserId());
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);

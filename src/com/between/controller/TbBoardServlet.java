@@ -186,6 +186,28 @@ public class TbBoardServlet extends HttpServlet {
 			} else {
 				responseAlert("fail", "index.html", response);
 			} 
+		} else if(command.equals("boardreple")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			String userId = request.getParameter("userId");
+			String reContent = request.getParameter("reContent");
+			String reGender = request.getParameter("reGender");
+			int res = 0;
+			
+			TbReBoardDto dto = new TbReBoardDto();
+			dto.setBoardNum(boardNum);
+			dto.setUserId(userId);
+			dto.setReContent(reContent);
+			dto.setReGender(reGender);
+			
+			res = reBiz.insertReBoard(dto);
+			
+			if(res>0) {
+				response.sendRedirect("TbBoard.do?command=boarddetail&boardnum="+boardNum);
+			} else {
+				responseAlert("fail", "index.html", response);
+			} 
+			
+			
 		}
 	}
 

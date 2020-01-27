@@ -26,10 +26,62 @@
 	]]>	
 	</select>
 
+	<insert id="insertBoard" parameterType="TbReBoardDto" >
+		INSERT INTO TB_RE_BOARD VALUES(
+		#{userId},
+		#{reGender},
+		#{boardNum},
+		TB_RE_BOARD_SEQ.NEXTVAL,
+		TB_RE_BOARD_GROUP_SEQ.NEXTVAL,
+		1,
+		0,
+		'N',
+		#{reContent},
+		SYSDATE,
+		'0',
+		'EMPTY'
+		)
+	</insert>
+	
+	<select id="checkGroupBoard" parameterType="TbReBoardDto" resultType="int" >
+		SELECT COUNT(*) FROM TB_RE_BOARD WHERE RE_GROUP_NUM = 
+		(SELECT RE_GROUP_NUM FROM TB_RE_BOARD WHERE RE_NUM = #{reNum}) AND RE_DELETE_CHECK = 'N'
+	</select>
+	
+	<update id="updateBoardCheck" parameterType="int" >
+		UPDATE TB_RE_BOARD SET
+		RE_DELETE_CHECK = 'Y'
+		WHERE RE_NUM = #{reNum}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE TB_RE_BOARD
+		WHERE RE_GROUP_NUM = #{reGroupNum}
+	</delete>
+	
+	<update id="updateAnswer" parameterType="TbReBoardDto" >
+		UPDATE TB_RE_BOARD
+		SET RE_ORDER = RE_ORDER +1
+		WHERE RE_GROUP_NUM = (SELECT RE_GROUP_NUM FROM TB_RE_BOARD WHERE RE_NUM = #{reNum} )
+		AND RE_ORDER > (SELECT RE_ORDER FROM TB_RE_BOARD WHERE RE_NUM = #{reNum})
+	</update>
 
-
-
-
+	<insert id="insertAnswer" parameterType="TbReBoardDto" >
+		INSERT INTO TB_RE_BOARD VALUES(
+		#{userId},
+		#{reGender},
+		#{boardNum},
+		TB_RE_BOARD_SEQ.NEXTVAL,
+		TB_RE_BOARD_GROUP_SEQ.NEXTVAL,
+		1,
+		0,
+		'N',
+		#{reContent},
+		SYSDATE,
+		'0',
+		'EMPTY'
+		)
+	</insert>
 
 	<select id="countBoard" resultType="int" >
 		SELECT COUNT(*) FROM TB_RE_BOARD

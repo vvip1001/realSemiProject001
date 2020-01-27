@@ -52,7 +52,8 @@
 	</insert>
 	
 	<select id="checkGroupBoard" parameterType="TbBoardDto" resultType="int" >
-		SELECT COUNT(*) FROM TB_BOARD WHERE BOARD_GROUP_NUM = (SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}) AND BOARD_DELETE_CHECK = 'N'
+		SELECT COUNT(*) FROM TB_BOARD WHERE BOARD_GROUP_NUM = 
+		(SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}) AND BOARD_DELETE_CHECK = 'N'
 	</select>
 	
 	<update id="updateBoard" parameterType="TbBoardDto" >
