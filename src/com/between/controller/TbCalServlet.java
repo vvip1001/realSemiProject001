@@ -18,6 +18,8 @@ import com.between.biz.TbCalBizImpl;
 import com.between.dto.TbCalDto;
 import com.between.dto.TbGroupDto;
 import com.between.dto.TbUserDto;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 
 import static com.between.controller.ServletUtil.*;
 
@@ -77,7 +79,9 @@ public class TbCalServlet extends HttpServlet {
 		System.out.println(groupDto.getPartnerId());
 		
 		
-		if(command.equals("calendar")) {			
+		if(command.equals("calendar")) {		
+			
+			//int date = Integer.parseInt(request.getParameter("date"));
 			
 			request.setAttribute("groupDto", groupDto);
 			request.setAttribute("year", year);

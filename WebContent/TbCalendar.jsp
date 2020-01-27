@@ -22,7 +22,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript" src="dday.js"></script>
+<script type="text/javascript"></script>
 
 <style type="text/css">
 #calendar {
@@ -66,6 +66,15 @@ a {
 	background-color: pink;
 }
 </style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js">
+
+	$(function(){
+		$(".D-Day").submit(function(){
+			$(this).css("display","none");
+		})
+	});
+
+</script>
 
 </head>
 <body>
@@ -94,9 +103,11 @@ a {
 
 	<div id="wrap">
 		<div class="D-Day">
-			<input type="text" id="first" placeholder="예)2019-12-25">
-			<input type="button" id="addDate" value="사귄날 등록" onclick="load();">
-			<div id="result"></div>
+			<form action="TbCal.do" method="post">
+				<input type="hidden" name="command" value="dday">
+				<input type="text" placeholder="예)2010-04-20">
+				<input type="submit" value="등록"> 
+			</form>
 		</div>
 		<div class="cal">
 			<table id="calendar">
