@@ -66,6 +66,7 @@
 
 <body>
 
+<div>
 <h1><%=dto.getUserId() %>내글 목록보기</h1>
 
 	<div align="right">
@@ -134,7 +135,7 @@
 	</form>
 	</div>
 
-
+</div>
 
 </body>
 </html>

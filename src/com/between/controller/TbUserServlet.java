@@ -99,27 +99,53 @@ public class TbUserServlet extends HttpServlet {
 				
 			}else if(loginDto.getUserStatus().equals("USER")) {
 				
+				//커플 그룹 번호가 유저테이블에 없을 경우 파트너의 아이디를 N으로 전송 
 				if(groupNum == 0 ) {
 					String partnerId = "N";
-//					int res = biz.partnerIdInsert(partnerId, userId);
-//					if(res > 0) {
-//						request.setAttribute("partnerId", partnerId);
-//					    dispatch("TbUserUserMyPage.jsp", request, response);
-//					}else {
-//						responseAlert("파트너아이디  입력 안되었음", "loginafter.jsp", response);
-//					}
-					request.setAttribute("partnerId", partnerId);
-				    dispatch("TbUserUserMyPage.jsp", request, response);
+
+				request.setAttribute("partnerId", partnerId);
+			    dispatch("TbUserUserMyPage.jsp", request, response);
 				}else {
 					String partnerId = biz.partnerIdShow(groupNum,userId);
 					request.setAttribute("partnerId", partnerId);
 					dispatch("TbUserUserMyPage.jsp", request, response);
 				}
 				
+				//상대방이 자신을 파트너로 등록 했을 경우 서로 커플 맺기
+				
+				/*if() {
+					
+				}
+				*/
 				
 				//responseAlert("일반회원님의 마이페이지 입니다. 환영합니다.", "TbUserUserMyPage.jsp", response);
 			}else if(loginDto.getUserStatus().equals("COUNSELOR")) {
 				responseAlert("상담사님의 마이페이지 입니다.","TbUserCounselorMyPage.jsp", response);
+			}
+			
+			
+			
+		}else if(command.equals("partnerinsert")) {
+			
+			//유저가 새로 등록한 파트너 아이디와 로그인한 유저의 아이디를 전송 받음 
+			String partnerId = request.getParameter("partnerId");
+			String userId = request.getParameter("userId");
+			
+			//로그인 유저의 커플 테이블에 파트너의 이름을 저장 및 커플테이블 넘버 생성 
+			int res = biz.partnerIdInsert(partnerId, userId);
+				//저장이 성공했다면 로그인한 유저의 커플테이블의 그룹넘버를 로그인한 유저테이블 그룹넘버에 저장 
+				if(res > 0) {
+					
+				   int afterres = biz.partnerNumUpdateUT(userId);
+				
+				  if(afterres>0) {
+					request.setAttribute("partnerId", partnerId);
+				    dispatch("TbUserUserMyPage.jsp", request, response);
+				  }else {
+					responseAlert("파트너 유저테이블에 입력 불가 ", "index.html", response);
+				}
+			}else {
+				responseAlert("파트너 입력하는 유저테이블에서 오류", "loginafter.jsp", response);
 			}
 			
 			
@@ -132,10 +158,12 @@ public class TbUserServlet extends HttpServlet {
 			dispatch("TbUserUserUpdateForm.jsp", request, response);
 			
 			
-		}else if(command.equals("partnerinsert")) {
-			String partnerId = request.getParameter("partnerId");
-			String userId = request.getParameter("userId");
-			int res = biz.partnerIdInsert(partnerId, userId);
+		}else if(command.equals("userupdateformres")) {
+			//수정될 파트너 아이디 비밀번호 등을 받아서 처리하자 
+			//커플 테이블에 정보를 넣고 생성된 번호를 유저테이블에 저장 
+			
+			/*
+			int res = biz.partnerIdUpdate(partnerId, groupNum);
 			if(res > 0) {
 				
 				//dispatch("TbUser.do?command=mypage", request, response);
@@ -143,11 +171,7 @@ public class TbUserServlet extends HttpServlet {
 			}else {
 				responseAlert("파트너아이디를 입력해 주세요", "TbUser.do?command=userupdateform", response);
 			}
-			
-		}else if(command.equals("userupdateformres")) {
-			//여기 빈칸임 
-			
-			
+			*/
 			
 		
 		}else if(command.equals("userboardlist")) {

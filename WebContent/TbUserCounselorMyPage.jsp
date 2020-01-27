@@ -12,6 +12,8 @@
 </head>
 <body>
 <% TbUserDto dto = (TbUserDto)session.getAttribute("dto");%>
+<div>
 <h1>상담사 마이페이지 </h1>
+</div>
 </body>
 </html>

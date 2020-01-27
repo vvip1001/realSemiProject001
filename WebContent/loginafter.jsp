@@ -27,7 +27,7 @@
 %>
 
 
-
+<div>
 	
 	<h1>로그인뒤 보이는 첫 화면 </h1>
 	<form action="TbUser.do" method="post">
@@ -37,5 +37,6 @@
 		<input type="submit" value="마이페이지">
 		
 	</form>
+</div>	
 </body>
 </html>

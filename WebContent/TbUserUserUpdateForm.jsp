@@ -40,6 +40,8 @@
 		
 </script>
 <body>
+
+<div>
 <h1>유저 정보 수정 테이블 </h1>
 
 	<form action="TbUser.do" method="post">
@@ -92,6 +94,7 @@
 
 <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div> 
 <div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
+</div>
 
 </body>
 </html>

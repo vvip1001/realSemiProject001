@@ -124,22 +124,23 @@
  	INSERT INTO TB_GROUP (PARTNER_ID, GROUP_NUM, GROUP_CHECK, USER_ID) VALUES(#{partnerId},TB_GROUP_SEQ.NEXTVAL ,'N', #{userId})
  	</update>
  	
+ 	<update id="partnerNumUpdateUT" parameterType="String" >
+ 	UPDATE TB_USER SET GROUP_NUM = (SELECT GROUP_NUM FROM TB_GROUP WHERE PARTNER_ID =#{userId} OR USER_ID = #{userId}) WHERE USER_ID = #{userId}
+ 	</update>
+ 	
  	<update id="partnerIdUpdate" parameterType="map">
  	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId} WHERE GROUP_NUM = #{groupNum}
  	</update>
 
- 	<update id="partnerIdInsertCheckO" parameterType="TbGroupDto" >
- 	UPDATE TB_GROUP SET PARTNER_ID = #{partnerId}, GROUP_CHECK ='Y' WHERE  GROUP_NUM = #{groupNum}
+ 	<update id="partnerIdInsertCheckO" parameterType="int" >
+ 	UPDATE TB_GROUP dSET GROUP_CHECK ='Y' WHERE  GROUP_NUM = #{groupNum}
  	</update>
  	
- 	<update id="partnerIdInsertChekX" parameterType="int" >
- 	UPDATE TB_GROUP SET PARTNER_ID = 'N', GROUP_CHECK ='N' WHERE GROUP_NUM = #{groupNum}
- 	</update>
- 	
- 	<update id="partnerIdDelete" parameterType="int">
+ 	<update id="partnerIdInsertChekXnDelete" parameterType="int" >
  	DELETE FROM TB_GROUP WHERE GROUP_NUM = #{groupNum}
  	</update>
  	
+ 
  	
  	
  	

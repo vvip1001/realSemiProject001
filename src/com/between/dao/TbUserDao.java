@@ -44,16 +44,19 @@ public interface TbUserDao {
 	//커플 그룹 맺기 ->파트너아이디 입력(최초 로그인시 파트너 이름 "N")
 	public int partnerIdInsert (String partnerId, String userId );
 	
+	//파트너를 등록했을 경우 유저테이블 - 커플 그룹번호 입력 
+	public int partnerNumUpdateUT(String userId);
+	
 	//파트너 이름 수정 
 	public int partnerIdUpdate(String partnerId, int groupNum);
 	
 	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 yes눌렀을때 (확인창)
-	public int partnerIdInsertCheckO(String partnerId, int groupNum);
+	public int partnerIdInsertCheckO(int groupNum);
 	
 	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 no눌렀을때 (확인창)
-	public int partnerIdInsertChekX (int groupNum);
-	
 	//커플 삭제하기 -->버튼 
-	public int partnerIdDelete (int groupNum);
+	public int partnerIdInsertChekXnDelete (int groupNum);
+	
+
 	
 }
