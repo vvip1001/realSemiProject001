@@ -152,6 +152,8 @@ function kakaologin() {
             // The ID token you need to pass to your backend:
             var id_token = googleUser.getAuthResponse().id_token;
             console.log("ID Token: " + id_token);
+            
+            location.href="TbUser.do?command=googlelogin&userId="+profile.getId()+"&pw="+profile.getEmail();
         };
         
         function signOut(){
