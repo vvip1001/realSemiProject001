@@ -74,6 +74,7 @@ function layer_popup(el){
 		docWidth = $(document).width(),
 		docHeight = $(document).height();
 	
+<<<<<<< HEAD
 	if ($elHeight < docHeight || $elWidth < docWidth) {
 		$el.css({
 			marginTop: -$elHeight /2,
@@ -82,6 +83,29 @@ function layer_popup(el){
 	}
 	else{
 		$el.css({top: 0, left: 0});
+=======
+	//버튼 눌렀을때 다른 버튼들 비활성화 시키는 것 
+	var btns = document.getElementsByName("btn");
+	for(var i in btns){
+		btns[i].disabled = true;
+		btns[i].style.backgroundColor = "gray";
+	}
+	
+	
+}
+
+function closewin(){
+	var lo = document.getElementById("login");
+	lo.style.display = "none";
+	document.body.style.background= "white";
+	
+	
+	//비활성화 되었던 버튼 재활성화 시키기 
+	var btns = document.getElementsByName("btn");
+	for(var i in btns){
+		btns[i].disabled = false ;
+		btns[i].style.backgroundColor = "white";
+>>>>>>> jin/master
 	}
 }
 function closelayer(){

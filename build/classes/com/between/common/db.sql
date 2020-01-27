@@ -326,18 +326,28 @@ SELECT * FROM TB_BOARD
 --0115  댓글번호 컬럼 추가됨
 --		댓글번호 시퀀스 추가
 --0116  글번호는 게시판테이블의 글번호와 참조관계
+--0125  WRITER ->USER_ID 변경
+--		그룹오더,성별 컬럼 추가
+
 CREATE TABLE TB_RE_BOARD(
+    USER_ID            VARCHAR2(20)    NOT NULL,
+    RE_GENDER		   VARCHAR2(6)     NOT NULL,
     BOARD_NUM          NUMBER          NOT NULL,
-    RE_NUM             NUMBER          NOT NULL,
-    WRITER             VARCHAR2(20)    NOT NULL, 
-    RE_CONTENT         VARCHAR2(20)    NOT NULL, 
-    RE_GROUP_NUM             NUMBER          NOT NULL, 
-    RE_TAB             NUMBER          NOT NULL, 
-    RE_DATE            DATE            NOT NULL, 
+    RE_NUM             NUMBER          NOT NULL, 
+    RE_GROUP_NUM       NUMBER          NOT NULL, 
+    RE_ORDER		   NUMBER		   NOT NULL,
+    RE_TAB             NUMBER          NOT NULL,
     RE_DELETE_CHECK    VARCHAR2(4)     NOT NULL, 
+    RE_CONTENT         VARCHAR2(20)    NOT NULL, 
+    RE_DATE            DATE            NOT NULL, 
     RE_FLAG            VARCHAR2(4)     NOT NULL, 
-    RE_FLAG_TYPE       VARCHAR2(20)    NOT NULL
+    RE_FLAG_TYPE       VARCHAR2(20)    NOT NULL,
+     CONSTRAINT TB_RE_BOARD_PK PRIMARY KEY (RE_NUM)
 )
+
+INSERT INTO TB_RE_BOARD VALUES('USER@NAVER.COM','MALE',80,1,80,1,0,'N','TEST',SYSDATE,'0','EMPTY');
+
+DROP TABLE TB_RE_BOARD
 
 CREATE SEQUENCE TB_RE_BOARD_SEQ;
 

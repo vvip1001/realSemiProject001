@@ -12,6 +12,7 @@
 		<typeAlias type="com.between.dto.TbUserDto" alias="TbUserDto"/>
 		<typeAlias type="com.between.dto.TbGroupDto" alias="TbGroupDto" />
 		<typeAlias type="com.between.dto.Criteria" alias="Cri" />
+		<typeAlias type="com.between.dto.TbReBoardDto" alias="TbReBoardDto" />
 	</typeAliases>
 
   <environments default="development">
@@ -31,6 +32,7 @@
     <mapper resource="com/between/common/TbBoard-mapper.xml"/>
     <mapper resource="com/between/common/TbUser-mapper.xml"/>
     <mapper resource="com/between/common/regist-mapper.xml"/>
+    <mapper resource="com/between/common/TbReBoard-mapper.xml" />
   </mappers>
   
 </configuration>
