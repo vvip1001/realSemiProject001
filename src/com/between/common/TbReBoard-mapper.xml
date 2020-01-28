@@ -83,8 +83,9 @@
 		)
 	</insert>
 
-	<select id="countBoard" resultType="int" >
-		SELECT COUNT(*) FROM TB_RE_BOARD
+	<select id="countBoard" parameterType="int" resultType="int" >
+		SELECT COUNT(*) FROM TB_RE_BOARD WHERE BOARD_NUM = #{boardNum}
 	</select>
+	
 
 </mapper>

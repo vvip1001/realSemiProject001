@@ -38,8 +38,6 @@
 
 	});
 </script>
-
-
 <style type="text/css">
 	#hideButton{
 		display:none;
@@ -61,8 +59,6 @@
 				//$values = $(".reple");
 				//console.log($values);
 			}			
-			
-			
 		});
 	});
 </script>
@@ -89,6 +85,7 @@
 			<tr>
 				<th>작성자</th>
 				<td><%=board.getBoardGender() %></td>
+				<td>조회수:<%=board.getBoardViewCount() %></td>
 			</tr>
 			<tr>
 				<th>제목</th>
@@ -103,7 +100,7 @@
 				<td>
 					<input type="button" value="답글작성" onclick="location.href='TbBoard.do?command=boardanswer&boardNum=<%=board.getBoardNum()%>'"/>
 				</td>
-				<td colspan="2" align="right" id=<%=(board.getUserId().equals(userInfo.getUserId())) ? "":"hideButton" %> >
+				<td colspan="3" align="right" id=<%=(board.getUserId().equals(userInfo.getUserId())) ? "":"hideButton" %> >
 					<input type="submit" value="수정"/>
 					<input type="button" value="삭제" onclick="location.href='TbBoard.do?command=boarddelete&boardNum=<%=board.getBoardNum()%>'"/>
 				</td>

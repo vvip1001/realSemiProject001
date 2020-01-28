@@ -122,14 +122,14 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	}
 
 	@Override
-	public int deleteBoard(int boardGroupNum) {
+	public int deleteBoard(int boardNum) {
 		//글삭제 
 		SqlSession session = null;
 		int res = 0;
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.delete(namespace+"deleteBoard",boardGroupNum);
+			res = session.delete(namespace+"deleteBoard",boardNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -185,6 +185,24 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		
 		session = getSqlSessionFactory().openSession(true);
 		res = session.selectOne(namespace+"countBoard");
+		
+		return res;
+	}
+
+	@Override
+	public int updateViewCount(int boardNum) {
+		
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			res = session.update(namespace+"updateViewCount",boardNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 		
 		return res;
 	}

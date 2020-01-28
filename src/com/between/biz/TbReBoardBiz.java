@@ -14,5 +14,5 @@ public interface TbReBoardBiz {
 	public int checkReBoardDelete(int boardNum);
 	public int answerProc(TbReBoardDto dto);
 	
-	public int countBoard();
+	public int countBoard(int boardNum);
 }

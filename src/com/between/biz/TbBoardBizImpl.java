@@ -64,14 +64,16 @@ public class TbBoardBizImpl implements TbBoardBiz{
 	public int deleteBoard(int boardNum) {
 		return dao.deleteBoard(boardNum);
 	}
-	public int checkBoardDelete(int boardNum) {
-		int count = dao.checkGroupBoard(boardNum);
+	public int checkBoardDelete(int boardGroupNum) {
+		int count = dao.checkGroupBoard(boardGroupNum);
 		int res = 0;
-		
+		System.out.println(count+"count");
 		if(count == 1) {
-			res = dao.deleteBoard(boardNum);
+			res = dao.deleteBoard(boardGroupNum);
+			System.out.println(res+"delete");
 		} else {
-			res = dao.updateBoardCheck(boardNum);
+			res = dao.updateBoardCheck(boardGroupNum);
+			System.out.println(res+"update");
 		}
 		
 		return res;
@@ -91,6 +93,11 @@ public class TbBoardBizImpl implements TbBoardBiz{
 	@Override
 	public int countBoard() {
 		return dao.countBoard();
+	}
+
+	@Override
+	public int updateViewCount(int boardNum) {
+		return dao.updateViewCount(boardNum);
 	}
 
 }

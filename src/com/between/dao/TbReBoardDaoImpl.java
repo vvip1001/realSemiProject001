@@ -166,13 +166,13 @@ public class TbReBoardDaoImpl extends SqlMapConfig implements TbReBoardDao {
 	}
 
 	@Override
-	public int countBoard() {
+	public int countBoard(int boardNum) {
 		
 		SqlSession session = null;
 		int res = 0;
 		
 		session = getSqlSessionFactory().openSession(true);
-		res = session.selectOne(namespace+"countBoard");
+		res = session.selectOne(namespace+"countBoard",boardNum);
 		
 		return res;
 	}

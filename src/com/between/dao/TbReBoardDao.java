@@ -16,5 +16,5 @@ public interface TbReBoardDao {
 	public int updateAnswer(int boardNum, int parentReNum);
 	public int insertAnswer(TbReBoardDto dto);
 	
-	public int countBoard();
+	public int countBoard(int boardNum);
 }

@@ -75,6 +75,9 @@ public class TbBoardServlet extends HttpServlet {
 			int boardNum = Integer.parseInt(request.getParameter("boardnum"));
 			String paramPage = request.getParameter("page");
 			
+			// 조회수 증가 +1
+			biz.updateViewCount(boardNum);
+			
 			TbBoardDto dto = biz.selectOne(boardNum);
 			
 			Criteria cri = new Criteria();
@@ -90,7 +93,7 @@ public class TbBoardServlet extends HttpServlet {
 			
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(reBiz.countBoard());
+			pageMaker.setTotalCount(reBiz.countBoard(boardNum));
 			
 			List<TbReBoardDto> list = reBiz.selectList(cri.getPage(), cri.getPageCount(), boardNum);
 
@@ -123,13 +126,12 @@ public class TbBoardServlet extends HttpServlet {
 		} else if(command.equals("boarddelete")) {
 			
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
-			
 			int res = biz.checkBoardDelete(boardNum);
 			
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boardlist");
 			} else {
-				responseAlert("fail", "index.html", response);
+				responseAlert("fail", "index2.jsp", response);
 			} 
 		} else if(command.equals("boardupdate")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));

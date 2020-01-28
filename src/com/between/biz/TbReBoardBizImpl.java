@@ -89,9 +89,9 @@ public class TbReBoardBizImpl implements TbReBoardBiz{
 	}
 
 	@Override
-	public int countBoard() {
+	public int countBoard(int boardNum) {
 		//전체 게시글 갯수 파악 함수
-		return dao.countBoard();
+		return dao.countBoard(boardNum);
 	}
 
 }
