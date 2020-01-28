@@ -43,13 +43,13 @@ public class PageMaker {
         next = endPage * cri.getPageCount() < totalCount ? true : false;
         
         
-        System.out.println("startPage : "+startPage);
-        System.out.println("endPage : "+endPage);
-        System.out.println("totalCount : "+totalCount);
-        System.out.println("cri.getPageCount : "+cri.getPageCount());
-        System.out.println("tempEndPage : "+tempEndPage);
-        System.out.println(prev);
-        System.out.println(next);
+//        System.out.println("startPage : "+startPage);
+//        System.out.println("endPage : "+endPage);
+//        System.out.println("totalCount : "+totalCount);
+//        System.out.println("cri.getPageCount : "+cri.getPageCount());
+//        System.out.println("tempEndPage : "+tempEndPage);
+//        System.out.println(prev);
+//        System.out.println(next);
         
     }
     

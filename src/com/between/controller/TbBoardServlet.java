@@ -191,7 +191,12 @@ public class TbBoardServlet extends HttpServlet {
 			String userId = request.getParameter("userId");
 			String reContent = request.getParameter("reContent");
 			String reGender = request.getParameter("reGender");
+			
 			String reNum = request.getParameter("reNum");
+			
+			System.out.println(userId);
+			System.out.println(reContent);
+			System.out.println(reGender);
 			
 			int res = 0;
 			
@@ -202,15 +207,15 @@ public class TbBoardServlet extends HttpServlet {
 			dto.setReContent(reContent);
 			dto.setReGender(reGender);
 			
-			// 댓글번호가 있는 경우 == 답글이라는 의미
-			if(reNum==null) {
+			
+			if(reNum.isEmpty()) {//댓글번호(시퀀스)가 없는 경우 == 답글이 아니라는 의미
+				res = reBiz.insertReBoard(dto); // 일반 댓글 기능 실행
 				
+			} else { // 댓글번호가 있는 경우 == 답글이라는 의미
+
 				dto.setReNum(Integer.parseInt(reNum));
 				
 				res = reBiz.answerProc(dto);// 답글 기능 실행
-				
-			} else { //댓글번호(시퀀스)가 없는 경우 == 답글이 아니라는 의미
-				res = reBiz.insertReBoard(dto); // 일반 댓글 기능 실행ㄴ
 			}
 			
 			if(res>0) {
