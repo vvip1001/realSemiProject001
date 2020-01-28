@@ -10,9 +10,11 @@ public interface TbCalBiz {
 	
 	public List<TbCalDto> selectCalList(String calTime, int groupNum);
 	public TbCalDto selectOne(int calNum, int groupNum);
+	public TbCalDto selectDday(String calTitle, int groupNum);
 	public int insertEvent(TbCalDto dto);
 	public int updateEvent(TbCalDto dto);
 	public int deleteEvent(String[] seq);
+	public int deleteOne(TbCalDto dto);
 	public TbGroupDto findPartner(int groupNum);
 	
 	public void setTodates(String calTime);

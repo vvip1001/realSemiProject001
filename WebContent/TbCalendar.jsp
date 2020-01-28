@@ -22,60 +22,37 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript"></script>
+<script type="text/javascript">
 
-<style type="text/css">
-#calendar {
-	border-collapse: collapse;;
-	border: 1px solid gray;
-}
-
-#calendar th {
-	width: 80px;
-	border: 1px solid gray;
-}
-
-#calendar td {
-	width: 80px;
-	height: 80px;
-	border: 1px solid gray;
-	text-align: left;
-	vertical-align: top;
-	position: relative;
-}
-
-a {
-	text-decoration: none;
-}
-
-#wrap {
-	width: 100%;
-	margin: 0 auto;
-}
-
-.D-Day {
-	float: left;
-	width: 25%;
-	height: 500px;
-	margin: 0 auto;
-}
-
-.preList>p {
-	font-size: 10px;
-	margin: 1px;
-	background-color: pink;
-}
-</style>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js">
-
-	$(function(){
-		$(".D-Day").submit(function(){
-			$(this).css("display","none");
-		})
-	});
-
+	/* onload = function(){
+		document.getElementById("dayCount").onclick = anniversary;
+	} */
+	
+	window.onload = anniversary;
+	
+	function anniversary() {
+		//var dates = document.getElementById("dates").value;
+		var year = document.getElementById("anniYear").innerHTML;
+		var month = document.getElementById("anniMonth").innerHTML;
+		var date = document.getElementById("anniDate").innerHTML;
+		console.log(year);
+		console.log(month);
+		console.log(date);
+		
+		var now = new Date();
+		var firstDay = new Date(year,month-1,date);
+		
+		
+		var toNow = now.getTime();
+		var toFirst = firstDay.getTime();
+		var passedTime = toNow - toFirst;
+		var passedDay = Math.ceil(passedTime/(1000*60*60*24));
+		
+		document.querySelector("#today").innerText = passedDay + "일";
+	}
+	
 </script>
-
+<link href="css/calendar.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<%
@@ -90,11 +67,10 @@ a {
 		int month = (int) request.getAttribute("month");
 		int dayOfWeek = (int) request.getAttribute("dayOfWeek");
 		int lastDay = (int) request.getAttribute("lastDay");
-		
+
 		TbCalDao dao = new TbCalDaoImpl();
 		String yyyyMM = year + biz.isTwo(String.valueOf(month));
 		List<TbCalDto> clist = dao.selectCalListView(yyyyMM, groupNum);
-		
 	%>
 
 	<h1><%=groupDto.getUserId()%>&
@@ -102,12 +78,36 @@ a {
 	</h1>
 
 	<div id="wrap">
-		<div class="D-Day">
+		<div class="D-Day" id="day">
+			<%
+				if(biz.selectDday("사귄날", groupNum)==null){
+			%>
 			<form action="TbCal.do" method="post">
 				<input type="hidden" name="command" value="dday">
-				<input type="text" placeholder="예)2010-04-20">
+				<input type="text" placeholder="예)2010-04-20" name="dateSince">
 				<input type="submit" value="등록"> 
 			</form>
+			<%		
+				} else {
+			%>
+			<div>
+				<h3>
+					<span id="anniYear">
+						<%=biz.selectDday("사귄날", groupNum).getCalTime().substring(0, 4) %>
+					</span>년  
+					<span id="anniMonth">
+						<%=biz.selectDday("사귄날", groupNum).getCalTime().substring(4, 6) %> 
+					</span>월 
+					<span id="anniDate">
+						<%=biz.selectDday("사귄날", groupNum).getCalTime().substring(6, 8) %> 
+					</span>일
+					<a href="TbCal.do?command=ddayEdit"><img alt="edit" src="images/pen.png"></a> 
+				</h3>
+				<label>사랑한지? </label><span id="today"></span><br/>
+			</div>
+			<%
+				}
+			%>
 		</div>
 		<div class="cal">
 			<table id="calendar">
@@ -146,8 +146,7 @@ a {
 					<td><a class="countview"
 						href="TbCal.do?command=callist&year=<%=year%>&month=<%=month%>&date=<%=i%>"
 						style="color: <%=biz.fontColor(i, dayOfWeek)%>"><%=i%> </a>
-						<div class="preList"><%=biz.getCalView(i, clist) %></div>
-					</td>
+						<div class="preList"><%=biz.getCalView(i, clist)%></div></td>
 					<%
 						if (cnt % 7 == 0) {
 					%>

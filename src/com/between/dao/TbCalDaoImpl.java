@@ -53,7 +53,29 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 		
 		return dto;
 	}
+	
 
+	@Override
+	public TbCalDto selectDday(String calTitle, int groupNum) {
+		SqlSession session = null;
+		TbCalDto dto = new TbCalDto();
+		dto.setCalTitle(calTitle);
+		dto.setGroupNum(groupNum);
+		
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			dto = session.selectOne(namespace+"selectDday",dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		
+		return dto;
+	}
+	
+	
 	@Override
 	public int insertEvent(TbCalDto dto) {
 		
@@ -88,6 +110,7 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 		
 		return res;
 	}
+	
 
 	@Override
 	public int deleteEvent(String[] seq) {
@@ -108,6 +131,17 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 		} finally {
 			session.close();
 		}
+		
+		return res;
+	}
+	
+	@Override
+	public int deleteOne(TbCalDto dto) {
+		SqlSession session = null;
+		int res = 0;
+		
+		session = getSqlSessionFactory().openSession(true);
+		res = session.delete(namespace+"deleteOne",dto);
 		
 		return res;
 	}
@@ -143,6 +177,7 @@ public class TbCalDaoImpl extends SqlMapConfig implements TbCalDao {
 		return list;
 		
 	}
+
 
 	
 }

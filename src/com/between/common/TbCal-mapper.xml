@@ -31,6 +31,13 @@
   	FROM TB_CAL WHERE CAL_NUM = #{calNum} AND GROUP_NUM = #{groupNum}
   </select>
   
+  <select id="selectDday" resultMap="TbCalResultMap">
+  	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
+  	FROM TB_CAL WHERE CAL_TITLE = #{calTitle} AND GROUP_NUM = #{groupNum}
+  </select>
+  
+ 
+  
   <select id="selectCalListView" parameterType="TbCalDto" resultMap="TbCalResultMap" >
   	SELECT CAL_NUM, GROUP_NUM, CAL_TITLE, CAL_CONTENT, CAL_TIME, CAL_DATE
   	FROM (SELECT
@@ -50,6 +57,11 @@
   	SET CAL_TITLE = #{calTitle}, CAL_CONTENT = #{calContent}, CAL_TIME = #{calTime}
   	WHERE CAL_NUM = #{calNum} AND GROUP_NUM = #{groupNum}
   </update>
+  
+  <delete id="deleteOne">
+  	DELETE FROM TB_CAL 
+  	WHERE CAL_TITLE = #{calTitle} AND GROUP_NUM = #{groupNum}
+  </delete>
   
   <delete id="deleteEvent">
   	DELETE FROM TB_CAL 

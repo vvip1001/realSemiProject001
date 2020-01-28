@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+#calendar {
+	border-collapse: collapse;;
+	border: 1px solid gray;
+}
+
+#calendar th {
+	width: 80px;
+	border: 1px solid gray;
+}
+
+#calendar td {
+	width: 80px;
+	height: 80px;
+	border: 1px solid gray;
+	text-align: left;
+	vertical-align: top;
+	position: relative;
+}
+
+a {
+	text-decoration: none;
+}
+
+#wrap {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.D-Day {
+	float: left;
+	width: 25%;
+	height: 500px;
+	margin: 0 auto;
+}
+
+.preList>p {
+	font-size: 10px;
+	margin: 1px;
+	background-color: #ceb6d9;
+}

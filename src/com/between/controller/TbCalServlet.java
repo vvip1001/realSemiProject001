@@ -191,7 +191,6 @@ public class TbCalServlet extends HttpServlet {
 			if(res>0) {
 				dispatch("TbCalendar.jsp", request, response);
 			} else {
-				request.setAttribute("msg", "일정 추가 실패");
 				dispatch("TbCalendar.jsp",request,response);
 			}
 			
@@ -245,7 +244,6 @@ public class TbCalServlet extends HttpServlet {
 				
 				dispatch("TbCalendar.jsp", request, response);
 			} else {
-				request.setAttribute("msg", "일정 수정 실패");
 				dispatch("TbCalendar.jsp",request,response);
 			}
 		} else if(command.equals("muldel")) {
@@ -277,8 +275,82 @@ public class TbCalServlet extends HttpServlet {
 			} else {
 				dispatch("TbCalendarList.jsp", request, response);
 			}
-		} 
+		} else if(command.equals("dday")) {
+			String daySince = request.getParameter("dateSince");
+			String arr[] = daySince.split("-");
+			int groupNum = userInfo.getGroupNum();
 			
+			year = Integer.parseInt(arr[0]);
+			month = Integer.parseInt(arr[1]);
+			int date = Integer.parseInt(arr[2]);
+			int hour = 0;
+			int min = 0;
+			String title = "사귄날";
+			String content = "오늘부터 1일~";
+			
+			String calTime = year+
+					biz.isTwo((Integer.toString(month)))+
+					biz.isTwo(Integer.toString(date))+
+					biz.isTwo(Integer.toString(hour))+
+					biz.isTwo(Integer.toString(min));
+			TbCalDto dto = new TbCalDto();
+			dto.setGroupNum(groupNum);
+			dto.setCalTitle(title);
+			dto.setCalContent(content);
+			dto.setCalTime(calTime);
+			
+			
+			
+			if(biz.selectDday(title, groupNum)==null) {
+				
+				int res = biz.insertEvent(dto);
+				
+				request.setAttribute("groupDto", groupDto);
+				request.setAttribute("year", year);
+				request.setAttribute("month", month);
+				request.setAttribute("dayOfWeek", dayOfWeek);
+				request.setAttribute("lastDay", lastDay);
+				
+				if(res > 0) {
+					dispatch("TbCalendar.jsp", request, response);
+				} else {
+					dispatch("TbCalendar.jsp", request, response);
+				}
+			} else {
+				request.setAttribute("groupDto", groupDto);
+				request.setAttribute("year", year);
+				request.setAttribute("month", month);
+				request.setAttribute("dayOfWeek", dayOfWeek);
+				request.setAttribute("lastDay", lastDay);
+				
+				dispatch("TbCalendar.jsp", request, response);
+			}
+		} else if(command.equals("ddayEdit")) {
+			String title = "사귄날";
+			int groupNum = userInfo.getGroupNum();
+			
+			TbCalDto dto = biz.selectDday(title, groupNum);
+			
+			int res = biz.deleteOne(dto);
+			
+			if(res > 0) {
+				request.setAttribute("groupDto", groupDto);
+				request.setAttribute("year", year);
+				request.setAttribute("month", month);
+				request.setAttribute("dayOfWeek", dayOfWeek);
+				request.setAttribute("lastDay", lastDay);
+				
+				dispatch("TbCalendar.jsp", request, response);
+			} else {
+				request.setAttribute("groupDto", groupDto);
+				request.setAttribute("year", year);
+				request.setAttribute("month", month);
+				request.setAttribute("dayOfWeek", dayOfWeek);
+				request.setAttribute("lastDay", lastDay);
+				
+				dispatch("TbCalendar.jsp", request, response);
+			}
+		}
 		
 	}
 

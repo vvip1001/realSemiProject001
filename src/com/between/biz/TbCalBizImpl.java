@@ -39,7 +39,6 @@ public class TbCalBizImpl implements TbCalBiz {
 	public int updateEvent(TbCalDto dto) {
 		return dao.updateEvent(dto);
 	}
-
 	
 	
 	@Override
@@ -103,6 +102,16 @@ public class TbCalBizImpl implements TbCalBiz {
 	public int deleteEvent(String[] seq) {
 		
 		return dao.deleteEvent(seq);
+	}
+
+	@Override
+	public TbCalDto selectDday(String calTitle, int groupNum) {
+		return dao.selectDday(calTitle, groupNum);
+	}
+
+	@Override
+	public int deleteOne(TbCalDto dto) {
+		return dao.deleteOne(dto);
 	}
 
 	

@@ -101,7 +101,9 @@ $(function(){
 			<tr>
 				<td colspan="3"><input type="button" value="글쓰기"
 					onclick="location.href='TbCal.do?command=insertCalForm&year=<%=year%>&month=<%=month%>&date=<%=date%>'">
-					<input type="submit" value="삭제"></td>
+					<input type="button" value="캘린더" onclick="location.href='TbCal.do?command=calendar&year=<%=year %>&month=<%=month %>'">
+					<input type="submit" value="삭제">
+				</td>
 			</tr>
 
 		</table>
