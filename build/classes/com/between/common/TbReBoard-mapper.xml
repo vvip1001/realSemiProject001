@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.between.TbReBoard.mapper" >
+	
+	<resultMap type="TbReBoardDto" id="TbReBoardResultMap">
+		<result property="userId" column="USER_ID"/>
+		<result property="reGender" column="RE_GENDER"/>
+		<result property="boardNum" column="BOARD_NUM"/>
+		<result property="reNum" column="RE_NUM" />
+		<result property="reGroupNum" column="RE_GROUP_NUM" />
+		<result property="reOrder" column="RE_ORDER" />
+		<result property="reTab" column="RE_TAB" />
+		<result property="reDeleteCheck" column="RE_DELETE_CHECK" />
+		<result property="reContent" column="RE_CONTENT" />
+		<result property="reDate" column="RE_DATE" />
+		<result property="reFlag" column="RE_FLAG" />
+		<result property="reFlagType" column="RE_FLAG_TYPE" />
+	</resultMap>
+	
+	<select id="selectlist" resultMap="TbReBoardResultMap" >
+	<![CDATA[
+		SELECT * FROM (
+		SELECT * FROM (
+		SELECT ROWNUM RNM,USER_ID,BOARD_NUM,RE_GENDER,RE_NUM,RE_GROUP_NUM,RE_ORDER,RE_TAB,RE_DELETE_CHECK,RE_CONTENT,RE_DATE,RE_FLAG,RE_FLAG_TYPE
+		FROM (SELECT * FROM TB_RE_BOARD WHERE BOARD_NUM = #{boardNum} ORDER BY RE_NUM, RE_ORDER)) WHERE RNM <=#{pageCount}) WHERE RNM >=#{page}
+	]]>	
+	</select>
+
+	<insert id="insertBoard" parameterType="TbReBoardDto" >
+		INSERT INTO TB_RE_BOARD VALUES(
+		#{userId},
+		#{reGender},
+		#{boardNum},
+		TB_RE_BOARD_SEQ.NEXTVAL,
+		TB_RE_BOARD_GROUP_SEQ.NEXTVAL,
+		1,
+		0,
+		'N',
+		#{reContent},
+		SYSDATE,
+		'0',
+		'EMPTY'
+		)
+	</insert>
+	
+	<select id="checkGroupBoard" parameterType="TbReBoardDto" resultType="int" >
+		SELECT COUNT(*) FROM TB_RE_BOARD WHERE RE_GROUP_NUM = 
+		(SELECT RE_GROUP_NUM FROM TB_RE_BOARD WHERE RE_NUM = #{reNum}) AND RE_DELETE_CHECK = 'N'
+	</select>
+	
+	<update id="updateBoardCheck" parameterType="int" >
+		UPDATE TB_RE_BOARD SET
+		RE_DELETE_CHECK = 'Y'
+		WHERE RE_NUM = #{reNum}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE TB_RE_BOARD
+		WHERE RE_GROUP_NUM = #{reGroupNum}
+	</delete>
+	
+	<update id="updateAnswer" parameterType="TbReBoardDto" >
+		UPDATE TB_RE_BOARD
+		SET RE_ORDER = RE_ORDER +1
+		WHERE RE_GROUP_NUM = (SELECT RE_GROUP_NUM FROM TB_RE_BOARD WHERE RE_NUM = #{reNum} )
+		AND RE_ORDER > (SELECT RE_ORDER FROM TB_RE_BOARD WHERE RE_NUM = #{reNum})
+	</update>
+
+	<insert id="insertAnswer" parameterType="TbReBoardDto" >
+		INSERT INTO TB_RE_BOARD VALUES(
+		#{userId},
+		#{reGender},
+		#{boardNum},
+		TB_RE_BOARD_SEQ.NEXTVAL,
+		(SELECT RE_GROUP_NUM FROM TB_RE_BOARD WHERE RE_NUM = #{reNum}),
+		(SELECT RE_ORDER +1 FROM TB_RE_BOARD WHERE RE_NUM = #{reNum}),
+		(SELECT RE_TAB +1 FROM TB_RE_BOARD WHERE RE_NUM = #{reNum}),
+		'N',
+		#{reContent},
+		SYSDATE,
+		'0',
+		'EMPTY'
+		)
+	</insert>
+
+	<select id="countBoard" parameterType="int" resultType="int" >
+		SELECT COUNT(*) FROM TB_RE_BOARD WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+
+</mapper>
