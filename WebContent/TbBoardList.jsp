@@ -26,12 +26,18 @@
 <style type="text/css">
 	#board{
 		background-color: rgb(240,240,240);
-		width:700px;
+		width:100%;
+		margin: 0 auto;
 	}
-	#board fieldset{
-		border : none;
-		
+	
+	#list{
+		width: 700px;
+		margin: 0 auto;
+		background-color: pink;
 	}
+	
+	
+	
 
 
 </style>
@@ -43,8 +49,8 @@
 	<div id="head"></div>
 	
 	<div id="board" >
-		<fieldset>
-			<table>
+		<div id="list">
+			<table >
 				<col width="100px">
 				<col width="200px">
 				<col width="150px">
@@ -107,7 +113,7 @@
 					</td>
 				</tr>
 			</table>
-		</fieldset>
+		</div>
 	</div>
 </body>
 </html>
