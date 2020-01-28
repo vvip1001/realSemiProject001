@@ -13,7 +13,7 @@ public interface TbReBoardDao {
 	public int deleteBoard(int boardNum);
 	public int updateBoardCheck(int boardNum);
 	
-	public int updateAnswer(int parentBoardNum);
+	public int updateAnswer(int boardNum, int parentReNum);
 	public int insertAnswer(TbReBoardDto dto);
 	
 	public int countBoard();

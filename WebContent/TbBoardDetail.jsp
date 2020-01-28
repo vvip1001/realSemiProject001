@@ -23,6 +23,22 @@
 <head>
 <meta charset="UTF-8">
 <title>속닥속닥</title>
+<%@ include file="./form/mainPage.jsp" %>
+<script src="resources/summernote/summernote-lite.js"></script>
+<script src="resources/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="resources/summernote/summernote-lite.css">
+
+<script type="text/javascript">
+	$(function() {
+	  $('#summernote').summernote({
+	    height: 300,
+	    lang: 'ko-KR' // 언어 세팅
+	  });
+	  $('#summernote').summernote('disable');
+
+	});
+</script>
+
 
 <style type="text/css">
 	#hideButton{
@@ -32,7 +48,24 @@
 
 </head>
 <body>
-<%@ include file="./form/mainPage.jsp" %>
+<script type="text/javascript">
+	$(function(){
+		//답글 버튼을 눌렀을 때, 버튼의 다음 태그안에 있는 댓글번호를 가지고 와서 댓글작성 form의 hidden에 집어넣어줌
+		$(".reple").click(function(){
+			if($(this).val()=="답글"){
+
+				$repleNum = $(this).next().val();
+				//console.log($repleNum);
+				$(".repleValue").val($repleNum);
+				//console.log($(".repleValue").val());
+				//$values = $(".reple");
+				//console.log($values);
+			}			
+			
+			
+		});
+	});
+</script>
 <%
 //	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
 	TbBoardDto board = (TbBoardDto)request.getAttribute("board");
@@ -63,7 +96,7 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="15" cols="30" readonly="readonly" ><%=board.getBoardContent() %></textarea>
+				<td><textarea readonly="readonly" id="summernote"><%=board.getBoardContent() %></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -84,20 +117,34 @@
 			<input type="hidden" name="boardNum" value="<%=board.getBoardNum()%>"/>
 			<input type="hidden" name="userId" value="<%=userInfo.getUserId()%>"/>
 			<input type="hidden" name="reGender" value="<%=userInfo.getUserGender()%>"/>
+			<input type="hidden" name="reNum" class="repleValue" value=""/>
 			<table>
 <%
 				for(int i = 0; i < list.size(); i++){
 %>
+			
 				<tr>
+				<td>
+					
+<%
+					for(int j = 0; j <list.get(i).getReTab();j++){
+%>						
+						&nbsp;
+<%
+					}
+%>
+					 <%=list.get(i).getReContent()%></td>
 					<td><%=list.get(i).getReGender()%> </td>
-					<td><%=list.get(i).getReContent()%> </td>
+					<td align="right" >
+						<input class="reple" type="button" value="답글" />
+						<input type="hidden" value="<%=list.get(i).getReNum()%>"/>
+						
 				
 <%				
 					if(userInfo.getUserId().equals(list.get(i).getUserId())){
 %>
-					<td align="right" >
+					
 						<input type="button" value="삭제"/>
-						<input type="button" value="수정"/>
 					</td>
 				
 <%						

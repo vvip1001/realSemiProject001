@@ -61,12 +61,13 @@ public class TbReBoardBizImpl implements TbReBoardBiz{
 		return dao.deleteBoard(boardNum);
 	}
 	public int checkReBoardDelete(int boardNum) {
+		//삭제 하기 전 게시글 번호를 파라미터로 받아서 해당 게시글 번호가 가진 자식(그룹넘버가 같은 게시글)을 확인
 		int count = dao.checkGroupBoard(boardNum);
 		int res = 0;
 		
-		if(count == 1) {
+		if(count == 1) {// 게시글이 자신 밖에 없을 경우 DB에서 DELETE
 			res = dao.deleteBoard(boardNum);
-		} else {
+		} else { // 게시글이 자신 이외에도 존재할 경우 DB에서 해당 게시글의 DELETE_CHECK를 Y로 바꿔줌
 			res = dao.updateBoardCheck(boardNum);
 		}
 		
@@ -75,9 +76,12 @@ public class TbReBoardBizImpl implements TbReBoardBiz{
 
 	@Override
 	public int answerProc(TbReBoardDto dto) {
-		
-		int update = dao.updateAnswer(dto.getBoardNum());
+
+		//답글 달기전 다른 게시글의 스탯을 업뎃 (탭번호,오더)
+		int update = dao.updateAnswer(dto.getBoardNum(),dto.getReNum());
 		System.out.println("UPDATE : "+update);
+		
+		//업뎃 후 답글 삽입
 		int insert = dao.insertAnswer(dto);
 		System.out.println("INSERT : "+insert);
 		
@@ -86,6 +90,7 @@ public class TbReBoardBizImpl implements TbReBoardBiz{
 
 	@Override
 	public int countBoard() {
+		//전체 게시글 갯수 파악 함수
 		return dao.countBoard();
 	}
 

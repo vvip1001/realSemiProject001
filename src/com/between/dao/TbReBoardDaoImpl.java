@@ -12,6 +12,7 @@ import com.between.dto.TbReBoardDto;
 public class TbReBoardDaoImpl extends SqlMapConfig implements TbReBoardDao {
 
 	String namespace = "com.between.TbReBoard.mapper.";
+	// 해당 클래스는 보기에 많이 불편할 수 있음.. 함수이름을 안바꾸거나..
 	
 	@Override
 	public List<TbReBoardDto> selectList(int pageNum, int pageCount, int boardNum) {
@@ -41,10 +42,6 @@ public class TbReBoardDaoImpl extends SqlMapConfig implements TbReBoardDao {
 		//글작성
 		SqlSession session = null;
 		int res = 0;
-		System.out.println(dto.getReContent());
-		System.out.println(dto.getReGender());
-		System.out.println(dto.getBoardNum());
-		System.out.println(dto.getUserId());
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
@@ -128,14 +125,18 @@ public class TbReBoardDaoImpl extends SqlMapConfig implements TbReBoardDao {
 	
 
 	@Override
-	public int updateAnswer(int parentBoardNum) {
+	public int updateAnswer(int boardNum, int parentReNum) {
 		//답글 탭번호 수정
 		SqlSession session = null;
 		int res = 0;
 		
+		TbReBoardDto dto = new TbReBoardDto();
+		dto.setBoardNum(boardNum);
+		dto.setReNum(parentReNum);
+		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"updateAnswer",parentBoardNum);
+			res = session.update(namespace+"updateAnswer",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

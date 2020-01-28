@@ -41,27 +41,24 @@ public class TbBoardServlet extends HttpServlet {
 		String command = request.getParameter("command");
 		
 		if(command.equals("boardlist")) {
-			
+			// 해당 페이지 번호를 값으로 받아옴
 			String paramPage = request.getParameter("page");
-			System.out.println(paramPage);
 
-			Criteria cri = new Criteria();
+			Criteria cri = new Criteria();//받은 페이지번호로 페이지를 지정할 객체
 			
-			
+			// 페이지 번호가 없는 경우 == 처음 게시판을 누를 경우, 1페이지
 			if(paramPage==null) {
-				cri.setPage(1);
-				cri.setPageCount(10);
-			} else {
+				cri.setPage(1); // 페이지 번호를 지정
+				cri.setPageCount(10); // 페이지에서 보여줄 게시글 갯수를 지정
+			} else { // 페이지 번호가 있는 경우
 				int page = Integer.parseInt(paramPage);
 				cri.setPage(page);
 				cri.setPageCount(10);
 			}
 			
-		
-			
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(biz.countBoard());
+			PageMaker pageMaker = new PageMaker();// 페이지 번호를 만들어주는 객체
+			pageMaker.setCri(cri);	// 위에서 만들어준 페이지 지정 객체를 저장
+			pageMaker.setTotalCount(biz.countBoard()); // 해당 게시판의 총 게시글 갯수를 지정
 			
 			List<TbBoardDto> list = biz.selectList(cri.getPage(), cri.getPageCount());
 
@@ -71,8 +68,10 @@ public class TbBoardServlet extends HttpServlet {
 			dispatch("TbBoardList.jsp", request, response);
 			
 			
-			
 		} else if(command.equals("boarddetail")) {
+			// 게시글 번호(시퀀스)와 페이지 번호를 불러옴
+			// 페이지 번호는 해당 게시글(selectOne)에서 보여질 댓글의 갯수를 보여주는 페이지 번호
+			// 즉 게시글 안의 게시판
 			int boardNum = Integer.parseInt(request.getParameter("boardnum"));
 			String paramPage = request.getParameter("page");
 			
@@ -187,19 +186,32 @@ public class TbBoardServlet extends HttpServlet {
 				responseAlert("fail", "index.html", response);
 			} 
 		} else if(command.equals("boardreple")) {
+			//게시판 번호, 댓글작성자아이디,댓글작성내용,댓글작성자성별,댓글번호(시퀀스) 값 받아오기
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 			String userId = request.getParameter("userId");
 			String reContent = request.getParameter("reContent");
 			String reGender = request.getParameter("reGender");
+			String reNum = request.getParameter("reNum");
+			
 			int res = 0;
 			
+			//dto 객체에 리플관련 값들 저장
 			TbReBoardDto dto = new TbReBoardDto();
 			dto.setBoardNum(boardNum);
 			dto.setUserId(userId);
 			dto.setReContent(reContent);
 			dto.setReGender(reGender);
 			
-			res = reBiz.insertReBoard(dto);
+			// 댓글번호가 있는 경우 == 답글이라는 의미
+			if(reNum==null) {
+				
+				dto.setReNum(Integer.parseInt(reNum));
+				
+				res = reBiz.answerProc(dto);// 답글 기능 실행
+				
+			} else { //댓글번호(시퀀스)가 없는 경우 == 답글이 아니라는 의미
+				res = reBiz.insertReBoard(dto); // 일반 댓글 기능 실행ㄴ
+			}
 			
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boarddetail&boardnum="+boardNum);
