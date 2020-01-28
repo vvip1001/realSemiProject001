@@ -4,6 +4,7 @@ public class Criteria {
     
     private int page; // 현재 페이지 번호
     private int pageCount; // 페이지 당 보여줄 게시글 갯수
+    private int boardNum;  // 댓글게시판에서 쓰일 변수..
     
     public int getPageStart() {// 특정 페이지의 게시글 시작 번호, 게시글 시작 행 번호
         return (this.page-1)*pageCount;
@@ -28,6 +29,14 @@ public class Criteria {
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
     }
+
+	public int getBoardNum() {
+		return boardNum;
+	}
+
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
+	}
     
 }
 

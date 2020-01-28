@@ -24,7 +24,7 @@
 		SELECT * FROM (
 		SELECT * FROM (
 		SELECT ROWNUM RNM,USER_ID,BOARD_GENDER,BOARD_NUM,BOARD_GROUP_NUM,BOARD_GROUP_ORDER,BOARD_TAB,BOARD_DELETE_CHECK,BOARD_TITLE,BOARD_CONTENT,BOARD_VIEW_COUNT,BOARD_DATE,BOARD_TYPE,BOARD_FLAG,BOARD_FLAG_TYPE
-		FROM (SELECT * FROM TB_BOARD ORDER BY BOARD_GROUP_NUM DESC)) WHERE RNM <=#{pageCount}) WHERE RNM >=#{page}
+		FROM (SELECT * FROM TB_BOARD ORDER BY BOARD_GROUP_NUM DESC, BOARD_GROUP_ORDER)) WHERE RNM <=#{pageCount}) WHERE RNM >=#{page}
 	]]>	
 	</select>
 	
@@ -52,7 +52,8 @@
 	</insert>
 	
 	<select id="checkGroupBoard" parameterType="TbBoardDto" resultType="int" >
-		SELECT COUNT(*) FROM TB_BOARD WHERE BOARD_GROUP_NUM = (SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}) AND BOARD_DELETE_CHECK = 'N'
+		SELECT COUNT(*) FROM TB_BOARD WHERE BOARD_GROUP_NUM = 
+		(SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum}) AND BOARD_DELETE_CHECK = 'N'
 	</select>
 	
 	<update id="updateBoard" parameterType="TbBoardDto" >
@@ -68,9 +69,9 @@
 		WHERE BOARD_NUM = #{boardNum}
 	</update>
 	
-	<delete id="deleteBoard">
+	<delete id="deleteBoard" parameterType="int" >
 		DELETE TB_BOARD
-		WHERE BOARD_GROUP_NUM = #{boardGroupNum}
+		WHERE BOARD_GROUP_NUM = (SELECT BOARD_GROUP_NUM FROM TB_BOARD WHERE BOARD_NUM = #{boardNum})
 	</delete>
 	
 	<update id="updateAnswer" parameterType="TbBoardDto">
@@ -103,5 +104,10 @@
 	</select>
 		
 
+	<insert id="updateViewCount" parameterType="TbBoardDto" >
+		UPDATE TB_BOARD SET
+		BOARD_VIEW_COUNT = (SELECT BOARD_VIEW_COUNT FROM TB_BOARD WHERE BOARD_NUM = #{boardNum})+1
+		WHERE BOARD_NUM = #{boardNum}
+	</insert>
 
 </mapper>

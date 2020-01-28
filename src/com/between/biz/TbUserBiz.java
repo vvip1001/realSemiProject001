@@ -22,8 +22,11 @@ public interface TbUserBiz {
 		public int userDelete(String userId);
 		
 
+		//페이징 카운트 보드 
+		public int countBoard(String userId);
+		
 		//회원 글목록 보기 
-		public List<TbBoardDto> userBoardList(String userId);
+		public List<TbBoardDto> userBoardList(String userId,int pageNum, int pageCount );
 		
 		//글 하나 선택시 
 		public TbBoardDto userBoardSelectOne(int boardNum);
@@ -59,4 +62,10 @@ public interface TbUserBiz {
 		//커플 삭제하기 -->버튼 
 		public int partnerIdInsertChekXnDelete (int groupNum);
 
+		//커플 테이블 dto 더미 호출 
+		public TbGroupDto partnerDtoDummy(String userId);
+		
+		//유저테이블에서 커플넘버지우기 
+		public int partnerNumUpdateUTDelete(int groupNum);
+		
 }

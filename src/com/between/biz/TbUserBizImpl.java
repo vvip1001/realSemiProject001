@@ -32,8 +32,8 @@ public class TbUserBizImpl implements TbUserBiz{
 
 	//내 글목록 보기 
 	@Override
-	public List<TbBoardDto> userBoardList(String userId) {
-		return dao.userBoardList(userId);
+	public List<TbBoardDto> userBoardList(String userId,int pageNum, int pageCount ) {
+		return dao.userBoardList(userId,pageNum,pageCount);
 	}
 	
 	
@@ -108,17 +108,37 @@ public class TbUserBizImpl implements TbUserBiz{
 		return dao.partnerIdInsertCheckO( groupNum);
 	}
 
-	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 no눌렀을때 (확인창)
-	//커플 삭제하기 -->버튼 
+	//파트너를 등록했을 경우 유저테이블 - 커플 그룹번호 입력 
 	@Override
 	public int partnerIdInsertChekXnDelete(int groupNum) {
 		return dao.partnerIdInsertChekXnDelete(groupNum);
 	}
-
+	//마이페이지에서 : 자신이 상대방에 의하여 등록당했을 경우 알림창에서 no눌렀을때 (확인창)
+	//커플 삭제하기 -->버튼 
 	@Override
 	public int partnerNumUpdateUT(String userId) {
 		// TODO Auto-generated method stub
 		return dao.partnerNumUpdateUT(userId);
+	}
+	//커플 테이블 dto 더미 호출 
+	@Override
+	public TbGroupDto partnerDtoDummy(String userId) {
+		// TODO Auto-generated method stub
+		return dao.partnerDtoDummy(userId);
+	}
+
+	//유저테이블에서 커플넘버지우기 
+	@Override
+	public int partnerNumUpdateUTDelete(int groupNum) {
+		// TODO Auto-generated method stub
+		return dao.partnerNumUpdateUTDelete(groupNum);
+	}
+
+	//페이징 
+	@Override
+	public int countBoard(String userId) {
+		// TODO Auto-generated method stub
+		return dao.countBoard(userId);
 	}
 
 

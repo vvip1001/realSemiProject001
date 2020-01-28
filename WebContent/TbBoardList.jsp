@@ -23,22 +23,38 @@
 <head>
 <meta charset="UTF-8">
 <title>속닥속닥</title>
+<style type="text/css">
+	#board{
+		background-color: rgb(240,240,240);
+		width:700px;
+	}
+	#board fieldset{
+		border : none;
+		
+	}
 
+
+</style>
 </head>
 <body>
-	<div id="head"></div>
 
-	<div>
+	<%@ include file="./form/mainPage.jsp" %>
+	
+	<div id="head"></div>
+	
+	<div id="board" >
 		<fieldset>
 			<table>
 				<col width="100px">
 				<col width="200px">
 				<col width="150px">
 				<col width="100px">
+				<col width="100px">
 				<tr>
 					<th>글번호</th>
 					<th>제목</th>
 					<th>작성자</th>
+					<th>조회수</th>
 					<th>작성일</th>
 				</tr>
 				<c:choose>
@@ -62,6 +78,7 @@
 											href="TbBoard.do?command=boarddetail&boardnum=${dto.boardNum }">${dto.boardTitle }</a>
 										</td>
 										<td align="center">${dto.boardGender }</td>
+										<td align="center">${dto.boardViewCount}</td>
 										<td align="center">${dto.boardDate }</td>
 									</c:otherwise>
 								</c:choose>

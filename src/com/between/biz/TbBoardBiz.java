@@ -12,8 +12,10 @@ public interface TbBoardBiz {
 	public int updateBoard(TbBoardDto dto);
 	public int deleteBoard(int boardNum);
 	
-	public int checkBoardDelete(int boardNum);
-	public int answerProc(TbBoardDto dto);
+	public int checkBoardDelete(int boardNum);//게시글 삭제 함수
+	public int answerProc(TbBoardDto dto);//답글 추가 함수
 	
-	public int countBoard();
+	public int countBoard();//게시글 갯수 파악 함수
+	
+	public int updateViewCount(int boardNum);
 }

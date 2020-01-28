@@ -8,7 +8,7 @@ public class PageMaker {
     private int endPage;
     private boolean prev;
     private boolean next;
-    private int displayPageNum = 1;
+    private int displayPageNum = 5;
     
     private int tempEndPage;
     
@@ -29,7 +29,8 @@ public class PageMaker {
     private void calcData() {
         
         endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
- 
+        // endPage(보여질 페이지에서의 페이징끝번호 
+        // = 버림(보고자 하는 페이지 번호 / 보여질 페이징번호 갯수 * 보여질페이징번호 갯수) 
         startPage = (endPage - displayPageNum) + 1;
         if(startPage <= 0) startPage = 1;
         
@@ -43,13 +44,13 @@ public class PageMaker {
         next = endPage * cri.getPageCount() < totalCount ? true : false;
         
         
-        System.out.println("startPage : "+startPage);
-        System.out.println("endPage : "+endPage);
-        System.out.println("totalCount : "+totalCount);
-        System.out.println("cri.getPageCount : "+cri.getPageCount());
-        System.out.println("tempEndPage : "+tempEndPage);
-        System.out.println(prev);
-        System.out.println(next);
+//        System.out.println("startPage : "+startPage);
+//        System.out.println("endPage : "+endPage);
+//        System.out.println("totalCount : "+totalCount);
+//        System.out.println("cri.getPageCount : "+cri.getPageCount());
+//        System.out.println("tempEndPage : "+tempEndPage);
+//        System.out.println(prev);
+//        System.out.println(next);
         
     }
     

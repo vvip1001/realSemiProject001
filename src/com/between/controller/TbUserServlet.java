@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import com.between.biz.TbUserBiz;
 import com.between.biz.TbUserBizImpl;
+import com.between.dto.Criteria;
+import com.between.dto.PageMaker;
 import com.between.dto.TbBoardDto;
 import com.between.dto.TbGroupDto;
 import com.between.dto.TbUserDto;
@@ -61,18 +63,83 @@ public class TbUserServlet extends HttpServlet {
 			String userId = request.getParameter("userId");
 			String userPw = request.getParameter("userPw");
 			TbUserDto dto = biz.login(userId, userPw);
+			System.out.println("유저 아이디유 : " + userId);
 			//dispatch("loginafter.jsp", request, response);
 			
 			//로그인 받은 정보에 따른 판별
 			if(dto != null) {
-				HttpSession session =  request.getSession(true);
-				session.setAttribute("dto", dto);
+				TbGroupDto groupdto = biz.partnerDtoDummy(userId);
+				
+				if(groupdto != null) {
+					HttpSession session =  request.getSession(true);
+					session.setAttribute("dto", dto);
+					request.setAttribute("groupdto", groupdto);
+					dispatch("loginafter.jsp", request, response);
+					
+				}else if(groupdto == null){
+					HttpSession session =  request.getSession(true);
+					session.setAttribute("dto", dto);
+					dispatch("loginafter.jsp", request, response);
+				}
+				
 				//session.setMaxInactiveInterval(60*10);
 				}
-			response.sendRedirect("loginafter.jsp");
+
+			
+			 
 			
 			
+		}else if(command.equals("loginafter2")) { 
+			HttpSession session = request.getSession();
+			TbUserDto dto = (TbUserDto)session.getAttribute("dto");
+			String userId = dto.getUserId();
 			
+
+			//상대방이 자신을 파트너로 등록 했을 경우 서로 커플 맺기
+			TbGroupDto groupdto = biz.partnerDtoDummy(userId);
+			
+			
+			if(groupdto != null) {
+				session.setAttribute("dto", dto);
+				request.setAttribute("groupdto", groupdto);
+				dispatch("loginafter2.jsp", request, response);
+			}
+			
+
+			
+		}else if(command.equals("after2")){
+			//커플 신청이 들어왔을때 승낙시
+			String userId = request.getParameter("userId");
+			String check = request.getParameter("check");
+			int groupNum = Integer.parseInt(request.getParameter("groupNum"));
+			
+			if(check.equals("yes")) {
+				int res = biz.partnerIdInsertCheckO(groupNum);
+				if(res >0) {
+					int res2 = biz.partnerNumUpdateUT(userId);
+					if(res2 > 0) {
+						responseAlert("커플등록 성공하였습니다", "loginafter.jsp", response);	
+					}
+					
+				}else {
+					responseAlert("커플등록 실패 하였습니다", "loginafter2.jsp", response);
+				}
+			}else if(check.equals("no")){
+				//커플 신청이 들어왔을때 거절시
+				int res = biz.partnerIdInsertChekXnDelete(groupNum);
+				if(res >0) {
+					int res2 = biz.partnerNumUpdateUTDelete(groupNum);
+					if(res2 >0) {
+						responseAlert("커플등록 거절 하였습니다", "loginafter.jsp", response);	
+					}
+					
+				}else {
+					responseAlert("커플등록을 실패하였습니다", "loginafter2.jsp", response);
+				}
+			}else {
+				response.sendRedirect("loginafter2.jsp");
+			}
+				
 		}else if(command.equals("logout")) {
 			
 			//세션 만료 
@@ -85,14 +152,10 @@ public class TbUserServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			TbUserDto loginDto = (TbUserDto)session.getAttribute("dto");
-			
 
 			int groupNum = loginDto.getGroupNum();
-			System.out.println("groupNum : "+groupNum);
 			String userId = loginDto.getUserId();
-			
-
-			//System.out.println(loginDto.getUserEmail());
+	
 			//각 등급별로 마이페이지 열리기 
 			if(loginDto.getUserStatus().equals("ADMIN")) {
 				responseAlert("어드민님의 마이페이지 입니다. 환영합니다.", "TbUserAdminMyPage.jsp", response);
@@ -106,17 +169,15 @@ public class TbUserServlet extends HttpServlet {
 				request.setAttribute("partnerId", partnerId);
 			    dispatch("TbUserUserMyPage.jsp", request, response);
 				}else {
+					
 					String partnerId = biz.partnerIdShow(groupNum,userId);
+					
 					request.setAttribute("partnerId", partnerId);
 					dispatch("TbUserUserMyPage.jsp", request, response);
 				}
 				
-				//상대방이 자신을 파트너로 등록 했을 경우 서로 커플 맺기
+
 				
-				/*if() {
-					
-				}
-				*/
 				
 				//responseAlert("일반회원님의 마이페이지 입니다. 환영합니다.", "TbUserUserMyPage.jsp", response);
 			}else if(loginDto.getUserStatus().equals("COUNSELOR")) {
@@ -161,17 +222,46 @@ public class TbUserServlet extends HttpServlet {
 		}else if(command.equals("userupdateformres")) {
 			//수정될 파트너 아이디 비밀번호 등을 받아서 처리하자 
 			//커플 테이블에 정보를 넣고 생성된 번호를 유저테이블에 저장 
+			String partnerId = request.getParameter("partnerId");
+			String userId = request.getParameter("userId");
+			TbGroupDto groupdto = biz.partnerDtoDummy(userId);
+
 			
-			/*
-			int res = biz.partnerIdUpdate(partnerId, groupNum);
+			String userPw = request.getParameter("userPw");
+			String userEmail = request.getParameter("userEmail");
+			String userNick = request.getParameter("userNick");
+			
+			TbUserDto dto = new TbUserDto();
+			dto.setUserPw(userPw);
+			dto.setUserEmail(userEmail);
+			dto.setUserNick(userNick);
+			
+			int res = biz.userUpdate(dto);
 			if(res > 0) {
-				
-				//dispatch("TbUser.do?command=mypage", request, response);
-				response.sendRedirect("TbUser.do?command=mypage");
-			}else {
-				responseAlert("파트너아이디를 입력해 주세요", "TbUser.do?command=userupdateform", response);
+				if(partnerId.equals("N")) {
+					responseAlert("회원정보 수정이 완료되었습니다", "TbUser.do?command=mypage", response);
+				}else if(!partnerId.equals("N")){
+					//기존 상대방 아이디 및 커플 번호 삭제 -> 새로 신청
+					int groupNum = groupdto.getGroupNum();
+					int res1 = biz.partnerIdInsertChekXnDelete(groupNum);
+					if(res1 > 0) {
+						//내 유저테이블에서 그룹 넘버 삭제 하기
+						int res2 = biz.partnerNumUpdateUTDelete(groupNum);
+						if(res2 > 0) {
+							//신규 상대방 아이디 신청
+							int res3 = biz.partnerIdInsert(partnerId, userId);
+							if(res3 > 0) {
+								//나의 유저 테이블에서 저장하기 
+								int res4 = biz.partnerNumUpdateUT(userId);
+								if(res4 > 0) {
+									responseAlert("회원정보 수정이 완료 되었습니다, 새로운 상대방에게 커플신청을 했습니다", "TbUser.do?command=mypage", response);
+								}
+							}
+						}
+					}
+					
+				}
 			}
-			*/
 			
 		
 		}else if(command.equals("userboardlist")) {
@@ -184,10 +274,26 @@ public class TbUserServlet extends HttpServlet {
 			
 			if(equserPw.equals(loginDto.getUserPw())) {
 				
+				String paramPage = request.getParameter("page");
+				System.out.println("파람페이지이게 뭘까 "+paramPage);
 				String userId = request.getParameter("userId");
+				Criteria cri = new Criteria(); 
+				if(paramPage == null) {
+					cri.setPage(1);
+					cri.setPageCount(10);
+				}else {
+					int page = Integer.parseInt(paramPage);
+					cri.setPage(page);
+					cri.setPageCount(10);
+				}
+				PageMaker pageMaker = new PageMaker();
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(biz.countBoard(userId));
 				
-				List<TbBoardDto> list = biz.userBoardList(userId);
+				List<TbBoardDto> list = biz.userBoardList(userId, cri.getPage(), cri.getPageCount());
 				request.setAttribute("list", list);
+				request.setAttribute("pageMaker", pageMaker);
+				System.out.println("페이지메이커에 들어있는 값은 뭐지 "+pageMaker);
 				dispatch("TbUserboardList.jsp", request, response);
 					
 			}else {
@@ -195,26 +301,71 @@ public class TbUserServlet extends HttpServlet {
 			}
 			
 			
+		}else if(command.equals("mylist")) {
+			
+			HttpSession session = request.getSession();
+			String userId = ((TbUserDto)session.getAttribute("dto")).getUserId();
+			String paramPage = request.getParameter("page");
+			
+			Criteria cri = new Criteria(); 
+			if(paramPage == null) {
+				cri.setPage(1);
+				cri.setPageCount(10);
+			}else {
+				int page = Integer.parseInt(paramPage);
+				cri.setPage(page);
+				cri.setPageCount(10);
+			}
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(biz.countBoard(userId));
+			
+			List<TbBoardDto> list = biz.userBoardList(userId, cri.getPage(), cri.getPageCount());
+			
+			request.setAttribute("pageMaker", pageMaker);
+			request.setAttribute("list", list);
+			dispatch("TbUserboardList.jsp", request, response);
+			
 		}else if(command.equals("search")) {
 			
 			String userId = request.getParameter("userId");
 			String boardTitle = request.getParameter("boardTitle");
 			
-			/*
-			List<TbBoardDto> list = biz.userBoardSearch(boardTitle, userId);
-			request.setAttribute("list", list);
-			dispatch("TbUserboardList.jsp", request, response);
-			*/
-			
 			List<TbBoardDto> list = new ArrayList<TbBoardDto>();
 			list = biz.userBoardSearch(boardTitle, userId);
 			
+			String paramPage = request.getParameter("page");
+			Criteria cri = new Criteria(); 
+
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(biz.countBoard(userId));
+			
 			
 				if(list.size()>0) {
+					if(paramPage == null) {
+						cri.setPage(1);
+						cri.setPageCount(10);
+					}else {
+						int page = Integer.parseInt(paramPage);
+						cri.setPage(page);
+						cri.setPageCount(10);
+					}
+					request.setAttribute("pageMaker", pageMaker);
 					request.setAttribute("list", list);
 					dispatch("TbUserboardList.jsp", request, response);
 				}else if(list.size()==0){
-					List<TbBoardDto> list2 = biz.userBoardList(userId);
+					if(paramPage == null) {
+						cri.setPage(1);
+						cri.setPageCount(10);
+					}else {
+						int page = Integer.parseInt(paramPage);
+						cri.setPage(page);
+						cri.setPageCount(10);
+					}
+					
+					List<TbBoardDto> list2 = biz.userBoardList(userId, cri.getPage(), cri.getPageCount());
+					request.setAttribute("pageMaker", pageMaker);
 					request.setAttribute("list", list2);
 					dispatch("TbUserboardList.jsp", request, response);
 			}
@@ -269,23 +420,7 @@ public class TbUserServlet extends HttpServlet {
 				responseAlert("글수정 실패 다시작성해주세요", "TbUser.do?command=userboardupdate", response);
 			}
 			
-		}else if(command.equals("mylist")) {
-			//에러문제 자꾸만 null이 뜸 
-			//String userId = request.getParameter("userId");
-			
-			HttpSession session = request.getSession();
-			String userId = ((TbUserDto)session.getAttribute("dto")).getUserId();
-			//System.out.println("나의 글 목록 보기 "+userId);
-			
-			List<TbBoardDto> list = biz.userBoardList(userId);
-			
-			request.setAttribute("list", list);
-			dispatch("TbUserboardList.jsp", request, response);
-			
 		}else if(command.equals("muldel")) {
-						
-			String userId = request.getParameter("userId");
-			//System.out.println("멀티딜리트"+userId);
 			
 			String[] boardNum = request.getParameterValues("chk");
 			if(boardNum == null || boardNum.length == 0) {

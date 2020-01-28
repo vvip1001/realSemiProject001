@@ -19,5 +19,7 @@ public interface TbBoardDao {
 	public int insertAnswer(TbBoardDto dto);
 	
 	public int countBoard();
+	
+	public int updateViewCount(int boardNum);
 
 }

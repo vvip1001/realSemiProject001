@@ -1,30 +1,33 @@
 package com.between.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.between.common.SqlMapConfig;
 import com.between.dto.Criteria;
-import com.between.dto.TbBoardDto;
+import com.between.dto.TbReBoardDto;
 
-public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
+public class TbReBoardDaoImpl extends SqlMapConfig implements TbReBoardDao {
 
-	private String namespace = "com.between.TbBoard.mapper.";
+	String namespace = "com.between.TbReBoard.mapper.";
+	// 해당 클래스는 보기에 많이 불편할 수 있음.. 함수이름을 안바꾸거나..
 	
 	@Override
-	public List<TbBoardDto> selectList(int pageNum, int pageCount) {
-		//전체출력
+	public List<TbReBoardDto> selectList(int pageNum, int pageCount, int boardNum) {
+		//완
 		SqlSession session = null;
-		List<TbBoardDto> list = null;
+		List<TbReBoardDto> list = new ArrayList<TbReBoardDto>();
 		
 		Criteria cri = new Criteria();
 		cri.setPage(pageNum);
 		cri.setPageCount(pageCount);
+		cri.setBoardNum(boardNum);
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			list = session.selectList(namespace+"selectList",cri);
+			list = session.selectList(namespace+"selectlist",cri);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -35,25 +38,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	}
 
 	@Override
-	public TbBoardDto selectOne(int boardNum) {
-		//하나출력
-		SqlSession session = null;
-		TbBoardDto dto = null;
-		
-		try {
-			session = getSqlSessionFactory().openSession(true);
-			dto = session.selectOne(namespace+"selectOne",boardNum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		
-		return dto;
-	}
-
-	@Override
-	public int insertBoard(TbBoardDto dto) {
+	public int insertReBoard(TbReBoardDto dto) {
 		//글작성
 		SqlSession session = null;
 		int res = 0;
@@ -70,7 +55,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	}
 
 	@Override
-	public int updateBoard(TbBoardDto dto) {
+	public int updateReBoard(TbReBoardDto dto) {
 		//글수정
 		SqlSession session = null;
 		int res = 0;
@@ -122,14 +107,14 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	}
 
 	@Override
-	public int deleteBoard(int boardNum) {
+	public int deleteBoard(int boardGroupNum) {
 		//글삭제 
 		SqlSession session = null;
 		int res = 0;
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.delete(namespace+"deleteBoard",boardNum);
+			res = session.delete(namespace+"deleteBoard",boardGroupNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -137,16 +122,21 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		}
 		return res;
 	}
+	
 
 	@Override
-	public int updateAnswer(int parentBoardNum) {
+	public int updateAnswer(int boardNum, int parentReNum) {
 		//답글 탭번호 수정
 		SqlSession session = null;
 		int res = 0;
 		
+		TbReBoardDto dto = new TbReBoardDto();
+		dto.setBoardNum(boardNum);
+		dto.setReNum(parentReNum);
+		
 		try {
 			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"updateAnswer",parentBoardNum);
+			res = session.update(namespace+"updateAnswer",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -157,13 +147,11 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	}
 
 	@Override
-	public int insertAnswer(TbBoardDto dto) {
+	public int insertAnswer(TbReBoardDto dto) {
 		//답글 삽입
 		SqlSession session = null;
 		int res = 0;
 		
-		System.out.println(dto.getBoardNum()+"/"+dto.getBoardTitle()+"/"+dto.getBoardContent()+"/"+
-		dto.getBoardGender()+"/"+dto.getUserId()+"/"+dto.getBoardType()+"/호호/");
 		
 		try {
 			session = getSqlSessionFactory().openSession(true);
@@ -178,34 +166,16 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 	}
 
 	@Override
-	public int countBoard() {
+	public int countBoard(int boardNum) {
 		
 		SqlSession session = null;
 		int res = 0;
 		
 		session = getSqlSessionFactory().openSession(true);
-		res = session.selectOne(namespace+"countBoard");
+		res = session.selectOne(namespace+"countBoard",boardNum);
 		
 		return res;
 	}
 
-	@Override
-	public int updateViewCount(int boardNum) {
-		
-		SqlSession session = null;
-		int res = 0;
-		
-		try {
-			session = getSqlSessionFactory().openSession(true);
-			res = session.update(namespace+"updateViewCount",boardNum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		
-		return res;
-	}
-
-
+	 
 }

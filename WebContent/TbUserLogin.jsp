@@ -25,30 +25,70 @@
 
 <!-- 일반 로그인 팝업창  -->
 <style>	
-	#login {
-		width : 300px;
-		height : 500px;
-		border: 1px solid black;
-		background: white;
-		position: absolute;
-		top: 100px;
-		left: 500px;
-		display: none;
+
+	.background{
+	display:none; 
+	position:fixed; 
+	_position:absolute; 
+	top:0; 
+	left:0; 
+	width:100%;  
+	height:100%; 
+	z-index:100;
 	}
+.background .dimBackground {
+	position:absolute; 
+	top:0; 
+	left:0; 
+	width:100%; 
+	height:100%;
+	 background:#000; 
+	 opacity: .5; 
+	 filter:alpha(opacity=70);
+	 }
+.background .popuplayer{
+	display:block;
+	}
+.popuplayer {
+	background-color:#f1f1f1;
+	width:300px;
+	height:500px;
+	display:none;
+	position:absolute;
+	top:50%;
+	left:50%;
+	z-index:10;
+	color:#000;
+	}
+	
 	
 </style>
 <!-- 일반 로그인 스크립트  -->
 <script type="text/javascript">
-function loginpopup(){
-	var lo = document.getElementById("login");
-	lo.style.display = "block";
-	document.body.style.background= "gray";
+function layer_popup(el){
+	var $el = $(el); 
+	var isDim = $el.prev().hasClass('dimBackground');
+	isDim ? $('.background').show() : $el.show();
+	var $elWidth = ~~($el.outerWidth()),
+		$elHeight = ~~($el.outerHeight()),
+		docWidth = $(document).width(),
+		docHeight = $(document).height();
 	
-	
+<<<<<<< HEAD
+	if ($elHeight < docHeight || $elWidth < docWidth) {
+		$el.css({
+			marginTop: -$elHeight /2,
+			marginLeft: -$elWidth/2
+		});
+	}
+	else{
+		$el.css({top: 0, left: 0});
+=======
 	//버튼 눌렀을때 다른 버튼들 비활성화 시키는 것 
 	var btns = document.getElementsByName("btn");
 	for(var i in btns){
 		btns[i].disabled = true;
+		btns[i].style.backgroundColor = "gray";
 	}
 	
 	
@@ -64,9 +104,15 @@ function closewin(){
 	var btns = document.getElementsByName("btn");
 	for(var i in btns){
 		btns[i].disabled = false ;
+		btns[i].style.backgroundColor = "white";
+>>>>>>> jin/master
 	}
-	
 }
+function closelayer(){
+	var isDim = $(".popuplayer").prev().hasClass('dimBackground'); 
+	isDim ? $('.background').hide() : $el.hide(); 
+}
+
 </script>
 
 <!-- 카카오톡 로그인 스크립트 -->
@@ -130,6 +176,8 @@ function kakaologin() {
             // The ID token you need to pass to your backend:
             var id_token = googleUser.getAuthResponse().id_token;
             console.log("ID Token: " + id_token);
+            
+            location.href="TbUser.do?command=googlelogin&userId="+profile.getId()+"&pw="+profile.getEmail();
         };
         
         function signOut(){
@@ -146,10 +194,14 @@ function kakaologin() {
 <!-- 큰 div로 묶었음 -->
 <div>
 <!-- 로그인 팝업창 띄우는  버튼   -->
-	 <input type="button" name="btn" onclick="loginpopup()" value="로그인 팝업창">
+	 <input type="button" Class="btn" onclick="layer_popup('#popuplayer');" value="로그인 팝업창">
 	 
-<!-- 로그인 팝업창 -->    
-	<div id=login align="center">	
+	<div class="background">
+	<div class="dimBackground"></div>
+	<div id="popuplayer" class="popuplayer">
+	
+	<!-- 로그인 팝업창 -->    
+	<div  align="center">	
 		<h1>로그인 하세요 </h1>
 	
 	<!-- 구글 로그인 -->
@@ -179,7 +231,7 @@ function kakaologin() {
 				<td colspan="2">
 					<input type="submit" value="로그인">
 					<input type="button" value="회원가입" onclick="location.href='TbUser.do?command=registerform'" >
-					<input type="button" value="취소" onclick="closewin()" >
+					<input type="button" value="취소" onClick='closelayer();' >
 				</td>
 			</tr>		
 		</table> 
@@ -187,6 +239,11 @@ function kakaologin() {
 	</div>
 	
 		</div>
+	
+	</div>
+	</div>
+	
+
 	</div>
 
 </body>
