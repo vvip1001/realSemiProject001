@@ -219,7 +219,7 @@ function kakaologin() {
 			<div class="dropdown-content">
 				<div class="row">
 					<div class="column">
-						<a href="">커플테스트</a> <a href="">니캉내캉</a> <a href="">사진분석</a>
+						<a href="">커플테스트</a> <a href="TbDic.do?command=dictionaryMain">니캉내캉</a> <a href="">사진분석</a>
 					</div>
 					<div class="column">
 						<a href="">앨범</a> <a href="">다이어리</a> <a href="">사이톡</a> <a

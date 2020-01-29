@@ -43,5 +43,14 @@
   	<url-pattern>/TbRegist.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>dictionaryController</servlet-name>
+  <servlet-class>com.between.controller.TbDictionaryServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>dictionaryController</servlet-name>
+  	<url-pattern>/TbDic.do</url-pattern>
+  </servlet-mapping>
   
 </web-app>
