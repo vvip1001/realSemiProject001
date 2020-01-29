@@ -8,6 +8,17 @@
 <head>
 <meta charset="UTF-8">
 <title>니캉 내캉</title>
+<style type="text/css">
+
+	.left{
+		float:left;
+	}
+	.right{
+		float:right;
+	}
+
+
+</style>
 </head>
 <body>
 	
@@ -15,11 +26,11 @@
 	
 	<div>니 캉 내 캉<br/>
 	
-	<input type="text" name="search"/>검색
+	<input type="text" name="search"/><input type="button" value="검색"/>
 	
 	</div>
 	
-	<div>
+	<div id="left" >
 	<table>
 		
 		<col width="150px">
@@ -31,7 +42,7 @@
 	
 	</table>
 	
-	<table>
+	<table id="right">
 		<col width="150px">
 		<col width="150px">
 	<tr>

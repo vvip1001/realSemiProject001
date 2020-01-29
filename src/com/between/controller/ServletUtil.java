@@ -24,5 +24,4 @@ public class ServletUtil {
 		PrintWriter out = response.getWriter();
 		out.append(s);
 	}
-
 }

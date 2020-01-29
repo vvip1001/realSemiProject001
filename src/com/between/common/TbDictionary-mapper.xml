@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.between.TbDic.mapper" >
+
+	<resultMap type="TbDictionaryDto" id="TbDictionaryResultMap">
+		<result property="dicNum" column="DIC_NUM" />
+		<result property="userId" column="USER_ID" />
+		<result property="dicKeyword" column="DIC_KEYWORD" />
+		<result property="dicMale" column="DIC_MALE" />
+		<result property="dicFemale" column="DIC_FEMALE" />
+		<result property="dicFlag" column="DIC_FLAG" />
+		<result property="dicLike" column="DIC_LIKE" />
+	</resultMap>
+	
+	<select id="selectList" resultMap="TbDictionaryResultMap" >
+		SELECT * FROM TB_DICTIONARY ORDER BY DIC_LIKE DESC, DIC_FLAG
+	</select>
+
+
+
+
+
+
+
+
+</mapper>
