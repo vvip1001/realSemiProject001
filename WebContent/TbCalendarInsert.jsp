@@ -3,6 +3,11 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Cache-control", "no-store");
+	response.setHeader("Expires", "0");
+%>    
  
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
@@ -11,20 +16,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file="./form/mainPage.jsp" %>
 </head>
 <%
-	
-	
+	if (userInfo == null) {
+		pageContext.forward("index2.jsp");
+	}
+
 	Calendar cal = Calendar.getInstance();
 	int hour = cal.get(Calendar.HOUR_OF_DAY);
 	int min = cal.get(Calendar.MINUTE);
-	
-	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
-	
-	int year = (int)request.getAttribute("year");
-	int month = (int)request.getAttribute("month");
-	int date = (int)request.getAttribute("date");
-	
+
+	int year = (int) request.getAttribute("year");
+	int month = (int) request.getAttribute("month");
+	int date = (int) request.getAttribute("date");
 %>
 <body>
 
