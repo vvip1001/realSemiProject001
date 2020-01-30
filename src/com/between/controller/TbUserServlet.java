@@ -147,7 +147,7 @@ public class TbUserServlet extends HttpServlet {
 				if(res >0) {
 					int res2 = biz.partnerNumUpdateUT(userId);
 					if(res2 > 0) {
-						responseAlert("커플등록 성공하였습니다", "loginafter.jsp", response);	
+						responseAlert("커플등록 성공하였습니다", "index.jsp", response);	
 					}
 					
 				}else {
@@ -159,7 +159,7 @@ public class TbUserServlet extends HttpServlet {
 				if(res >0) {
 					int res2 = biz.partnerNumUpdateUTDelete(groupNum);
 					if(res2 >0) {
-						responseAlert("커플등록 거절 하였습니다", "loginafter.jsp", response);	
+						responseAlert("커플등록 거절 하였습니다", "index.jsp", response);	
 					}
 					
 				}else {
