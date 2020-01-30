@@ -19,7 +19,7 @@
 <body>
 <%
 	if (userInfo == null) {
-		pageContext.forward("index2.jsp");
+		pageContext.forward("index.jsp");
 	}
 
 	int groupNum = (int) request.getAttribute("groupNum");

@@ -73,7 +73,7 @@ public class TbCalServlet extends HttpServlet {
 		TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
 		
 		if(userInfo==null) {
-			response.sendRedirect("index2.jsp");
+			response.sendRedirect("index.jsp");
 		} else {
 			
 		

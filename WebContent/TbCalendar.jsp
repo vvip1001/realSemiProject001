@@ -59,7 +59,7 @@
 	<%
 		
 		if(userInfo==null){
-			pageContext.forward("index2.jsp");
+			pageContext.forward("index.jsp");
 		}
 	
 		TbCalBiz biz = new TbCalBizImpl();

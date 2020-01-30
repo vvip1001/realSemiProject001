@@ -120,7 +120,7 @@ public class TbBoardServlet extends HttpServlet {
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boardlist");
 			} else {
-				responseAlert("fail", "index.html", response);
+				responseAlert("fail", "index.jsp", response);
 			} 
 		} else if(command.equals("boarddelete")) {
 			
@@ -130,7 +130,7 @@ public class TbBoardServlet extends HttpServlet {
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boardlist");
 			} else {
-				responseAlert("fail", "index2.jsp", response);
+				responseAlert("fail", "index.jsp", response);
 			} 
 		} else if(command.equals("boardupdate")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
@@ -152,7 +152,7 @@ public class TbBoardServlet extends HttpServlet {
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boardlist");
 			} else {
-				responseAlert("fail", "index.html", response);
+				responseAlert("fail", "index.jsp", response);
 			} 
 		} else if(command.equals("boardanswer")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
@@ -184,7 +184,7 @@ public class TbBoardServlet extends HttpServlet {
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boardlist");
 			} else {
-				responseAlert("fail", "index.html", response);
+				responseAlert("fail", "index.jsp", response);
 			} 
 		} else if(command.equals("boardreple")) {
 			//게시판 번호, 댓글작성자아이디,댓글작성내용,댓글작성자성별,댓글번호(시퀀스) 값 받아오기
@@ -222,7 +222,7 @@ public class TbBoardServlet extends HttpServlet {
 			if(res>0) {
 				response.sendRedirect("TbBoard.do?command=boarddetail&boardnum="+boardNum);
 			} else {
-				responseAlert("fail", "index.html", response);
+				responseAlert("fail", "index.jsp", response);
 			} 
 			
 			

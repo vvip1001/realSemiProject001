@@ -62,7 +62,7 @@ $(function(){
 
 	<%
 		if (userInfo == null) {
-			pageContext.forward("index2.jsp");
+			pageContext.forward("index.jsp");
 		}
 
 		int year = (int) request.getAttribute("year");

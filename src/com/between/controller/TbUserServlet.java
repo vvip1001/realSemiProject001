@@ -84,7 +84,7 @@ public class TbUserServlet extends HttpServlet {
 			
 		}else if(command.equals("main")) {
 			//취소했을때 로그인 하지 않은 메인으로 돌아가야 함 
-			response.sendRedirect("index2.jsp");
+			response.sendRedirect("index.jsp");
 			
 		}else if(command.equals("loginres")) {
 			String userId = request.getParameter("userId");
@@ -101,13 +101,13 @@ public class TbUserServlet extends HttpServlet {
 					HttpSession session =  request.getSession(true);
 					session.setAttribute("dto", dto);
 					session.setAttribute("groupdto", groupdto);
-					response.sendRedirect("index2.jsp");
+					response.sendRedirect("index.jsp");
 					
 				}else if(groupdto == null){
 					HttpSession session =  request.getSession(true);
 					session.setAttribute("dto", dto);
 					System.out.println("공백 값일때 "+dto.getUserId());
-					dispatch("index2.jsp", request, response);
+					dispatch("index.jsp", request, response);
 				}
 				
 				//session.setMaxInactiveInterval(60*10);
@@ -173,8 +173,8 @@ public class TbUserServlet extends HttpServlet {
 			//세션 만료 
 			HttpSession session = request.getSession();
 			session.invalidate();
-			responseAlert("로그아웃 되었습니다.", "index.html", response);
-			//response.sendRedirect("index.html");
+			responseAlert("로그아웃 되었습니다.", "index.jsp", response);
+			//response.sendRedirect("index.jsp");
 			
 		}else if(command.equals("mypage")) {
 			
@@ -255,10 +255,10 @@ public class TbUserServlet extends HttpServlet {
 					request.setAttribute("partnerId", partnerId);
 				    dispatch("TbUserUserMyPage.jsp", request, response);
 				  }else {
-					responseAlert("파트너 유저테이블에 입력 불가 ", "index2.jsp", response);
+					responseAlert("파트너 유저테이블에 입력 불가 ", "index.jsp", response);
 				}
 			}else {
-				responseAlert("파트너 입력하는 유저테이블에서 오류", "index2.jsp", response);
+				responseAlert("파트너 입력하는 유저테이블에서 오류", "index.jsp", response);
 			}
 			
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

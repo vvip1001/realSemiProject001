@@ -24,7 +24,7 @@
 	TbBoardDto board = (TbBoardDto)request.getAttribute("board");
 
 	if(userInfo==null){
-		pageContext.forward("index.html");
+		pageContext.forward("index.jsp");
 	}
 %>
 	

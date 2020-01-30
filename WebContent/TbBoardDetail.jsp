@@ -70,7 +70,7 @@
 	List<TbReBoardDto> list = (List<TbReBoardDto>)request.getAttribute("list");
 	
 	if(userInfo==null){
-		pageContext.forward("index2.jsp");
+		pageContext.forward("index.jsp");
 	}
 %>
 

@@ -21,7 +21,7 @@
 <%
 	TbUserDto dto = (TbUserDto)session.getAttribute("dto");
     if(dto==null){
- 	  pageContext.forward("index.html");	
+ 	  pageContext.forward("index.jsp");	
      }
 	
     TbGroupDto groupdto = (TbGroupDto)session.getAttribute("groupdto");

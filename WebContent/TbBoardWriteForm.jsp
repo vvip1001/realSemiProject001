@@ -34,7 +34,7 @@
 	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
 
 	if(userInfo==null){
-		pageContext.forward("index.html");
+		pageContext.forward("index.jsp");
 	}
 %>
 	

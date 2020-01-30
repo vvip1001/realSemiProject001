@@ -193,7 +193,7 @@
 			%>
 
 		</div>
-		<a href="index2.jsp"><img alt="" src="images/logo.gif"
+		<a href="index.jsp"><img alt="" src="images/logo.gif"
 			class="logo"></a>
 	</header>
 
