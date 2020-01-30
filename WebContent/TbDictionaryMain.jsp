@@ -12,9 +12,13 @@
 
 	.left{
 		float:left;
+		width: 40%;
+		height: 500px;
 	}
 	.right{
 		float:right;
+		width: 40%;
+		height: 500px;
 	}
 
 </style>

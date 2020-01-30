@@ -21,7 +21,6 @@ public class TbDictionaryDaoImpl extends SqlMapConfig implements TbDictionaryDao
 			session = getSqlSessionFactory().openSession(false);
 			list = session.selectList(namespace+"selectList");
 		} catch (Exception e) {
-			System.out.println("딕셔너리 selectList");
 			e.printStackTrace();
 		} finally {
 			session.close();
@@ -40,7 +39,6 @@ public class TbDictionaryDaoImpl extends SqlMapConfig implements TbDictionaryDao
 			session = getSqlSessionFactory().openSession(true);
 			dto = session.selectOne(namespace+"searchKeyword", keyword);
 		} catch (Exception e) {
-			System.out.println("searchKeyword에서 에러났대요");
 			e.printStackTrace();
 		} finally {
 			session.close();
