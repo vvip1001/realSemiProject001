@@ -8,6 +8,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Cache-control", "no-store");
+	response.setHeader("Expires", "0");
+%>
+<%
 	request.setCharacterEncoding("UTF-8");
 %>
 <%
@@ -18,6 +23,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file="./form/mainPage.jsp" %>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -55,6 +61,10 @@ $(function(){
 	<h1>일정보기</h1>
 
 	<%
+		if (userInfo == null) {
+			pageContext.forward("index2.jsp");
+		}
+
 		int year = (int) request.getAttribute("year");
 		int month = (int) request.getAttribute("month");
 		int date = (int) request.getAttribute("date");

@@ -71,9 +71,16 @@ public class TbUserServlet extends HttpServlet {
 			String userEmail = request.getParameter("userEmail");
 			String userGender = request.getParameter("userGender");
 			String userDob = request.getParameter("year")+request.getParameter("month")+request.getParameter("date");
-			String a = request.getParameter("year");
 			
-			System.out.println(userDob +userId+a);
+			TbUserDto dto = new TbUserDto();
+			dto.setUserId(userId);
+			dto.setUserName(userName);
+			dto.setUserEmail(userEmail);
+			dto.setUserGender(userGender);
+			dto.setUserDob(userDob);
+			
+			
+			
 			
 		}else if(command.equals("main")) {
 			//취소했을때 로그인 하지 않은 메인으로 돌아가야 함 

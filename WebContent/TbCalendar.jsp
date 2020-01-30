@@ -9,7 +9,11 @@
 <%@page import="com.between.dto.TbUserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Cache-control", "no-store");
+	response.setHeader("Expires", "0");
+%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -21,12 +25,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<%@ include file="./form/mainPage.jsp" %>
 <script type="text/javascript">
 
-	/* onload = function(){
-		document.getElementById("dayCount").onclick = anniversary;
-	} */
 	
 	window.onload = anniversary;
 	
@@ -56,10 +57,15 @@
 </head>
 <body>
 	<%
+		
+		if(userInfo==null){
+			pageContext.forward("index2.jsp");
+		}
+	
 		TbCalBiz biz = new TbCalBizImpl();
 
-		TbUserDto userInfo = (TbUserDto) session.getAttribute("dto");
 		int groupNum = userInfo.getGroupNum();
+		
 
 		TbGroupDto groupDto = (TbGroupDto) request.getAttribute("groupDto");
 

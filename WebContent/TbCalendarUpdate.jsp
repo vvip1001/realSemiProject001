@@ -1,7 +1,11 @@
 <%@page import="com.between.dto.TbCalDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+<%
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Cache-control", "no-store");
+	response.setHeader("Expires", "0");
+%> 
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
@@ -9,18 +13,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file="./form/mainPage.jsp" %>
+
 </head>
 <body>
 <%
-	int groupNum = (int)request.getAttribute("groupNum");
-	int calNum = (int)request.getAttribute("calNum");
-	TbCalDto calDto =(TbCalDto)request.getAttribute("calDto");
+	if (userInfo == null) {
+		pageContext.forward("index2.jsp");
+	}
+
+	int groupNum = (int) request.getAttribute("groupNum");
+	int calNum = (int) request.getAttribute("calNum");
+	TbCalDto calDto = (TbCalDto) request.getAttribute("calDto");
 	// yyyyMMddHHmm
 	int year = Integer.parseInt(calDto.getCalTime().substring(0, 4));
 	int month = Integer.parseInt(calDto.getCalTime().substring(4, 6));
 	int date = Integer.parseInt(calDto.getCalTime().substring(6, 8));
-	int hour = Integer.parseInt(calDto.getCalTime().substring(8,10));
-	int min = Integer.parseInt(calDto.getCalTime().substring(10,12));
+	int hour = Integer.parseInt(calDto.getCalTime().substring(8, 10));
+	int min = Integer.parseInt(calDto.getCalTime().substring(10, 12));
 %>
 
 	<h1>UPDATE</h1>

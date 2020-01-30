@@ -72,12 +72,13 @@ public class TbCalServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
 		
-		System.out.println(userInfo.getGroupNum());
+		if(userInfo==null) {
+			response.sendRedirect("index2.jsp");
+		} else {
+			
 		
 		TbGroupDto groupDto = biz.findPartner(userInfo.getGroupNum());
-		
-		System.out.println(groupDto.getPartnerId());
-		
+				
 		
 		if(command.equals("calendar")) {		
 			
@@ -350,6 +351,7 @@ public class TbCalServlet extends HttpServlet {
 				
 				dispatch("TbCalendar.jsp", request, response);
 			}
+		}
 		}
 		
 	}

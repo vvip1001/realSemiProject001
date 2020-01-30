@@ -47,7 +47,11 @@
 	
 	
 	
-
+	<insert id="snslongregister">
+	INSERT INTO TB_USER 
+	VALUES(#{userId},#{userPw},#{userName},#{userGender},#{userNick},#{userDob},
+	#{userEmail},'N','USER',SYSDATE,SYSDATE,0,null,'EMPTY','EMPTY')
+	</insert>
 	
 	<select id="login" resultMap="TbUserResultMap">
 	SELECT * FROM TB_USER WHERE USER_ID =#{userId} AND USER_PW=#{userPw} AND USER_DEACT= 'N'
