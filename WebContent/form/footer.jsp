@@ -10,7 +10,8 @@
 <title>Insert title here</title>
 <style type="text/css">
 	#foot{
-		background-color:gray;
+		background-color:rgb(51, 85, 139);
+		color: white;
 	}
 
 </style>
