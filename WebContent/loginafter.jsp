@@ -24,7 +24,7 @@
  	  pageContext.forward("index.html");	
      }
 	
-    TbGroupDto groupdto = (TbGroupDto)request.getAttribute("groupdto");
+    TbGroupDto groupdto = (TbGroupDto)session.getAttribute("groupdto");
 %>
 
 
@@ -44,7 +44,7 @@
 		
 	</form>
 <%
- if(groupdto != null){
+ if(groupdto.getGroupCheck().equals("N")){
 	 
 %> 
 	<input type="button" value="로그인 2번째 페이지로...이창내에서 팝업 어케할지 모르겠음 " onclick="location.href='TbUser.do?command=loginafter2'">

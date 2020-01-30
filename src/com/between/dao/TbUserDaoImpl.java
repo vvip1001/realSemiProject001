@@ -345,6 +345,9 @@ public class TbUserDaoImpl extends SqlMapConfig implements TbUserDao{
 		
 		return res;
 	}
+	
+
+	
 
 	//커플그룹 dto더미 만들기 
 	@Override

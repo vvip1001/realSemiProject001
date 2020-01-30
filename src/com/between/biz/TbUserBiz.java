@@ -68,4 +68,6 @@ public interface TbUserBiz {
 		//유저테이블에서 커플넘버지우기 
 		public int partnerNumUpdateUTDelete(int groupNum);
 		
+		
+	
 }

@@ -21,6 +21,8 @@ import com.between.dto.TbBoardDto;
 import com.between.dto.TbGroupDto;
 import com.between.dto.TbUserDto;
 
+import net.sf.json.JSONObject;
+
 
 @WebServlet("/TbUserServlet.do")
 public class TbUserServlet extends HttpServlet {
@@ -57,29 +59,30 @@ public class TbUserServlet extends HttpServlet {
 			
 		}else if(command.equals("main")) {
 			//취소했을때 로그인 하지 않은 메인으로 돌아가야 함 
-			response.sendRedirect("index.html");
+			response.sendRedirect("index2.jsp");
 			
 		}else if(command.equals("loginres")) {
 			String userId = request.getParameter("userId");
 			String userPw = request.getParameter("userPw");
 			TbUserDto dto = biz.login(userId, userPw);
-			System.out.println("유저 아이디유 : " + userId);
+			//System.out.println("유저 아이디유 : " + userId);
 			//dispatch("loginafter.jsp", request, response);
 			
 			//로그인 받은 정보에 따른 판별
 			if(dto != null) {
 				TbGroupDto groupdto = biz.partnerDtoDummy(userId);
-				
+				System.out.println("그룹 정보에 대한 값 "+groupdto);
 				if(groupdto != null) {
 					HttpSession session =  request.getSession(true);
 					session.setAttribute("dto", dto);
-					request.setAttribute("groupdto", groupdto);
-					dispatch("loginafter.jsp", request, response);
+					session.setAttribute("groupdto", groupdto);
+					response.sendRedirect("index2.jsp");
 					
 				}else if(groupdto == null){
 					HttpSession session =  request.getSession(true);
 					session.setAttribute("dto", dto);
-					dispatch("loginafter.jsp", request, response);
+					System.out.println("공백 값일때 "+dto.getUserId());
+					dispatch("index2.jsp", request, response);
 				}
 				
 				//session.setMaxInactiveInterval(60*10);
@@ -95,7 +98,7 @@ public class TbUserServlet extends HttpServlet {
 			String userId = dto.getUserId();
 			
 
-			//상대방이 자신을 파트너로 등록 했을 경우 서로 커플 맺기
+			
 			TbGroupDto groupdto = biz.partnerDtoDummy(userId);
 			
 			
@@ -186,6 +189,30 @@ public class TbUserServlet extends HttpServlet {
 			
 			
 			
+		}else if(command.equals("check1")) {
+			
+			String partnerId = request.getParameter("partnerId");
+			String status = "1"; 
+			TbGroupDto groupdto = biz.partnerDtoDummy(partnerId);
+			
+			if(groupdto==null) {
+				status = "-1";
+			} else {
+				status = "1";
+			}
+			
+			response.getWriter().write(status);
+			
+			
+			/*
+			 * String partnerId = request.getParameter("partnerId");
+			 * System.out.println("파트너 아이디 "+partnerId); TbGroupDto groupdto2 =
+			 * biz.partnerDtoDummy(partnerId); if(groupdto2 == null) {
+			 * responseAlert("사용가능한 아이디 입니다", "TbUser.do?command=partnerinsert", response);
+			 * }else { responseAlert("상대방 아이디가 중복 됩니다. 다시 입력하세요.",
+			 * "TbUser.do?command=partnerinsert", response); }
+			 */
+			
 		}else if(command.equals("partnerinsert")) {
 			
 			//유저가 새로 등록한 파트너 아이디와 로그인한 유저의 아이디를 전송 받음 
@@ -203,11 +230,13 @@ public class TbUserServlet extends HttpServlet {
 					request.setAttribute("partnerId", partnerId);
 				    dispatch("TbUserUserMyPage.jsp", request, response);
 				  }else {
-					responseAlert("파트너 유저테이블에 입력 불가 ", "index.html", response);
+					responseAlert("파트너 유저테이블에 입력 불가 ", "index2.jsp", response);
 				}
 			}else {
-				responseAlert("파트너 입력하는 유저테이블에서 오류", "loginafter.jsp", response);
+				responseAlert("파트너 입력하는 유저테이블에서 오류", "index2.jsp", response);
 			}
+			
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
 			
 			
@@ -241,6 +270,11 @@ public class TbUserServlet extends HttpServlet {
 				if(partnerId.equals("N")) {
 					responseAlert("회원정보 수정이 완료되었습니다", "TbUser.do?command=mypage", response);
 				}else if(!partnerId.equals("N")){
+					////////////////////////////////////////////////////////////////////////////////
+					
+					
+					/////////////////////////////////////////////////////////////////////////////////
+
 					//기존 상대방 아이디 및 커플 번호 삭제 -> 새로 신청
 					int groupNum = groupdto.getGroupNum();
 					int res1 = biz.partnerIdInsertChekXnDelete(groupNum);
@@ -248,15 +282,16 @@ public class TbUserServlet extends HttpServlet {
 						//내 유저테이블에서 그룹 넘버 삭제 하기
 						int res2 = biz.partnerNumUpdateUTDelete(groupNum);
 						if(res2 > 0) {
-							//신규 상대방 아이디 신청
-							int res3 = biz.partnerIdInsert(partnerId, userId);
-							if(res3 > 0) {
-								//나의 유저 테이블에서 저장하기 
-								int res4 = biz.partnerNumUpdateUT(userId);
-								if(res4 > 0) {
-									responseAlert("회원정보 수정이 완료 되었습니다, 새로운 상대방에게 커플신청을 했습니다", "TbUser.do?command=mypage", response);
+	
+								int res3 = biz.partnerIdInsert(partnerId, userId);
+								if(res3 > 0) {
+									//나의 유저 테이블에서 저장하기 
+									int res4 = biz.partnerNumUpdateUT(userId);
+									if(res4 > 0) {
+										responseAlert("회원정보 수정이 완료 되었습니다, 새로운 상대방에게 커플신청을 했습니다", "TbUser.do?command=mypage", response);
+									}
 								}
-							}
+	
 						}
 					}
 					
@@ -275,7 +310,7 @@ public class TbUserServlet extends HttpServlet {
 			if(equserPw.equals(loginDto.getUserPw())) {
 				
 				String paramPage = request.getParameter("page");
-				System.out.println("파람페이지이게 뭘까 "+paramPage);
+				//System.out.println("파람페이지이게 뭘까 "+paramPage);
 				String userId = request.getParameter("userId");
 				Criteria cri = new Criteria(); 
 				if(paramPage == null) {
@@ -293,7 +328,7 @@ public class TbUserServlet extends HttpServlet {
 				List<TbBoardDto> list = biz.userBoardList(userId, cri.getPage(), cri.getPageCount());
 				request.setAttribute("list", list);
 				request.setAttribute("pageMaker", pageMaker);
-				System.out.println("페이지메이커에 들어있는 값은 뭐지 "+pageMaker);
+				//System.out.println("페이지메이커에 들어있는 값은 뭐지 "+pageMaker);
 				dispatch("TbUserboardList.jsp", request, response);
 					
 			}else {

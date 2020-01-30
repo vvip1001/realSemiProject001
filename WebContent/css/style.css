@@ -118,7 +118,7 @@ header {
 }
 
 .column a:hover {
-	color: blue;
+	color: orange;
 }
 
 .row:after {

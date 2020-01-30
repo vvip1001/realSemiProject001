@@ -40,6 +40,43 @@
 	
 		
 </script>
+
+<script type="text/javascript">
+
+$(function(){
+	$("#idcheck").click(function(){
+		var partnerId = $('input[name="partnerId1"]').val();
+
+		if($("#partneridin").val().trim() == 0){
+			$("#partneridin").focus();
+		}  
+		else{
+			$.ajax({ 
+				url: 'TbUser.do?command=check1&partnerId='+partnerId,
+											
+				method:'post',
+			
+				success: function(data){
+					
+					if(data == 1){
+						
+						alert('중복된 아이디 입니다');
+						
+					}else if (data == -1){
+						
+						alert('사용가능한 아이디 입니다');
+						
+					}
+				}
+			});
+		 } 
+		return false;
+	});
+});	
+
+</script>
+
+
 <body>
 
 <div>
@@ -58,11 +95,14 @@
 %>
 			<td>
 			<input type="hidden" name="partnerId" value="<%=partnerId %>">
-			<input type="text"  value="우리자기 등록하기  먼저 해주세요" readonly="readonly" style="width:210px;"></td>
+			<input type="text"  placeholder="우리자기 등록하기  먼저 해주세요" readonly="readonly" style="width:210px;"></td>
 <% 
 	}else{
 %>
-			<td><input type="text" name="partnerId" ></td>
+			<td>
+				<input type="text" id="partneridin" name="partnerId1" placeholder="<%=partnerId %>" required="required" />
+				<input type="button" id="idcheck" value="아이디 중복체크"/>
+			</td>
 <%
 	}
 %>	
@@ -79,12 +119,12 @@
 			</tr>
 			<tr>	
 				<th>이메일</th>
-				<td><input type="email" name="userEmail" placeholder="<%=dto.getUserEmail()%>" ></td>
+				<td><input type="email" name="userEmail" placeholder="<%=dto.getUserEmail()%>"  required="required" ></td>
 				
 			</tr>
 			<tr>	
 				<th>나의애칭바꾸기</th>
-				<td><input type="text" name="userNick" placeholder="<%=dto.getUserNick() %>"></td>
+				<td><input type="text" name="userNick" placeholder="<%=dto.getUserNick() %>"  required="required" ></td>
 				
 			</tr>
 			<tr>

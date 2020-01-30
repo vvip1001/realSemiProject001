@@ -1,3 +1,4 @@
+<%@page import="net.sf.json.JSON"%>
 <%
 	response.setHeader("Pragma","no-cache");
 	response.setHeader("Cache-control","no-store");
@@ -74,7 +75,7 @@ function layer_popup(el){
 		docWidth = $(document).width(),
 		docHeight = $(document).height();
 	
-<<<<<<< HEAD
+
 	if ($elHeight < docHeight || $elWidth < docWidth) {
 		$el.css({
 			marginTop: -$elHeight /2,
@@ -83,29 +84,7 @@ function layer_popup(el){
 	}
 	else{
 		$el.css({top: 0, left: 0});
-=======
-	//버튼 눌렀을때 다른 버튼들 비활성화 시키는 것 
-	var btns = document.getElementsByName("btn");
-	for(var i in btns){
-		btns[i].disabled = true;
-		btns[i].style.backgroundColor = "gray";
-	}
-	
-	
-}
 
-function closewin(){
-	var lo = document.getElementById("login");
-	lo.style.display = "none";
-	document.body.style.background= "white";
-	
-	
-	//비활성화 되었던 버튼 재활성화 시키기 
-	var btns = document.getElementsByName("btn");
-	for(var i in btns){
-		btns[i].disabled = false ;
-		btns[i].style.backgroundColor = "white";
->>>>>>> jin/master
 	}
 }
 function closelayer(){
@@ -127,16 +106,29 @@ function kakaologin() {
 	            url: '/v2/user/me',
 	            success: function(res) {
 	            	
-	            console.log(res);
+	            console.log("1"+res);
 	            
 	            var userId = res.id; 
 	            var userEmail = res.kakao_account.email; 
 	            var userNickName = res.properties.nickname; 
 	            var gender = res.kakao_account.gender; 
-	            document.getElementById("userId").value = userId;
-	            document.getElementById("userEmail").value = userEmail;
+	          //  document.getElementById("userId").value = userId;
+	          //  document.getElementById("userEmail").value = userEmail;
 	              alert(JSON.stringify(res));
 	              persistAccessToken:true;
+	              
+	              
+	              $.ajax({
+	            	  method:"POST",
+	            	  url: "",
+	            	  data: JSON.stringify(res),
+	            	  success:function(){
+	            		  
+	            	  },
+	            	  error:function(){
+	            		  
+	            	  }
+	              });
 	            },
 	            fail: function(error) {
 	              alert(JSON.stringify(error));
@@ -163,30 +155,36 @@ function kakaologin() {
 </script>
 <!-- 구글 로그인 스크립트  -->
 <script>
-        function onSignIn(googleUser) {
-            // Useful data for your client-side scripts:
-            var profile = googleUser.getBasicProfile();
-            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-            console.log('Full Name: ' + profile.getName());
-            console.log('Given Name: ' + profile.getGivenName());
-            console.log('Family Name: ' + profile.getFamilyName());
-            console.log("Image URL: " + profile.getImageUrl());
-            console.log("Email: " + profile.getEmail());
 
-            // The ID token you need to pass to your backend:
-            var id_token = googleUser.getAuthResponse().id_token;
-            console.log("ID Token: " + id_token);
-            
-            location.href="TbUser.do?command=googlelogin&userId="+profile.getId()+"&pw="+profile.getEmail();
-        };
-        
-        function signOut(){
-        	var auth2 = gapi.auth2.getAuthInstance();
-        	auth2.signOut().then(function(){
-        		console.log('user signed out');
-        	});
-        	auth2.disconnect();
-        }
+
+	//1086121226988-79i2g3qsvsr85hmu6kh2i5jkelnofqrm.apps.googleusercontent.com
+    // Useful data for your client-side scripts:
+    
+	   function onSignIn(googleUser) {
+           // Useful data for your client-side scripts:
+           var profile = googleUser.getBasicProfile();
+           console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+           console.log('Full Name: ' + profile.getName());
+           console.log('Given Name: ' + profile.getGivenName());
+           console.log('Family Name: ' + profile.getFamilyName());
+           console.log("Image URL: " + profile.getImageUrl());
+           console.log("Email: " + profile.getEmail());
+           alert("test!");
+				//alert("성별:"+profile.getGender());
+           // The ID token you need to pass to your backend:
+           var id_token = googleUser.getAuthResponse().id_token;
+           console.log("ID Token: " + id_token);
+           
+           location.href="TbUser.do?command=googlelogin&userId="+profile.getId()+"&pw="+profile.getEmail();
+       };
+       
+       function signOut(){
+       	var auth2 = gapi.auth2.getAuthInstance();
+       	auth2.signOut().then(function(){
+       		console.log('user signed out');
+       	});
+       	auth2.disconnect();
+       }
 
     </script>
 </head>
@@ -206,7 +204,7 @@ function kakaologin() {
 	
 	<!-- 구글 로그인 -->
 	<div class="g-signin2" data-width="220" data-height="45" data-onsuccess="onSignIn" data-longtitle="true"></div>
-	<a href ="#" onclick="signOut();">구글로그아웃</a>
+	<a href ="#" id="google" onclick="signOut();">구글로그아웃</a>
 	
 	<!-- 카카오톡 로그인 -->
 	<div>
