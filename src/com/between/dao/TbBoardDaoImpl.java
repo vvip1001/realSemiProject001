@@ -17,7 +17,7 @@ public class TbBoardDaoImpl extends SqlMapConfig implements TbBoardDao {
 		//전체출력
 		SqlSession session = null;
 		List<TbBoardDto> list = null;
-		
+		//너는 뭐니? 페이지 메이커
 		Criteria cri = new Criteria();
 		cri.setPage(pageNum);
 		cri.setPageCount(pageCount);

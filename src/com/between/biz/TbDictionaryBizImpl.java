@@ -17,8 +17,28 @@ public class TbDictionaryBizImpl extends SqlMapConfig implements TbDictionaryBiz
 	}
 
 	@Override
-	public TbDictionaryDto searchKeword(String keyword) {
-		return dao.searchKeword(keyword);
+	public TbDictionaryDto searchKeyword(String keyword) {
+		return dao.searchKeyword(keyword);
+	}
+
+	@Override
+	public int insert(TbDictionaryDto dto) {
+		return dao.insert(dto);
+	}
+
+	@Override
+	public int insertLike(TbDictionaryDto dto) {
+		return dao.insertLike(dto);
+	}
+
+	@Override
+	public int updateLike(TbDictionaryDto dto) {
+		return dao.updateLike(dto);
+	}
+
+	@Override
+	public int delete(TbDictionaryDto dto) {
+		return dao.delete(dto);
 	}
 
 }

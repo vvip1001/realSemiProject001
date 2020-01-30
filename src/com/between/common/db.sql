@@ -253,10 +253,11 @@ SELECT * FROM TB_DICTIONARY ORDER BY DIC_LIKE DESC, DIC_FLAG
 -- 회원 아이디, 사전키워드 번호
 -- 두 컬럼 각각 회원정보테이블의 회원 아이디, 사전테이블의 사전키워드 번호와 참조관계
 --0129 추가
+
 CREATE TABLE TB_LIKE(
 	USER_ID		VARCHAR2(100)		NOT NULL,
-	DIC_NUM		NUMBER				NOT NULL,
-)
+	DIC_NUM		NUMBER				NOT NULL
+);
 
 
 
