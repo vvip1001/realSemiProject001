@@ -92,7 +92,6 @@ public class TbUserServlet extends HttpServlet {
 			TbUserDto dto = biz.login(userId, userPw);
 			//System.out.println("유저 아이디유 : " + userId);
 			//dispatch("loginafter.jsp", request, response);
-			
 			//로그인 받은 정보에 따른 판별
 			if(dto != null) {
 				TbGroupDto groupdto = biz.partnerDtoDummy(userId);
@@ -111,6 +110,8 @@ public class TbUserServlet extends HttpServlet {
 				}
 				
 				//session.setMaxInactiveInterval(60*10);
+				} else {
+					responseAlert("로그인 실패", "index.jsp", response);
 				}
 
 			
