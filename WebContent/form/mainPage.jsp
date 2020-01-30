@@ -208,7 +208,7 @@ function kakaologin() {
 %>
 		<script type="text/javascript">
 		$(function (){
-			if(confirm("<%=groupdto.getUserId().equals(userInfo.getUserName())%>님으로 부터 온 커플 신청을 수락하시겠습니까? ")==true){
+			if(confirm("<%=userInfo.getUserName()%>님으로 부터 온 커플 신청을 수락하시겠습니까? ") == true){
 				location.href="TbUser.do?command=after2&check=yes&groupNum=<%=groupdto.getGroupNum() %>&userId=<%=userInfo.getUserId() %>";
 				alert('커플 신청이 수락 되었습니다');
 			}else{

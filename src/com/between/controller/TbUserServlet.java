@@ -57,6 +57,24 @@ public class TbUserServlet extends HttpServlet {
 			 
 			response.sendRedirect("RegistForm.jsp");
 			
+		}else if(command.equals("googlelogin")) {
+			
+			response.sendRedirect("TbUserSnsloginResgisterForm.jsp");
+			
+		}else if(command.equals("kakaologin")) {
+			
+			response.sendRedirect("TbUserSnsloginResgisterForm.jsp");
+			
+		}else if(command.equals("snsloginregisterformres")) {
+			String userId = request.getParameter("userId");
+			String userName = request.getParameter("userName");
+			String userEmail = request.getParameter("userEmail");
+			String userGender = request.getParameter("userGender");
+			String userDob = request.getParameter("year")+request.getParameter("month")+request.getParameter("date");
+			String a = request.getParameter("year");
+			
+			System.out.println(userDob +userId+a);
+			
 		}else if(command.equals("main")) {
 			//취소했을때 로그인 하지 않은 메인으로 돌아가야 함 
 			response.sendRedirect("index2.jsp");

@@ -85,7 +85,7 @@ function appendDay(){
 </head>
 <body>
 	<form action="TbUser.do" method="post">
-		<input type="hidden" name="command" value="snsloginregisterform">
+		<input type="hidden" name="command" value="snsloginregisterformres">
 
 		<table border="1">
 
@@ -106,25 +106,25 @@ function appendDay(){
 			<tr>
 				<th>성별</th>
 				<td>
-					<input type="radio" name="userGender" checked="checked" value="남자" /> 남
-					<input type="radio" name="userGender" value="여자" />여
+					<input type="radio" name="userGender" checked="checked" value="MALE" /> 남
+					<input type="radio" name="userGender" value="FEMALE" />여
 				</td>
 			</tr>
 			<tr>
 				<th>생년월일</th>
                 <td>
-                		<input type="hidden" name="year"/>
-                		<select id="year">
+                		
+                		<select name="year" id="year">
                         <option value="">---선택하세요---</option>
                     	</select> 년
                     	
-                		<input type="hidden" name="month"/>
-                		<select id="month">
+                		
+                		<select name="month" id="month">
                         <option value= "" >---선택하세요---</option>
 	                    </select> 월                 
 
-                		<input type="hidden" name="date"/>
-                		<select id="date">
+                		
+                		<select name="date" id="date">
                         <option value="">---선택하세요---</option>
 	                    </select> 일              
   
