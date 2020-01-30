@@ -1,4 +1,3 @@
-<%@page import="com.between.dto.TbGroupDto"%>
 <%@page import="com.between.dto.TbUserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -137,10 +136,6 @@
 
 		});
 	}
-	
-	
-	
-	
 </script>
 <!-- 구글 로그인 스크립트  -->
 <script>
@@ -171,58 +166,35 @@
 
 </head>
 <body>
-<%
-	TbUserDto userInfo = (TbUserDto)session.getAttribute("dto");
-//	System.out.println(userInfo);
-    TbGroupDto groupdto = (TbGroupDto)session.getAttribute("groupdto");
-    
-    //System.out.println(groupdto.getPartnerId()+"나의 유저페이지에서 보는....");
-%>
+	<%
+		TbUserDto userInfo = (TbUserDto) session.getAttribute("dto");
+		//	System.out.println(userInfo);
+	%>
 	<header>
 
 		<div align="right">
-<%
-			if(userInfo==null){
-%>
-			<input type="button" class="login btn" name="btn" onclick="layer_popup('#popuplayer');" value="로그인"/> 
-			<input type="button" name="btn" class="login btn" value="회원가입"/>
-			
-<%
-			} else {
-				if(groupdto != null){
-				
-					if(groupdto.getPartnerId().equals(userInfo.getUserId()) && groupdto.getGroupCheck().equals("N")){
-%>
-		<script type="text/javascript">
-		$(function (){
-			if(confirm("<%=userInfo.getUserName()%>님으로 부터 온 커플 신청을 수락하시겠습니까? ") == true){
-				location.href="TbUser.do?command=after2&check=yes&groupNum=<%=groupdto.getGroupNum() %>&userId=<%=userInfo.getUserId() %>";
-				alert('커플 신청이 수락 되었습니다');
-			}else{
-				location.href="TbUser.do?command=after2&check=no&groupNum=<%=groupdto.getGroupNum() %>&userId=<%=userInfo.getUserId() %>";
-				alert('커플을 거절 하였습니다 새로 신청해 주세요 ');
-			}
-			
-		});
-		</script>	
-<%
-			}
-     }	
-%>
-			<input type="button" onclick="location.href='TbUser.do?command=logout'" name="btn" class="loginbtn" value="로그아웃"/> 
-			<input type="button" onclick="location.href='TbUser.do?command=mypage&userStatus=<%=userInfo.getUserStatus()%>'"name="btn" class="loginbtn" value="마이페이지"/>
+			<%
+				if (userInfo == null) {
+			%>
+			<input type="button" class="login-btn" name="btn"
+				onclick="layer_popup('#popup-layer');" value="로그인" /> <input
+				type="button" name="btn" class="login-btn" value="회원가입" />
+			<%
+				} else {
+			%>
 
-
-
-<%					
-	}
-%>	
-
-
-
+			<input type="button"
+				onclick="location.href='TbUser.do?command=logout'" name="btn"
+				class="login-btn" value="로그아웃" /> <input type="button"
+				onclick="location.href='TbUser.do?command=mypage&userStatus=<%=userInfo.getUserStatus()%>'"
+				name="btn" class="login-btn" value="마이페이지" />
+			<%
+				}
+			%>
 
 		</div>
-		<a href="index2.jsp"><img alt="" src="images/logo.gif" class="logo"></a>
+		<a href="index2.jsp"><img alt="" src="images/logo.gif"
+			class="logo"></a>
 	</header>
 
 	<nav>

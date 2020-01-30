@@ -97,13 +97,6 @@ nav ul li a {
 	background: white;
 	width: 31%;
 	text-decoration: none;
-	display: block;
-	text-align: left;
-	width: 29%;
-}
-
-.column a:hover {
-	color: orange;
 	color: skyblue;
 	line-height: 20px;
 	letter-spacing: 2px;
