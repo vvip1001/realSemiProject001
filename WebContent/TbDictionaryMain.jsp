@@ -1,3 +1,5 @@
+<%@page import="com.between.dto.TbDictionaryDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -11,14 +13,23 @@
 <style type="text/css">
 
 	.left{
-		float:left;
-		width: 40%;
+		float: left;
+		width: 500px;
 		height: 500px;
 	}
 	.right{
 		float:right;
-		width: 40%;
+		width: 500px;
 		height: 500px;
+	}
+	.dicBtn{
+		outline: none;
+		border: none;
+		color: skyblue;
+		background-color: white;
+	}
+	#like{
+		cursor: pointer;
 	}
 
 </style>
@@ -26,8 +37,40 @@
 <body>
 	
 	<%@ include file="./form/mainPage.jsp" %>
+	<%
+		if(userInfo==null){
+			pageContext.forward("index.jsp");
+		}
+		
+		List<TbDictionaryDto> list = (List<TbDictionaryDto>)request.getAttribute("list");
+		
 	
-	<div>니 캉 내 캉<br/>
+	%>
+	
+	<div><br/>
+	
+	<div id="list" >
+	<table>
+		<col width="300px">
+		<col width="50px">
+		<col width="50px" >
+		<tr>
+			<th>키워드</th>
+			<th>공감</th>
+		</tr>
+<%
+		for(int i =0 ; i < list.size(); i++){
+%>
+		<tr class="row" >
+			<td><%=list.get(i).getDicKeyword() %></td>
+			<td><input class="dicBtn" type="button" value="<%=list.get(i).getDicLike()%>"/></td>
+			<td><input class="dicBtn" id="like" type="button" value="공감" onclick="location.href='TbDic.do?command=like'"/></td>
+		</tr>
+<%		
+		}
+%>
+		</table>
+	</div>
 	
 	<input type="text" name="search"/><input type="button" value="검색"/>
 	
@@ -42,10 +85,11 @@
 	<tr>
 		<td>남자어</td>
 	</tr>
-	
 	</table>
+	</div>
 	
-	<table id="right">
+	<div id="right">
+	<table>
 		<col width="150px">
 		<col width="150px">
 	<tr>
