@@ -81,9 +81,9 @@
 		var pwch = document.getElementById("pwch");
 		var pw = document.getElementsByName("userpw")[0];
 		var name = document.getElementById("username");
-		var year = document.getElementsByName("year")[0];
-		var month = document.getElementsByName("month")[0];
-		var date = document.getElementsByName("date")[0];
+		var year = document.getElementById("year");
+		var month = document.getElementById("month");
+		var date = document.getElementById("date");
 	 
 	
 		if (regist.pw.value != regist.pwch.value) {
