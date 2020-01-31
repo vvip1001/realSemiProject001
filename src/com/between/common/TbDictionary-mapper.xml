@@ -18,11 +18,21 @@
 	]]>
 	</select>
 	
+	<select id="searchKeyword" parameterType="TbDictionaryDto" resultMap="TbDictionaryResultMap" >
+		SELECT * FROM TB_DICTIONARY
+		WHERE DIC_KEYWORD = #{dicKeyword}
+	</select>
+	
+	<select id="selectOne" parameterType="TbDictionaryDto" resultMap="TbDictionaryResultMap" >
+		SELECT * FROM TB_DICTIONARY
+		WHERE DIC_NUM = #{dicNum}
+	</select>
+	
 	<insert id="insert" parameterType="TbDictionaryDto" >
 		INSERT INTO TB_DICTIONARY VALUES(
 		TB_DICTIONARY_SEQ.NEXTVAL,
 		#{userId},
-		#{dicKeword},
+		#{dicKeyword},
 		#{dicMale},
 		#{dicFemale},
 		0,

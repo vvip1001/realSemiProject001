@@ -1,6 +1,7 @@
 package com.between.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -42,6 +43,46 @@ public class TbDictionaryServlet extends HttpServlet {
 			
 			request.setAttribute("list", list);
 			dispatch("TbDictionaryMain.jsp", request, response);
+		} else if(command.equals("search")) {
+			String keyword = request.getParameter("keyword").trim();
+			//앞 뒤 공백을 다 자른 후 키워드를 받음
+			
+			TbDictionaryDto dto = biz.searchKeyword(keyword);
+			List<TbDictionaryDto> list = biz.selectList();
+			
+			request.setAttribute("list", list);
+			request.setAttribute("dto", dto);
+			dispatch("TbDictionaryMain.jsp", request, response);
+		} else if(command.equals("insert")) {
+			
+			String keyword = request.getParameter("keyword");
+			String male = request.getParameter("male");
+			String female = request.getParameter("female");
+			String userId = request.getParameter("userId");
+			
+			TbDictionaryDto dto = new TbDictionaryDto();
+			dto.setDicKeyword(keyword);
+			dto.setDicMale(male);
+			dto.setDicFemale(female);
+			dto.setUserId(userId);
+			String msg = "";
+			int res = biz.insert(dto);
+			if(res>0) {
+				msg = "성공!";
+			} else {
+				msg = "실패!";
+			}
+			
+			PrintWriter out = response.getWriter();
+			String str="";
+			   str = "<script type='text/javascript'>";
+			   str += "opener.window.location.reload();";  //오프너 새로고침
+			   str += "alert("+msg+");";   // 창닫기
+			   str += "self.close();";
+			   str += "</script>";
+			   out.print(str);
+		} else if(command.equals("like")) {
+			
 		}
 	
 	}
