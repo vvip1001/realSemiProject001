@@ -50,8 +50,11 @@ public class TbRegistServlet extends HttpServlet {
 			String userPw = request.getParameter("userpw");
 			String userName= request.getParameter("username");
 			String userGender = request.getParameter("usergender");
-			String userDob = request.getParameter("year")+request.getParameter("month")+request.getParameter("day");
+			String userDob = request.getParameter("year")+request.getParameter("month")+request.getParameter("date");
 			String userEmail = request.getParameter("useremail");
+			
+			System.out.println(userDob+"왜안나옴");
+			System.out.println(request.getParameter("year")+"월"+request.getParameter("month")+"달"+request.getParameter("date")+"일");
 			
 			System.out.println(userID);
 

@@ -191,8 +191,7 @@
 		String useremail = request.getParameter("useremail");
 	%>
 
-	<form action="TbRegist.do" method="post" name="regist"
-		onsubmit="return validate()">
+	<form action="TbRegist.do" method="post">
 		<input type="hidden" name="command" value="insert">
 		<table border="1">
 
@@ -236,9 +235,14 @@
 			</tr>
 			<tr>
 				<th>생년월일</th>
-				<td><select name="year" id="year"><option></option></select> 년
-					<select name="month" id="month"><option></option></select> 월 <select
-					name="date" id="date"><option></option></select>일</td>
+				<td>
+					<select name="year"  id="year">
+						<option value=""></option></select> 년
+					<select name="month" id="month">
+						<option value=""></option></select> 월 
+					<select name="date" id="date">
+						<option value=""></option></select>일
+				</td>
 
 			</tr>
 			<tr>

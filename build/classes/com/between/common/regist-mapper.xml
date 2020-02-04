@@ -15,7 +15,8 @@
 
  	<insert id="insert" parameterType="TbUserDto">
  	INSERT INTO TB_USER
-    VALUES(#{userId},#{userPw},#{userName},#{userGender},NULL,#{userDob},#{userEmail},'##','##',NULL,SYSDATE,2,NULL,NULL,NULL)
+    VALUES(#{userId},#{userPw},#{userName},#{userGender},NULL,#{userDob},
+    #{userEmail},'N','USER',SYSDATE,SYSDATE,0,NULL,'EMPTY','EMPTY')
  	</insert>
  	
  	<select id="selectOne" parameterType="String" resultMap="MyResultMap">
